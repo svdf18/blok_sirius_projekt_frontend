@@ -1,9 +1,9 @@
-import HeroSection from '../components/HomeSection/HomeComponent.jsx';
+import HomeSection from '../components/HomeSection/HomeComponent.jsx';
 
 const HomeIndex = () => {
 return (
   <>
-  <HeroSection />
+  <HomeSection />
   </>
  );
 };
