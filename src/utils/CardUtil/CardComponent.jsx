@@ -15,8 +15,8 @@ const Card = ({ title, content, color, buttonText, buttonRoute }) => {
 };
 
 Card.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    content: PropTypes.string,
     color: PropTypes.oneOf(['green', 'grey', 'white']),
     buttonText: PropTypes.string, // Optional prop for button text
     buttonRoute: PropTypes.string, // Optional prop for button route
