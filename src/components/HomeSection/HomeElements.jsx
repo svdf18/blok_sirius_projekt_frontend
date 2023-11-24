@@ -13,7 +13,7 @@ export const HomeContainer = styled.div`
 
 export const HomeH1Container = styled.div`
     position: fixed;
-    top: 0;
+    top: -2.5rem;
     width: 100%;
     background: #DFC4ED;
     text-align: center;
@@ -23,4 +23,5 @@ export const HomeH1Container = styled.div`
 
 export const HomeH1 = styled.h1`
     font-size: 48px;
+    color: #141313;
 `

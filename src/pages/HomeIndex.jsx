@@ -1,9 +1,23 @@
 import HomeSection from '../components/HomeSection/HomeComponent.jsx';
+import { useState } from 'react';
+import Sidebar from '../components/Sidebar/SideBarComponent.jsx';
+import { SidebarButtonComponent } from '../components/SideBar/SideBarButtonComponent.jsx';
+import { NavBarComponent } from '../components/NavBar/NavBarComponent.jsx';
+
 
 const HomeIndex = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen)
+  }
+
 return (
   <>
-  <HomeSection />
+    <HomeSection />
+    <SidebarButtonComponent onClick={toggleSidebar}/>
+    <Sidebar isOpen={isOpen} toggle={toggleSidebar}/>
+    <NavBarComponent isSidebarOpen={isOpen} />
   </>
  );
 };
