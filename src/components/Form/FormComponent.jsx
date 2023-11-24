@@ -73,7 +73,7 @@ const handleChange = (e) => {
 
     try {
       console.log(form);
-      const response = await fetch("http://localhost:3333/users", {
+      const response = await fetch("http://localhost:3333/users", { // brug axios
         method: "POST",
         headers: {
           "Content-Type": "application/json",
