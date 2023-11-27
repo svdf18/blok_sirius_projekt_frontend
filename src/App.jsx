@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<HomeIndex />} />
         <Route path="/people-directory" element={<PeopleDirectoryIndex/>} />
         <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
-        <Route path="/admin" element={<AdminIndex/>} />
+        <Route path="/admin-dashboard" element={<AdminIndex/>} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
-import { HomeContainer, HomeH1Container, HomeH1, } from './HomeElements.jsx';
+import { HomeContainer, HomeContainerGrid, breakpointColumnsObj } from './HomeElements.jsx';
 import GlobalStyle from '../../styles/globalStyles';
 import Card from '../../utils/CardUtil/CardComponent.jsx';
+import ActionMenuComponent from '../ActionMenu/ActionMenuComponent.jsx';
 
 
 const HomeSection = () => {
@@ -10,11 +11,20 @@ const HomeSection = () => {
     <>
     <GlobalStyle/>
       <HomeContainer id='/'>
-        <HomeH1Container>
-        <HomeH1>Sirius</HomeH1>
-        </HomeH1Container>
-        <Card color="white" buttonText="People Directory" buttonRoute="/people-directory" />
-        <Card color="green" buttonText="Knowledge Hub" buttonRoute="/knowledge-hub" />
+        <HomeContainerGrid
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column">
+
+        <ActionMenuComponent></ActionMenuComponent>
+        <Card title="Knowledge Hub"color="white" size="medium" linkPath="/knowledge-hub" />
+        <Card title="People Directory" color="green" size="medium" linkPath="/people-directory" />
+        <Card title="People Directory" color="grey" size="small" linkPath="/people-directory" />
+        <Card title="People Directory" color="grey" size="large" linkPath="/people-directory" />
+        <Card title="People Directory" color="green" size="medium" linkPath="/people-directory" />
+        <Card title="People Directory" color="white" size="medium" linkPath="/people-directory" />
+        <Card title="People Directory" color="grey" size="large" linkPath="/people-directory" />
+        </HomeContainerGrid>
       </HomeContainer>
     </>
   );

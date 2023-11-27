@@ -9,7 +9,7 @@ const AdminSection = () => {
   return (
     <>
     <GlobalStyle/>
-      <AdminContainer id='/'>
+      <AdminContainer id='admin-dashboard'>
         <AdminH1Container>
         <AdminH1>Sirius</AdminH1>
         </AdminH1Container>
