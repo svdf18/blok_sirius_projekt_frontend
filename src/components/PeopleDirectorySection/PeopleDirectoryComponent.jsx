@@ -1,20 +1,30 @@
 import GlobalStyle from "../../styles/globalStyles"
-import { PeopleDirectoryContainer, PeopleDirectoryGrid } from "./PeopleDirectoryElements.jsx";
+import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "./PeopleDirectoryElements.jsx";
 import UserList from "../../utils/UserCardUtil/UserCardComponent";
+import ActionMenuComponent from "../ActionMenu/ActionMenuComponent";
 
 
 
 const PeopleDirectorySection = () => {
   return (
     <>
-      <GlobalStyle/>
-        <PeopleDirectoryContainer id="people-directory">
-              <PeopleDirectoryGrid>
-                <UserList></UserList>
-              </PeopleDirectoryGrid>
-        </PeopleDirectoryContainer>
+      <GlobalStyle />
+      <DirectoryContainer id="people-directory">
+        <DirectoryGridContainer>
+          <ActionMenuGridContainer>
+            <ActionMenuComponent />
+          </ActionMenuGridContainer>
+            <DirectoryGrid>
+              <UserList />
+              <ActionMenuComponent />
+              <ActionMenuComponent />
+              <ActionMenuComponent />
+              <ActionMenuComponent />
+            </DirectoryGrid>
+        </DirectoryGridContainer>
+      </DirectoryContainer>
     </>
-  )
-}
+  );
+};
 
 export default PeopleDirectorySection

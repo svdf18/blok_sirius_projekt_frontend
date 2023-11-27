@@ -19,7 +19,7 @@ const UserCard = ({ user }) => {
 }
 
 const UserList = () => {
-  const endpoint = "http://localhost:3333";
+  const endpoint = "http://localhost:3306";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {

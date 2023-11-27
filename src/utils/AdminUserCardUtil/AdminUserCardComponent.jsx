@@ -42,7 +42,7 @@ const UserCard = ({ user, onDelete, onUpdate }) => {
 };
 
 const AdminUserList = () => {
-  const endpoint = "http://localhost:3333";
+  const endpoint = "http://localhost:3306";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const handleUpdate = (userId) => {
 const handleFormSubmit = async (formData) => {
   try {
     // Make an HTTP request to update the user data on the server
-    const response = await axios.put(`http://localhost:3333/users/${formData.user_id}`, formData);
+    const response = await axios.put(`http://localhost:3306/users/${formData.user_id}`, formData);
     
     if (response.status === 200) {
       console.log("User updated successfully:", response.data);
