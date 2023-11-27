@@ -12,14 +12,14 @@ const UserCard = ({ user }) => {
       <UserCardText>Phone: {user.phone}</UserCardText>
       <UserCardText>Birthdate: {user.birthdate}</UserCardText>
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
-      <UserCardText>User Preferences: {user.user_preferences}</UserCardText>
+      {/* <UserCardText>User Preferences: {user.user_preferences}</UserCardText> */}
       {/* <UserCardImage src={`data:image/png;base64,${user.user_image}`} alt="User" /> */}
     </UserCardContainer>
   );
 }
 
 const UserList = () => {
-  const endpoint = "http://localhost:3306";
+  const endpoint = "http://localhost:3333";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ UserCard.propTypes = {
     phone: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,
     postal_code: PropTypes.number.isRequired,
-    user_preferences: PropTypes.string,
+    // user_preferences: PropTypes.string,
     user_type: PropTypes.string.isRequired,
     // user_image: PropTypes.string.isRequired, // Assuming user_image is stored as a base64-encoded string
   }).isRequired,
