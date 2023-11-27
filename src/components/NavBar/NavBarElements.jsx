@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { FaHashtag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 
@@ -49,6 +50,17 @@ export const NavBarIconLink = styled(Link)`
   color: #C2DFD3;
   border-radius: 1.5rem;
   transition: all 300ms linear;
+  position: relative;
+
+  &:first-child {
+    margin-bottom: auto;
+    margin-top: 1.2rem;
+    transition: 100ms linear;
+  }
+
+  &:last-child {
+    margin-bottom: 1.2rem;
+  }
 
   &:hover {
     background-color: #C2DFD3;
@@ -57,14 +69,44 @@ export const NavBarIconLink = styled(Link)`
   }
 
   @media screen and (max-width: 720px) {
-    margin-bottom: 0rem;
+    margin-bottom: 0.2rem;
     margin-left: 0.5rem;
+
+    &:first-child {
+      margin-top: 0.25rem;
+    }
+
+    &:last-child {
+      margin-top: 1rem; 
+    }
   }
 
   @media screen and (max-width: 720px) {
     ${props => props.mobile && mobileStylesSideBarOpen}
   }
+
+  .tooltip {
+    position: absolute;
+    width: auto;
+    padding: 0.2rem 0.5rem;
+    background-color: #2b2b2b;
+    color: #C2DFD3;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    bottom: 25%;
+    left: 215%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
+
 
 export const UserIcon = styled(FaUser)`
 `;
@@ -74,3 +116,7 @@ export const HashtagIcon = styled(FaHashtag)`
 
 export const MessageIcon = styled(FaEnvelope)`
 `;
+
+export const StarIcon = styled(FaStar)`
+`;
+
