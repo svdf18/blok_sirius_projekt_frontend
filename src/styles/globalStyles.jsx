@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background: #DFC4ED; 
     font-family: 'Rubik', sans-serif;
-    color: #343e46; 
+    color: #343e46;
   }
 `;
 

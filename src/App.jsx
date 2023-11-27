@@ -14,8 +14,8 @@ function App() {
         <Route path="/" element={<HomeIndex />} />
         <Route path="/people-directory" element={<PeopleDirectoryIndex/>} />
         <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
-        <Route path="/admin" element={<AdminIndex/>} />
-        <Route path="/admin/people-directory" element={<AdminPeopleDirectoryIndex/>} />
+        <Route path="/admin-dashboard" element={<AdminIndex/>} />
+        <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />
       </Routes>
     </Router>
   );

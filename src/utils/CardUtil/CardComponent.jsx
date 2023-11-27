@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
-import { CardContainer, CardTitle, CardContent } from './CardElements.jsx';
-import ButtonComponent from '../ButtonUtil/ButtonComponent.jsx';
+import { CardContainer, CardTitle, CardContent, CardIconLink, PlusIcon } from './CardElements.jsx';
 
-const Card = ({ title, content, color, buttonText, buttonRoute }) => {
+const Card = ({ title, content, color, size, linkPath, backgroundImage }) => {
     return (
-        <CardContainer color={color}>
-            <CardTitle>{title}</CardTitle>
+        <CardContainer color={color} size={size} backgroundImage={backgroundImage}>
+            <CardIconLink>
+                <PlusIcon/>
+            </CardIconLink>
+            <CardTitle to={linkPath}>{title}</CardTitle>
             <CardContent>{content}</CardContent>
-            {buttonText && buttonRoute && (
-                <ButtonComponent label={buttonText} variant={color} route={buttonRoute} />
-            )}
         </CardContainer>
     );
 };
@@ -18,12 +17,14 @@ Card.propTypes = {
     title: PropTypes.string,
     content: PropTypes.string,
     color: PropTypes.oneOf(['green', 'grey', 'white']),
-    buttonText: PropTypes.string, // Optional prop for button text
-    buttonRoute: PropTypes.string, // Optional prop for button route
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    linkPath: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string,
 };
 
 Card.defaultProps = {
-    color: 'green', // Set a default color if not provided
+    color: 'green',
+    size: 'medium',
 };
 
 export default Card;
