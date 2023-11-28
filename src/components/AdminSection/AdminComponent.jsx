@@ -12,8 +12,8 @@ const AdminSection = () => {
         <AdminH1Container>
         <AdminH1>Sirius</AdminH1>
         </AdminH1Container>
-        <Card color="white" buttonText="Manage People Directory" buttonRoute="/admin/people-directory" />
-        <Card color="green" buttonText="Manage Knowledge Hub" buttonRoute="/admin/knowledge-hub" />
+        <Card color="white" buttonText="Manage People Directory" buttonRoute="/admin-dashboard/people-directory" />
+        <Card color="green" buttonText="Manage Knowledge Hub" buttonRoute="/admin-dashboard/knowledge-hub" />
       </AdminContainer>
     </>
   );
