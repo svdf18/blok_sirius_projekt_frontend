@@ -27,7 +27,7 @@ Form.propTypes = {
     street: PropTypes.string.isRequired,
     postal_code: PropTypes.number.isRequired,
     user_type: PropTypes.string.isRequired,
-    user_image: PropTypes.arrayOf(PropTypes.number),   
+    user_image: PropTypes.string,   
   }),
   onSubmit: PropTypes.func.isRequired,
 };
@@ -46,8 +46,9 @@ Form.propTypes = {
     e.preventDefault();
 
     try {
-      console.log(form);
-      onSubmit(form);
+    console.log(form);
+    console.log("onSubmit type:", typeof onSubmit);
+    onSubmit(form);
     } catch (error) {
       console.error("Error:", error.message);
       if (axios.isAxiosError(error)) {
