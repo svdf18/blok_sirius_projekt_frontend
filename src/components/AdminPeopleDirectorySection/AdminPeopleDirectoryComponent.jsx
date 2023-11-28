@@ -1,11 +1,6 @@
 import { useState } from "react";
 import GlobalStyle from "../../styles/globalStyles.jsx";
-import {
-  AdminPeopleDirectoryContainer,
-  AdminPeopleDirectoryH1Container,
-  AdminPeopleDirectoryH1,
-  AdminPeopleDirectoryGrid,
-} from "./AdminPeopleDirectoryElements.jsx";
+import { AdminPeopleDirectoryContainer, AdminPeopleDirectoryH1Container, AdminPeopleDirectoryH1, AdminPeopleDirectoryGrid } from "./AdminPeopleDirectoryElements.jsx";
 import AdminUserList from "../../utils/AdminUserCardUtil/AdminUserCardComponent.jsx";
 import Form from "../Form/FormComponent.jsx";
 
