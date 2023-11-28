@@ -1,11 +1,17 @@
 import Masonry from 'react-masonry-css';
 import styled from 'styled-components';
 
+const colorMappings = {
+  lilac: '#DFC4ED',
+  yellow: '#FFEBA4',
+  default: '#DFC4ED',
+};
+
 export const HomeContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    background: #DFC4ED;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: ${(props) => colorMappings[props.backgroundColor] || colorMappings.default};
 `;
 
 export const HomeContainerGrid = styled(Masonry)`

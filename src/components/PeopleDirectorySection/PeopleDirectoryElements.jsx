@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
+const colorMappings = {
+  lilac: '#DFC4ED',
+  yellow: '#FFEBA4',
+  default: '#DFC4ED',
+};
+
 export const DirectoryContainer = styled.div`
     width: 100vw;
     min-height: 100vh;
     position: relative;
-    background: #DFC4ED;
+    background: ${(props) => colorMappings[props.backgroundColor] || colorMappings.default};
 `;
 
 export const DirectoryGridContainer = styled.div`
@@ -44,7 +50,7 @@ export const DirectoryGrid = styled.div`
   gap: 0px;
   width: auto;
   position: relative;
-  background: #DFC4ED;
+  background: inherit;
 
   @media screen and (max-width: 2100px) {
     grid-template-columns: 1fr 1fr 1fr;

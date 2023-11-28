@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import Modal from 'react-modal';
 import { FaStar } from "react-icons/fa";
+import { FaPlusCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export const ActionMenuContainer = styled.div`
@@ -43,14 +45,53 @@ export const ActionMenuLogoStar = styled(Link)`
 export const StarIcon = styled(FaStar)`
 `;
 
+export const PlusIcon = styled(FaPlusCircle)`
+`;
+
+export const BreakLine = styled.div`
+  width: 80%; 
+  border-bottom: 2px solid;
+  border-radius: 2.5rem;
+  margin: 0 auto;
+  margin-bottom: 1.2rem;
+  transform-origin: center; 
+  transition: transform 0.5s ease;
+`;
+
 export const ActionMenuLogo = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f7f7f7;
+
   img {
     width: 80%; 
     height: auto; 
   }
+
+  &:hover + ${BreakLine} {
+    transform: scaleX(0.8);
+  }
+`
+
+export const ActionMenuTitleModal = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 2rem;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+`;
+
+export const ActionMenuModal = styled(Modal)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `
