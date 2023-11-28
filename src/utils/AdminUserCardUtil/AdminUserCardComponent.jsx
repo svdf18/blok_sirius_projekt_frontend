@@ -3,27 +3,18 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "../UserCardUtil/UserCardElements.jsx";
 import Form from "../../components/Form/FormComponent.jsx";
+import { getUsers, deleteUser, updateUser } from "../../components/Api/userApis.jsx"
+import { UpdateButtonComponent } from "../ButtonUtil/UpdateButtonComponent.jsx";
+import { DeleteButtonComponent } from "../ButtonUtil/DeleteButtonComponent.jsx";
 
 const UserCard = ({ user, onDelete, onUpdate }) => {
   const handleDelete = () => {
     onDelete(user.user_id);
   };
-
+  
   const handleUpdate = () => {
     onUpdate(user.user_id);
   };
-
-
-    // Format the birthdate for display
-    const formattedBirthdate = (() => {
-    const sqlDate = user.birthdate; // Assuming user.birthdate is in the format 'YYYY-MM-DD'
-    const jsDate = new Date(sqlDate);
-    return jsDate.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-  })();
 
   return (
     <UserCardContainer user_type={user.user_type}>
@@ -31,25 +22,22 @@ const UserCard = ({ user, onDelete, onUpdate }) => {
       <UserCardSubtitle>{user.user_type}</UserCardSubtitle>
       <UserCardText>Email: {user.email}</UserCardText>
       <UserCardText>Phone: {user.phone}</UserCardText>
-      <UserCardText>Birthdate: {formattedBirthdate}</UserCardText>
+      <UserCardText>Birthdate: {user.birthdate}</UserCardText>
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
-
-      {/* Add the delete and update buttons */}
-      <button onClick={handleDelete}>Delete</button>
-      <button onClick={handleUpdate}>Update</button>
+      <DeleteButtonComponent onDelete={handleDelete} itemId={user.user_id} />
+      <UpdateButtonComponent onUpdate={handleUpdate} itemId={user.user_id} />
     </UserCardContainer>
   );
 };
 
 const AdminUserList = () => {
-  const endpoint = "http://localhost:3333";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get(`${endpoint}/users`)
-      .then((response) => {
-        console.log('Data received:', response.data);
-        setUsers(response.data);
+    getUsers()
+      .then((data) => {
+        console.log('Data received:', data);
+        setUsers(data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -57,7 +45,7 @@ const AdminUserList = () => {
   }, []);
 
   const handleDelete = (userId) => {
-    axios.delete(`${endpoint}/users/${userId}`)
+    deleteUser(userId)
       .then(() => {
         setUsers((prevUsers) => prevUsers.filter((user) => user.user_id !== userId));
       })
@@ -77,14 +65,14 @@ const toggleFormVisibility = () => {
 const handleUpdate = (userId) => {
   const userToUpdate = users.find((user) => user.user_id === userId);
   setSelectedUser(userToUpdate);
-  toggleFormVisibility(); // This sets isFormVisible to true
+  toggleFormVisibility();
 };
 
 
 const handleFormSubmit = async (formData) => {
   try {
     // Make an HTTP request to update the user data on the server
-    const response = await axios.put(`http://localhost:3333/users/${formData.user_id}`, formData);
+    const response = await updateUser(formData);
     
     if (response.status === 200) {
       console.log("User updated successfully:", response.data);
@@ -107,9 +95,6 @@ const handleFormSubmit = async (formData) => {
     }
   }
 };
-
-
-
   return (
     <>
       {users.map((user) => (
