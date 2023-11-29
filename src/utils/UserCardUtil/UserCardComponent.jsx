@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "./UserCardElements";
+import { endpoint } from "../../components/Api/endpoint";
+
 
 const UserCard = ({ user }) => {
   return (
@@ -19,7 +21,6 @@ const UserCard = ({ user }) => {
 }
 
 const UserList = () => {
-  const endpoint = "http://localhost:3306";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
