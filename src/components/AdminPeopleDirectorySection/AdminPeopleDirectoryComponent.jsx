@@ -1,5 +1,5 @@
 import GlobalStyle from "../../styles/globalStyles.jsx";
-import AdminUserList from "../Api/AdminUserList.jsx";
+import AdminUserList from "../../api/AdminUserList.jsx";
 import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
 import ActionMenuComponent from "../ActionMenu/ActionMenuComponent.jsx";
 import Form from "../../utils/FormUtil/FormComponent.jsx";

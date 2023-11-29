@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import UserCard from "../../utils/UserCardUtil/UserCardComponent.jsx"
+import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx"
 import { endpoint } from './endpoint.jsx';
 import { useState, useEffect } from 'react';
 
