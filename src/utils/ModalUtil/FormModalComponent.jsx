@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
+import { ModalContainer, Icon, CloseIcon } from './FormModalElements';
 
 const ModalComponent = ({ isOpen, onRequestClose, formComponent: FormComponent, onSubmit }) => {
   const closeModal = () => {
@@ -7,10 +7,14 @@ const ModalComponent = ({ isOpen, onRequestClose, formComponent: FormComponent, 
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={() => {}}>
+  <>
+    <ModalContainer isOpen={isOpen} onRequestClose={() => {}}>
+    <Icon onClick={closeModal}>
+            <CloseIcon />
+          </Icon>
       {FormComponent && <FormComponent onSubmit={onSubmit} />}
-      <button onClick={closeModal}>Close Modal</button>
-    </Modal>
+    </ModalContainer>
+  </>
   );
 };
 

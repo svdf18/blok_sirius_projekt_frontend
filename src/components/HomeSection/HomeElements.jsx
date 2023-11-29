@@ -33,3 +33,8 @@ export const breakpointColumnsObj = {
     1080: 2,
     720: 1,
 };
+
+export const MasonryItem = styled.div`
+  grid-column: span 2; /* Make the first item span two columns */
+  grid-row: span 2; /* Make the first item span two rows */
+`;

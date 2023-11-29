@@ -28,8 +28,9 @@ export const UserCardContainer = styled.div.attrs((props) => ({
     color: getTextColorByUserType(props.user_type),
   },
 }))`
-  width: 15vw;
+  width: auto;
   text-align: left;
+  min-width: 12rem;
   border: none;
   border-radius: 28px;
   padding: 20px;
@@ -43,9 +44,11 @@ export const UserCardContainer = styled.div.attrs((props) => ({
 `;
 
 export const UserCardTitle = styled.h2`
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 24px;
   font-weight: bold;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: inherit;
 `;
 
 export const UserCardSubtitle = styled.p`
