@@ -1,6 +1,6 @@
 import GlobalStyle from "../../styles/globalStyles"
 import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "./PeopleDirectoryElements.jsx";
-import UserList from "../../utils/UserCardUtil/UserCardComponent";
+import UserList from "../Api/UserList.jsx";
 import ActionMenuComponent from "../ActionMenu/ActionMenuComponent";
 
 
