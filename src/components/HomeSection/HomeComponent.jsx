@@ -17,7 +17,8 @@ const HomeSection = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
 
-        <ActionMenuComponent></ActionMenuComponent>
+        <ActionMenuComponent/>
+       
         <Card title="Recommendations"color="white" size="medium" linkPath="/knowledge-hub" />
         <Card title="Events & Calendar" color="green" size="medium" linkPath="/people-directory" />
         <Card title="" color="grey" size="small" linkPath="/people-directory" backgroundImage={SiriusPeople}/>

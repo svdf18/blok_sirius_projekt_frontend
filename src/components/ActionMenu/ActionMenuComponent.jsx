@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ActionMenuContainer, ActionMenuLogoStar, StarIcon, ActionMenuLogo, ActionMenuTitleModal, BreakLine } from './ActionMenuElements';
 import SiriusLogo from '../../assets/sirius_logo.png';
-import ModalComponent from '../../utils/ModalUtil/ModalComponent.jsx';
+import ModalComponent from '../../utils/ModalUtil/FormModalComponent.jsx';
 
-const ActionMenuComponent = ({ title, formComponent: FormComponent, toggle }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+const ActionMenuComponent = ({ menuItems = [], toggle }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openModal = (menuItem) => {
+    setSelectedMenuItem(menuItem);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalOpen(false);
+    setSelectedMenuItem(null);
+    setIsModalOpen(false);
   };
 
   return (
@@ -24,14 +27,20 @@ const ActionMenuComponent = ({ title, formComponent: FormComponent, toggle }) =>
         <img src={SiriusLogo} alt="Sirius Logo" />
       </ActionMenuLogo>
       <BreakLine />
-      <ActionMenuTitleModal onClick={openModal}>
-        {title}
-      </ActionMenuTitleModal>
+
+      {menuItems &&
+        menuItems.map((menuItem, index) => (
+          <React.Fragment key={index}>
+            <ActionMenuTitleModal onClick={() => openModal(menuItem)}>
+              {menuItem.title}
+            </ActionMenuTitleModal>
+          </React.Fragment>
+        ))}
 
       <ModalComponent
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        formComponent={FormComponent}
+        formComponent={selectedMenuItem?.formComponent}
         onSubmit={(formData) => {
           console.log('Form data:', formData);
           closeModal();
@@ -41,10 +50,15 @@ const ActionMenuComponent = ({ title, formComponent: FormComponent, toggle }) =>
   );
 };
 
+
 ActionMenuComponent.propTypes = {
-  title: PropTypes.string,
-  formComponent: PropTypes.elementType,
-  toggle: PropTypes.func
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      formComponent: PropTypes.elementType.isRequired,
+    })
+  ).isRequired,
+  toggle: PropTypes.func,
 };
 
 export default ActionMenuComponent;

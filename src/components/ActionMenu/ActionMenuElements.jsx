@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export const ActionMenuContainer = styled.div`
     border: none;
     border-radius: 28px;
-    max-height: 10rem;
+    max-height: 15rem;
     max-width: auto;
     padding: 20px;
     margin: 20px;

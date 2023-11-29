@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "../UserCardUtil/UserCardElements.jsx";
 import Form from "../../components/Form/FormComponent.jsx";
+import DeleteButtonComponent from "../ButtonUtil/DeleteButtonComponent.jsx";
 
 const UserCard = ({ user, onDelete, onUpdate }) => {
   const handleDelete = () => {
@@ -35,7 +36,7 @@ const UserCard = ({ user, onDelete, onUpdate }) => {
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
 
       {/* Add the delete and update buttons */}
-      <button onClick={handleDelete}>Delete</button>
+      <DeleteButtonComponent onClick={handleDelete}/>
       <button onClick={handleUpdate}>Update</button>
     </UserCardContainer>
   );
