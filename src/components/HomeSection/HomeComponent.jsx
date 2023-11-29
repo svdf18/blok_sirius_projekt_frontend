@@ -1,7 +1,7 @@
 import { HomeContainer, HomeContainerGrid, breakpointColumnsObj } from './HomeElements.jsx';
 import GlobalStyle from '../../styles/globalStyles';
 import Card from '../../utils/CardUtil/CardComponent.jsx';
-import ActionMenuComponent from '../ActionMenu/ActionMenuComponent.jsx';
+import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import SiriusPeople from '../../assets/sirius_people.jpeg'
 
 
