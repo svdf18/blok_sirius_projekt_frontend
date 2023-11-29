@@ -1,44 +1,43 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ActionMenuContainer, ActionMenuLogoStar, StarIcon, ActionMenuLogo, ActionMenuTitleModal, ActionMenuModal, BreakLine } from './ActionMenuElements';
-import SiriusLogo from '../../assets/sirius_logo.png'
-
+import { ActionMenuContainer, ActionMenuLogoStar, StarIcon, ActionMenuLogo, ActionMenuTitleModal, BreakLine } from './ActionMenuElements';
+import SiriusLogo from '../../assets/sirius_logo.png';
+import ModalComponent from '../../utils/ModalUtil/ModalComponent.jsx';
 
 const ActionMenuComponent = ({ title, formComponent: FormComponent, toggle }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  
+
   const openModal = () => {
     setModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalOpen(false)
+    setModalOpen(false);
   };
 
   return (
     <ActionMenuContainer>
       <ActionMenuLogoStar>
-        <StarIcon/>
+        <StarIcon />
       </ActionMenuLogoStar>
       <ActionMenuLogo to='/' onClick={toggle}>
-        <img src={SiriusLogo}/>
+        <img src={SiriusLogo} alt="Sirius Logo" />
       </ActionMenuLogo>
-      <BreakLine/>
+      <BreakLine />
       <ActionMenuTitleModal onClick={openModal}>
         {title}
-      </ActionMenuTitleModal >
-      <ActionMenuModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        {FormComponent && (
-          <FormComponent
-            onSubmit={(formData) => {
-              console.log("Form data:", formData);
-              closeModal();
-            }}
-          />
-        )}
-        <button onClick={closeModal}>Close Modal</button>
-      </ActionMenuModal>
-    </ActionMenuContainer> 
+      </ActionMenuTitleModal>
+
+      <ModalComponent
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        formComponent={FormComponent}
+        onSubmit={(formData) => {
+          console.log('Form data:', formData);
+          closeModal();
+        }}
+      />
+    </ActionMenuContainer>
   );
 };
 
