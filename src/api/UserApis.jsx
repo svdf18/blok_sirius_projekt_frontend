@@ -11,6 +11,17 @@ export const getUsers = async () => {
   }
 };
 
+export const postUser = async (formData) => {
+  try {
+    const response = await axios.post(`${endpoint}/users`, formData);
+    console.log('User created successfully:', response.data);
+  } catch (error) {
+    console.error(`Error creating user with ID ${formData.user_id}:`, error.message);
+    console.error("Error details:", error.response?.data);
+    throw error;
+  }
+};
+
 export const deleteUser = async (userId) => {
   try {
     await axios.delete(`${endpoint}/users/${userId}`);
