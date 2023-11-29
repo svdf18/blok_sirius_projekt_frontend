@@ -44,7 +44,7 @@ const ActionMenuComponent = ({ title, formComponent: FormComponent, toggle }) =>
 ActionMenuComponent.propTypes = {
   title: PropTypes.string,
   formComponent: PropTypes.elementType,
-  toggle: PropTypes.func.isRequired,
+  toggle: PropTypes.func
 };
 
 export default ActionMenuComponent;

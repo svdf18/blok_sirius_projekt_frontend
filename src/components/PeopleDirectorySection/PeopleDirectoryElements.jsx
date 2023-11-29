@@ -38,9 +38,7 @@ export const ActionMenuGridContainer = styled.div`
     margin: 0 auto;
     margin-left: 6rem;
     justify-content: center;
-    position: sticky;
     top: 0;
-    z-index: 100;
     height: 100%;
 `;
 
