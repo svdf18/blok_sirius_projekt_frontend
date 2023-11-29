@@ -1,8 +1,8 @@
 import AdminSection from '../components/AdminSection/AdminComponent.jsx';
 import { useState } from 'react';
-import Sidebar from '../components/Sidebar/SideBarComponent.jsx';
-import { SidebarButtonComponent } from '../components/SideBar/SideBarButtonComponent.jsx';
-import { NavBarComponent } from '../components/NavBar/NavBarComponent.jsx';
+import Sidebar from '../components/Menu/Sidebar/SideBarComponent.jsx';
+import { SidebarButtonComponent } from '../components/Menu/Sidebar/SideBarButtonComponent.jsx';
+import { NavBarComponent } from '../components/Menu/NavBar/NavBarComponent.jsx';
 
 const AdminIndex = () => {
   const [isOpen, setIsOpen] = useState(false);

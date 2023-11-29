@@ -1,4 +1,4 @@
-import { NavBarComponent } from "../components/NavBar/NavBarComponent"
+import { NavBarComponent } from "../components/Menu/NavBar/NavBarComponent"
 
 const KnowledgeHubIndex = () => {
   return (
