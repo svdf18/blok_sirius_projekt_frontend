@@ -2,7 +2,7 @@ import GlobalStyle from "../../styles/globalStyles.jsx";
 import AdminUserList from "../Api/AdminUserList.jsx";
 import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
 import ActionMenuComponent from "../ActionMenu/ActionMenuComponent.jsx";
-import Form from "../Form/FormComponent.jsx";
+import Form from "../../utils/FormUtil/FormComponent.jsx";
 
 const AdminPeopleDirectorySection = () => {
 
