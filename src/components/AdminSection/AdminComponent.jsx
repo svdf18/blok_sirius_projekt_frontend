@@ -1,7 +1,6 @@
 import { AdminContainer, AdminH1Container, AdminH1, } from './AdminElements.jsx';
 import GlobalStyle from '../../styles/globalStyles.jsx';
-import Card from '../../utils/CardUtil/CardComponent.jsx';
-
+import Card from "../../utils/AdminUserCardUtil/AdminUserCardComponent.jsx"
 const AdminSection = () => {
 
   
