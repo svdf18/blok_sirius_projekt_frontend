@@ -41,14 +41,13 @@ Form.propTypes = {
     });
   };
 
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (typeof onSubmit === 'function') {
     try {
-    console.log(form);
-    console.log("onSubmit type:", typeof onSubmit);
-    onSubmit(form);
+      console.log(form);
+      console.log("onSubmit type:", typeof onSubmit);
+      onSubmit(form);
     } catch (error) {
       console.error("Error:", error.message);
       if (axios.isAxiosError(error)) {
@@ -61,7 +60,10 @@ Form.propTypes = {
         console.error("Non-Axios Error:", error.message);
       }
     }
-  };
+  } else {
+    console.error('onSubmit is not a function');
+  }
+};
 
   return (
     <FormContainer onSubmit={handleSubmit}>

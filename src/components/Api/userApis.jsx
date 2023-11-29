@@ -16,9 +16,11 @@ export const deleteUser = async (userId) => {
     await axios.delete(`${endpoint}/users/${userId}`);
   } catch (error) {
     console.error(`Error deleting user with ID ${userId}:`, error.message);
+    console.error("Error details:", error.response?.data);
     throw error;
   }
 };
+
 
 export const updateUser = async (formData) => {
   try {
@@ -26,6 +28,7 @@ export const updateUser = async (formData) => {
     return response.data;
   } catch (error) {
     console.error(`Error updating user with ID ${formData.user_id}:`, error.message);
+    console.error("Error details:", error.response?.formData);
     throw error;
   }
 };
