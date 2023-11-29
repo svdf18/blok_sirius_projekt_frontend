@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "./UserCardElements";
-import { endpoint } from "../../components/Api/endpoint";
+import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
+import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 
+const UserCard = ({ user, showButtons, onDelete, onUpdate }) => {
 
-const UserCard = ({ user }) => {
   return (
     <UserCardContainer user_type={user.user_type}>
       <UserCardTitle>{user.first_name} {user.last_name}</UserCardTitle>
@@ -14,34 +13,15 @@ const UserCard = ({ user }) => {
       <UserCardText>Phone: {user.phone}</UserCardText>
       <UserCardText>Birthdate: {user.birthdate}</UserCardText>
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
-      {/* <UserCardText>User Preferences: {user.user_preferences}</UserCardText> */}
-      {/* <UserCardImage src={`data:image/png;base64,${user.user_image}`} alt="User" /> */}
+      {showButtons && (
+        <>
+          <DeleteButtonComponent onDelete={onDelete} itemId={user.user_id} />
+          <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} />
+        </>
+      )}
     </UserCardContainer>
   );
-}
-
-const UserList = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get(`${endpoint}/users`)
-      .then((response) => {
-        console.log('Data received:', response.data);
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [])
-
-  return (
-    <>
-      {users.map(user => (
-        <UserCard key={user.user_id} user={user} />
-      ))}
-    </>
-  );
-}
+};
 
 UserCard.propTypes = {
   user: PropTypes.shape({
@@ -53,10 +33,11 @@ UserCard.propTypes = {
     phone: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,
     postal_code: PropTypes.number.isRequired,
-    // user_preferences: PropTypes.string,
     user_type: PropTypes.string.isRequired,
-    // user_image: PropTypes.string.isRequired, // Assuming user_image is stored as a base64-encoded string
   }).isRequired,
+  showButtons: PropTypes.bool,
+  onDelete: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
-export default UserList;
+export default UserCard;
