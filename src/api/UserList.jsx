@@ -37,7 +37,6 @@ UserList.propTypes = {
     phone: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,
     postal_code: PropTypes.number.isRequired,
-    // user_preferences: PropTypes.string,
     user_type: PropTypes.string.isRequired,
     // user_image: PropTypes.string.isRequired, // Assuming user_image is stored as a base64-encoded string
   }).isRequired,
