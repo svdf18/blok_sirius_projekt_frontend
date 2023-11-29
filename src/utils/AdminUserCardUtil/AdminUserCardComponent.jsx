@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:src/utils/AdminUserCardUtil/AdminUserCardComponent.jsx
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -29,20 +30,17 @@ const UserCard = ({ user, onDelete, onUpdate }) => {
     </UserCardContainer>
   );
 };
+=======
+import { useState } from "react";
+import axios from 'axios';
+import Form from "../Form/FormComponent.jsx";
+import { deleteUser, updateUser } from "./UserApis.jsx"
+import UserCard from "../../utils/UserCardUtil/UserCardComponent.jsx";
+import { useFetchUsers } from "./UserApis.jsx";
+>>>>>>> Stashed changes:src/components/Api/AdminUserList.jsx
 
 const AdminUserList = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    getUsers()
-      .then((data) => {
-        console.log('Data received:', data);
-        setUsers(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  const users = useFetchUsers();
 
   const handleDelete = (userId) => {
     deleteUser(userId)
@@ -54,11 +52,6 @@ const AdminUserList = () => {
       });
   };
 
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-const toggleFormVisibility = () => {
-  setIsFormVisible((prevVisibility) => !prevVisibility);
-};
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -66,6 +59,12 @@ const handleUpdate = (userId) => {
   const userToUpdate = users.find((user) => user.user_id === userId);
   setSelectedUser(userToUpdate);
   toggleFormVisibility();
+};
+
+const [isFormVisible, setIsFormVisible] = useState(false);
+
+const toggleFormVisibility = () => {
+  setIsFormVisible((prevVisibility) => !prevVisibility);
 };
 
 

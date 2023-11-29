@@ -2,7 +2,27 @@ import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "./UserCardElements";
+<<<<<<< Updated upstream
 import { endpoint } from "../../constants/endpoint";
+=======
+import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
+import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
+import { useDeleteUser } from '../../components/Api/UserApis';
+import { useState } from 'react';
+
+const UserCard = ({ user, showButtons, onUpdate }) => {
+  const { deleteUser } = useDeleteUser();
+  const [users, setUsers] = useState([]);
+
+  const handleDelete = async (userId) => {
+    try {
+      await deleteUser(userId);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.user_id !== userId));
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+>>>>>>> Stashed changes
 
 const UserCard = ({ user }) => {
   return (
@@ -13,8 +33,17 @@ const UserCard = ({ user }) => {
       <UserCardText>Phone: {user.phone}</UserCardText>
       <UserCardText>Birthdate: {user.birthdate}</UserCardText>
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
+<<<<<<< Updated upstream
       {/* <UserCardText>User Preferences: {user.user_preferences}</UserCardText> */}
       {/* <UserCardImage src={`data:image/png;base64,${user.user_image}`} alt="User" /> */}
+=======
+      {showButtons && (
+        <>
+          <DeleteButtonComponent onDelete={() => handleDelete(user.user_id)} itemId={user.user_id} />
+          <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} />
+        </>
+      )}
+>>>>>>> Stashed changes
     </UserCardContainer>
   );
 }
@@ -41,6 +70,11 @@ const UserList = () => {
     </>
   );
 }
+
+
+
+
+
 
 UserCard.propTypes = {
   user: PropTypes.shape({
