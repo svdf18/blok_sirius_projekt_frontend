@@ -1,9 +1,9 @@
 import GlobalStyle from "../../styles/globalStyles.jsx";
-import AdminUserList from "../../api/AdminUserList.jsx";
+import UserList from "../../api/UserList.jsx"
 import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
-import ActionMenuComponent from "../ActionMenu/ActionMenuComponent.jsx";
-import Form from "../Form/FormComponent.jsx";
 import SimpleForm from "../../utils/FormUtil/UserFormComponent.jsx";
+import Form from "../../utils/FormUtil/FormComponent.jsx";
+import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
 
 const AdminPeopleDirectorySection = () => {
   const menuItems = [
@@ -20,10 +20,11 @@ const AdminPeopleDirectorySection = () => {
             <ActionMenuComponent menuItems={menuItems} />
           </ActionMenuGridContainer>
           <DirectoryGrid>
-            <AdminUserList />
+            <UserList/>
           </DirectoryGrid>
         </DirectoryGridContainer>
       </DirectoryContainer>
+
     </>
   );
 };

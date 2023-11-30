@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ActionMenuContainer, ActionMenuLogoStar, StarIcon, ActionMenuLogo, ActionMenuTitleModal, BreakLine } from './ActionMenuElements';
-import SiriusLogo from '../../assets/sirius_logo.png';
-import ModalComponent from '../../utils/ModalUtil/FormModalComponent.jsx';
+import SiriusLogo from '../../../assets/sirius_logo.png';
+import ModalComponent from '../../../utils/ModalUtil/FormModalComponent.jsx';
 
 const ActionMenuComponent = ({ menuItems = [], toggle }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

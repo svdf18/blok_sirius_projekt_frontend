@@ -1,21 +1,47 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const DeleteButtonComponent = ({ onDelete, itemId, buttonText, ...restProps }) => {
-  const handleClick = () => {
-    onDelete(itemId);
+
+export const DeleteButtonComponent = ({ deleteFunction, itemId, buttonText, itemType, ...restProps }) => {
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
+
+  const handleOpenConfirmation = () => {
+    setConfirmationOpen(true);
   };
 
-  return <StyledDeleteButton onClick={handleClick} {...restProps}>
-    {buttonText || <FaTrash />}
-  </StyledDeleteButton>;
+  const handleCloseConfirmation = () => {
+    setConfirmationOpen(false);
+  };
+
+  const handleDelete = () => {
+    deleteFunction(itemId);
+    handleCloseConfirmation();
+  };
+
+  return (
+    <>
+      <StyledDeleteButton onClick={handleOpenConfirmation} {...restProps}>
+        {buttonText || <FaTrash />}
+      </StyledDeleteButton>
+
+      {isConfirmationOpen && (
+        <ConfirmationDialog>
+          <p>{`Are you sure you want to delete this ${itemType}?`}</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={handleCloseConfirmation}>No</button>
+        </ConfirmationDialog>
+      )}
+    </>
+  );
 };
 
 DeleteButtonComponent.propTypes = {
-  onDelete: PropTypes.func.isRequired,
+  deleteFunction: PropTypes.func.isRequired,
   itemId: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
+  itemType: PropTypes.string.isRequired, // Added prop for item type
 };
 
 const StyledDeleteButton = styled.div`
@@ -41,3 +67,18 @@ const StyledDeleteButton = styled.div`
   }
 `;
 
+const ConfirmationDialog = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  button {
+    margin-right: 10px;
+  }
+`;
