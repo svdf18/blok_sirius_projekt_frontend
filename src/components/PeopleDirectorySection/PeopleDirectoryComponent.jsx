@@ -15,11 +15,7 @@ const PeopleDirectorySection = () => {
             <ActionMenuComponent />
           </ActionMenuGridContainer>
             <DirectoryGrid>
-              <UserList />
-              <ActionMenuComponent />
-              <ActionMenuComponent />
-              <ActionMenuComponent />
-              <ActionMenuComponent />
+              <UserList/>
             </DirectoryGrid>
         </DirectoryGridContainer>
       </DirectoryContainer>

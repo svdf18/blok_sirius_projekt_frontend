@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 
 const colorMappings = {
@@ -7,7 +8,7 @@ const colorMappings = {
 };
 
 export const DirectoryContainer = styled.div`
-    width: 100vw;
+    width: 90vw;
     min-height: 100vh;
     position: relative;
     background: ${(props) => colorMappings[props.backgroundColor] || colorMappings.default};
@@ -16,7 +17,8 @@ export const DirectoryContainer = styled.div`
 export const DirectoryGridContainer = styled.div`
   display: grid;
   margin-top: 5.9rem;
-  width: 80vw;
+  padding-right: 6rem;
+  width: 90vw;
   grid-template-columns: 1fr 3fr;
 
   @media screen and (max-width: 1440px) {
@@ -47,14 +49,11 @@ export const DirectoryGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0px;
   width: auto;
+  margin-left: 6rem;
   position: relative;
   background: inherit;
 
-  @media screen and (max-width: 2100px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @media screen and (max-width: 1080px) {
+  @media screen and (max-width: 1440px) {
     grid-template-columns: 1fr 1fr;
   }
 

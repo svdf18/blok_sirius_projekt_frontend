@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import Form from "../utils/FormUtil/FormComponent.jsx";
+import Form from "../Form/FormComponent.jsx";
 import { getUsers, deleteUser, updateUser } from "./UserApis.jsx"
-import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx";
+import UserCard from "../../utils/UserCardUtil/UserCardComponent.jsx";
 
 const AdminUserList = () => {
   const [users, setUsers] = useState([]);
