@@ -43,6 +43,12 @@ export const UserCardContainer = styled.div.attrs((props) => ({
   }
 `;
 
+export const ButtonCardContainer = styled.div`
+  display: flex;
+  position: relative;
+  margin-top: 3rem;
+`;
+
 export const UserCardTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;

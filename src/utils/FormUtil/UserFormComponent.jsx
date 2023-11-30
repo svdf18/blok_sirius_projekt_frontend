@@ -11,17 +11,17 @@ const SimpleForm = () => {
       <FormTitle>Simple Form</FormTitle>
 
       <FormInputContainer>
-        <FormLabel>First Name:</FormLabel>
+        <FormLabel>First Name</FormLabel>
         <FormInput type="text" />
       </FormInputContainer>
 
       <FormInputContainer>
-        <FormLabel>Last Name:</FormLabel>
+        <FormLabel>Last Name</FormLabel>
         <FormInput type="text" />
       </FormInputContainer>
 
       <FormInputContainer>
-        <FormLabel>Email:</FormLabel>
+        <FormLabel>Email</FormLabel>
         <FormInput type="email"/>
       </FormInputContainer>
       

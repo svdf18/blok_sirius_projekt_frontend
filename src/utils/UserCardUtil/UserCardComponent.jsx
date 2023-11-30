@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import { useState } from "react";
-
-import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText } from "./UserCardElements";
+import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText, ButtonCardContainer } from "./UserCardElements";
 import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 
-const UserCard = ({ user, showButtons, onDelete, onUpdate }) => {
+const UserCard = ({ user, onDelete, onUpdate }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleCardClick = () => {
@@ -20,12 +19,7 @@ const UserCard = ({ user, showButtons, onDelete, onUpdate }) => {
       <UserCardSubtitle>{user.user_type}</UserCardSubtitle>
       <UserCardText>Email: {user.email}</UserCardText>
   
-      {showButtons && (
-        <>
-          <DeleteButtonComponent onDelete={onDelete} itemId={user.user_id} />
-          <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} />
-        </>
-      )}
+ 
   
       {expanded && (
         <>
@@ -34,6 +28,10 @@ const UserCard = ({ user, showButtons, onDelete, onUpdate }) => {
           <UserCardText>
             Address: {user.street}, {user.postal_code}
           </UserCardText>
+          <ButtonCardContainer>
+          <DeleteButtonComponent onDelete={onDelete} itemId={user.user_id} />
+          <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} />
+          </ButtonCardContainer>
         </>
       )}
     </UserCardContainer>
@@ -52,7 +50,6 @@ UserCard.propTypes = {
     postal_code: PropTypes.number.isRequired,
     user_type: PropTypes.string.isRequired,
   }).isRequired,
-  showButtons: PropTypes.bool,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
