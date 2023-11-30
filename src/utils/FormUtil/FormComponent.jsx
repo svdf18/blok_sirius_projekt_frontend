@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel } from "./FormElements";
 import PropTypes from 'prop-types';
+import { updateUser } from "../../api/UserApis";
 
 const Form = ({ userToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
@@ -42,25 +42,17 @@ Form.propTypes = {
   };
 
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      console.log(form);
-      onSubmit(form);
-    } catch (error) {
-      console.error("Error:", error.message);
-      if (axios.isAxiosError(error)) {
-        console.error(
-          "Axios Error:",
-          error.response.status,
-          error.response.data
-        );
-      } else {
-        console.error("Non-Axios Error:", error.message);
-      }
-    }
-  };
+  try {
+    console.log(form);
+    const updatedUser = await updateUser(form);
+    onSubmit(updatedUser);
+  } catch (error) {
+    console.error("Error submitting form:", error.message);
+  }
+};
 
   return (
     <FormContainer onSubmit={handleSubmit}>
