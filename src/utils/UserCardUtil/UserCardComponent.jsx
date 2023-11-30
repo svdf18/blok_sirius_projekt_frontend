@@ -30,7 +30,7 @@ const UserCard = ({ user, onUpdate }) => {
           itemId={user.user_id}
           itemType="user"
         />
-        <UpdateButtonComponent onUpdateButton={onUpdate} itemId={user.user_id} itemProps={user} />
+        <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} itemProps={user} />
       </ButtonCardContainer>
     </UserCardContainer>
   );

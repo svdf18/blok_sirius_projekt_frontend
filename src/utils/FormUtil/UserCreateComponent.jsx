@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel } from "./FormElements";
 import PropTypes from 'prop-types';
-import { updateUser } from "../../api/UserApis";
+import { postUser } from "../../api/UserApis";
 
-const Form = ({ userToUpdate, onSubmit }) => {
+const CreateUserForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -16,24 +16,6 @@ const Form = ({ userToUpdate, onSubmit }) => {
     user_image: "",
   });
 
-
-Form.propTypes = {
-  userToUpdate: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    birthdate: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
-    street: PropTypes.string.isRequired,
-    postal_code: PropTypes.number.isRequired,
-    user_type: PropTypes.string.isRequired,
-    user_image: PropTypes.arrayOf(PropTypes.number),   
-  }),
-  onSubmit: PropTypes.func.isRequired,
-};
-  
-  useEffect(() => {if (userToUpdate) { setForm(userToUpdate)}}, [userToUpdate]);
-
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -41,22 +23,32 @@ Form.propTypes = {
     });
   };
 
-  
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    console.log(form);
-    const updatedUser = await updateUser(form);
-    onSubmit(updatedUser);
-  } catch (error) {
-    console.error("Error submitting form:", error.message);
-  }
-};
+    try {
+      const newUser = await postUser(form);
+      onSubmit(newUser);
+
+      setForm({
+        first_name: "",
+        last_name: "",
+        birthdate: "",
+        email: "",
+        phone: "",
+        street: "",
+        postal_code: "",
+        user_type: "",
+        user_image: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error.message);
+    }
+  };
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <FormTitle>{userToUpdate ? "Update User" : "Create User"}</FormTitle>
+      <FormTitle>{"Create User"}</FormTitle>
 
       <FormInputContainer>
         <FormLabel>First Name</FormLabel>
@@ -157,10 +149,13 @@ const handleSubmit = async (e) => {
       />
     </FormInputContainer>
 
-
-      <button type="submit">{userToUpdate ? "Update" : "Submit"}</button>
+    <button type="submit">Submit</button>
     </FormContainer>
   );
 };
 
-export default Form;
+CreateUserForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default CreateUserForm;

@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { FaPen } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const UpdateButtonComponent = ({ onUpdate, itemId, itemType, buttonText, itemProps, ...restProps }) => {
+export const UpdateButtonComponent = ({ onUpdate, itemId, buttonText, itemProps, ...restProps }) => {
   const handleClick = () => {
-    onUpdate(itemId, itemType, itemProps);
+    onUpdate(itemId, itemProps);
   };
 
   return (
@@ -17,7 +17,6 @@ export const UpdateButtonComponent = ({ onUpdate, itemId, itemType, buttonText, 
 UpdateButtonComponent.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   itemId: PropTypes.number.isRequired,
-  itemType: PropTypes.string.isRequired,
   buttonText: PropTypes.string,
   itemProps: PropTypes.object,
 };
@@ -35,7 +34,6 @@ const StyledUpdateButton = styled.div`
   border-radius: 1.5rem;
   transition: all 300ms linear;
   cursor: pointer;
-
 
   &:hover {
     color: #2b2b2b;

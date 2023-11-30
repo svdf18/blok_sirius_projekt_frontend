@@ -11,7 +11,10 @@ export const FormContainer = styled.form`
   margin: 10px;
   background-color: #F7F7F7;
   width: 93%;
+  height: auto;
   position: relative;
+  max-height: 500px; // Set a max height for scrolling to kick in.
+  overflow-y: auto;
 `;
 
 export const FormInput = styled.input`
