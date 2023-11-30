@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx"
+import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx";
+import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx"; // Import your UpdateUserForm component
 import { getUsers } from './UserApis.jsx';
 import { useState, useEffect } from 'react';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const fetchUsers = async () => {
     try {
@@ -21,19 +23,35 @@ const UserList = () => {
 
     const intervalId = setInterval(() => {
       fetchUsers();
-    }, 1000); 
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleUpdateClick = (userId, userProps) => {
+    setSelectedUser({ userId, ...userProps });
+  };
+
+  const handleFormSubmit = async (updatedUser) => {
+    // Handle the form submit (e.g., update the user on the server)
+    console.log(updatedUser);
+    // Clear the selected user after the form is submitted
+    setSelectedUser(null);
+  };
+
   return (
     <>
       {users.map(user => (
-        <UserCard key={user.user_id} user={user} />
+        <div key={user.user_id}>
+          <UserCard user={user} onUpdate={handleUpdateClick} />
+          {selectedUser && selectedUser.userId === user.user_id && (
+            <UpdateUserForm userToUpdate={selectedUser} onSubmit={handleFormSubmit} />
+          )}
+        </div>
       ))}
     </>
   );
-}
+};
 
 UserList.propTypes = {
   users: PropTypes.arrayOf(
