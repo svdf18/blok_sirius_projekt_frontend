@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Modal from 'react-modal'
 import { FaTimes } from 'react-icons/fa';
 
-
 export const ModalContainer = styled(Modal)`
     display: block;
     position: relative;
