@@ -3,8 +3,36 @@ import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText, Butto
 import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 import { deleteUser } from '../../api/UserApis';
+import ModalComponent from '../ModalUtil/FormModalComponent';
+import UserUpdateForm from '../FormUtil/UserUpdateComponent';
+import { useState, useEffect } from 'react';
 
 const UserCard = ({ user, onUpdate }) => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+const openUpdateModal = () => {
+  console.log('Opening modal');
+  setSelectedUser(user);
+  setIsUpdateModalOpen(true);
+};
+
+  const closeUpdateModal = () => {
+    console.log('Closing modal');
+    console.log('Before - selectedUser:', selectedUser);
+    console.log('Before - isUpdateModalOpen:', isUpdateModalOpen);
+  
+    setSelectedUser(null);
+  };
+
+  useEffect(() => {
+    if (selectedUser === null) {
+      setIsUpdateModalOpen(false);
+    }
+  }, [selectedUser]);
+
+
+
 
   return (
     <UserCardContainer user_type={user.user_type} onClick={() => console.log("Card clicked")}>
@@ -23,7 +51,17 @@ const UserCard = ({ user, onUpdate }) => {
           itemId={user.user_id}
           itemType="user"
         />
-        <UpdateButtonComponent onUpdate={onUpdate} itemId={user.user_id} itemProps={user} />
+        <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={user.user_id} itemProps={user} />
+        <ModalComponent
+          isOpen={isUpdateModalOpen}
+          onRequestClose={closeUpdateModal}
+          formComponent={(props) => <UserUpdateForm userToUpdate={selectedUser} {...props} />}
+          onSubmit={(updatedUser) => {
+            console.log('Form submitted:', updatedUser);
+            onUpdate(updatedUser);
+            closeUpdateModal();
+          }}
+        />
       </ButtonCardContainer>
     </UserCardContainer>
   );

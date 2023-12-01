@@ -7,7 +7,6 @@ import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
 
 const AdminPeopleDirectorySection = () => {
   const menuItems = [
-    { title: 'Create User', formComponent: Form },
     { title: 'Create User', formComponent: CreateUser },
   ];
 
