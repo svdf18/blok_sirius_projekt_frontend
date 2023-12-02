@@ -1,43 +1,60 @@
-import PropTypes from 'prop-types';
 import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx";
-import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx"; // Import your UpdateUserForm component
+import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx";
 import { getUsers } from './UserApis.jsx';
 import { useState, useEffect } from 'react';
+import debounce from 'lodash/debounce';
+
+const useInterval = (callback, delay) => {
+  useEffect(() => {
+    const intervalId = setInterval(callback, delay);
+    return () => clearInterval(intervalId);
+  }, [callback, delay]);
+};
+
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchUsers = async () => {
     try {
       const data = await getUsers();
-      console.log('Data received:', data);
       setUsers(data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setError(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchUsers();
-
-    const intervalId = setInterval(() => {
-      fetchUsers();
-    }, 1000);
-
-    return () => clearInterval(intervalId);
   }, []);
+
+  const debouncedFetchUsers = debounce(fetchUsers, 1000);
+
+  useInterval(debouncedFetchUsers, 1000);
 
   const handleUpdateClick = (userId, userProps) => {
     setSelectedUser({ userId, ...userProps });
   };
 
   const handleFormSubmit = async (updatedUser) => {
-    // Handle the form submit (e.g., update the user on the server)
     console.log(updatedUser);
-    // Clear the selected user after the form is submitted
     setSelectedUser(null);
+    fetchUsers();
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <>
@@ -51,22 +68,6 @@ const UserList = () => {
       ))}
     </>
   );
-};
-
-UserList.propTypes = {
-  users: PropTypes.arrayOf(
-    PropTypes.shape({
-      user_id: PropTypes.number.isRequired,
-      first_name: PropTypes.string.isRequired,
-      last_name: PropTypes.string.isRequired,
-      birthdate: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-      street: PropTypes.string.isRequired,
-      postal_code: PropTypes.number.isRequired,
-      user_type: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default UserList;
