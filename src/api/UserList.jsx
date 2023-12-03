@@ -4,14 +4,6 @@ import { getUsers } from './UserApis.jsx';
 import { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 
-const useInterval = (callback, delay) => {
-  useEffect(() => {
-    const intervalId = setInterval(callback, delay);
-    return () => clearInterval(intervalId);
-  }, [callback, delay]);
-};
-
-
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -36,7 +28,13 @@ const UserList = () => {
 
   const debouncedFetchUsers = debounce(fetchUsers, 1000);
 
-  useInterval(debouncedFetchUsers, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      debouncedFetchUsers();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [debouncedFetchUsers]);
 
   const handleUpdateClick = (userId, userProps) => {
     setSelectedUser({ userId, ...userProps });
