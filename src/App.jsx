@@ -5,6 +5,8 @@ import PeopleDirectoryIndex from './pages/PeopleDirectoryIndex.jsx';
 import KnowledgeHubIndex from './pages/KnowledgeHubIndex.jsx';
 import AdminIndex from './pages/AdminIndex.jsx';
 import AdminPeopleDirectoryIndex from './pages/AdminPeopleDirectoryIndex.jsx'
+import RecommendationsIndex from './pages/RecommendationsIndex';
+
 
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeIndex />} />
         <Route path="/people-directory" element={<PeopleDirectoryIndex/>} />
+        <Route path="/recommendations" element={<RecommendationsIndex/>} />
         <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
         <Route path="/admin-dashboard" element={<AdminIndex/>} />
         <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />
