@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getRecommendations } from './RecommendationApis.jsx'; // Replace with the actual path to your recommendation model
+import { getRecommendations } from './RecommendationApis.jsx';
 import RecommendationCard from '../utils/RecommendationCardUtil/RecommendationCardComponent.jsx';
 
 const RecommendationList = () => {
