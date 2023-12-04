@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx";
-import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx"; // Import your UpdateUserForm component
+import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx";
 import { getUsers } from './UserApis.jsx';
 import { useState, useEffect } from 'react';
 
@@ -33,9 +33,7 @@ const UserList = () => {
   };
 
   const handleFormSubmit = async (updatedUser) => {
-    // Handle the form submit (e.g., update the user on the server)
     console.log(updatedUser);
-    // Clear the selected user after the form is submitted
     setSelectedUser(null);
   };
 
