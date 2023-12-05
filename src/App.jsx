@@ -7,8 +7,7 @@ import AdminIndex from './pages/AdminIndex.jsx';
 import AdminPeopleDirectoryIndex from './pages/AdminPeopleDirectoryIndex.jsx'
 import RecommendationsIndex from './pages/RecommendationsIndex';
 import AdminRecommendationsIndex from './pages/AdminRecommendationsIndex';
-
-
+import EventIndex from './pages/EventIndex.jsx';
 
 function App() {
   return (
@@ -17,6 +16,7 @@ function App() {
         <Route path="/" element={<HomeIndex />} />
         <Route path="/people-directory" element={<PeopleDirectoryIndex/>} />
         <Route path="/recommendations" element={<RecommendationsIndex/>} />
+        <Route path="/events-calendar" element={<EventIndex/>} />
         <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
         <Route path="/admin-dashboard" element={<AdminIndex/>} />
         <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />

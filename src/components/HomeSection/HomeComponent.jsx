@@ -20,9 +20,9 @@ const HomeSection = () => {
         <ActionMenuComponent/>
        
         <Card title="Recommendations"color="white" size="medium" linkPath="/recommendations" />
-        <Card title="Events & Calendar" color="green" size="medium" linkPath="/people-directory"/>
+        <Card title="Events & Calendar" color="green" size="medium" linkPath="/events-calendar"/>
         <Card title="" color="grey" size="small" linkPath="/people-directory" backgroundImage={SiriusPeople}/>
-        <Card title="Knowledge Hub" color="grey" size="large" linkPath="/people-directory" />
+        <Card title="Knowledge Hub" color="grey" size="large" linkPath="/knowledge-hub" />
         <Card title="Human Resources System" color="green" size="medium" linkPath="/people-directory" />
         <Card title="Learning & Development Community" color="white" size="medium" linkPath="/people-directory" />
         <Card title="People Directory" color="grey" size="large" linkPath="/people-directory"/>
