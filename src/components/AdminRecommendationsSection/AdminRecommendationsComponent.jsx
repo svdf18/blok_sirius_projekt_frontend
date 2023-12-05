@@ -1,31 +1,32 @@
 import GlobalStyle from "../../styles/globalStyles.jsx";
-import UserList from "../../api/UserList.jsx";
+import RecommendationList from "../../api/RecommendationsList.jsx";
 import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
-import CreateUserForm from "../../utils/FormUtil/UserCreateComponent.jsx";
 import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
+import CreateRecommendationForm from "../../utils/FormUtil/RecommendationCreateComponent.jsx";
 
-const AdminPeopleDirectorySection = () => {
+const AdminRecommendationsComponent = () => {
   const menuItems = [
-    { title: 'Create User', formComponent: CreateUserForm },
+    { title: 'Food', formComponent: CreateRecommendationForm },
+    { title: 'Cultural', formComponent: CreateRecommendationForm },
+    { title: 'Travel', formComponent: CreateRecommendationForm },
   ];
 
   return (
     <>
       <GlobalStyle backgroundColor="yellow" />
-      <DirectoryContainer id="admin-dashboard-people-directory" backgroundColor="yellow">
+      <DirectoryContainer id="admin-recommendations" backgroundColor="yellow">
         <DirectoryGridContainer>
           <ActionMenuGridContainer>
             <ActionMenuComponent menuItems={menuItems} />
           </ActionMenuGridContainer>
           <DirectoryGrid>
-            <UserList/>
+            <RecommendationList/>
           </DirectoryGrid>
         </DirectoryGridContainer>
       </DirectoryContainer>
-
+      
     </>
-  );
-};
+  )
+}
 
-export default AdminPeopleDirectorySection;
-
+export default AdminRecommendationsComponent

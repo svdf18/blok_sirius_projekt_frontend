@@ -17,7 +17,7 @@ const AdminSection = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
         <ActionMenuComponent></ActionMenuComponent>
-          <Card title="Manage Recommendations"color="white" size="medium" linkPath="/knowledge-hub"/>
+          <Card title="Manage Recommendations"color="white" size="medium" linkPath="/admin-recommendations"/>
           <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/people-directory"/>
           <Card title="" color="white" size="small" linkPath="/people-directory" backgroundImage={SiriusDecor}/>
           <Card title="Manage Knowledge Hub" color="grey" size="large" linkPath="/people-directory" />

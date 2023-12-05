@@ -1,53 +1,72 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { getRecommendations } from './RecommendationApis.jsx'; // Replace with the actual path to your recommendation model
+import { getRecommendations } from './RecommendationApis.jsx';
 import RecommendationCard from '../utils/RecommendationCardUtil/RecommendationCardComponent.jsx';
+import UpdateRecommendationForm from '../utils/FormUtil/RecommendationUpdateComponent.jsx';
 
 const RecommendationList = () => {
   const [recommendations, setRecommendations] = useState([]);
-
-  const fetchRecommendations = async () => {
-    try {
-      const data = await getRecommendations();
-      console.log('Data received:', data);
-      setRecommendations(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const data = await getRecommendations();
+        const previousRecommendations = [...recommendations];
+
+        if (!areArraysEqual(previousRecommendations, data)) {
+          setRecommendations(data);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    const intervalId = setInterval(fetchRecommendations, 5000);
+
     fetchRecommendations();
 
-    const intervalId = setInterval(() => {
-      fetchRecommendations();
-    }, 1000);
-
     return () => clearInterval(intervalId);
-  }, []);
+  }, [recommendations]);
+
+  const handleUpdateClick = (recommendationId, recommendationProps) => {
+    setSelectedRecommendation({ recommendationId, ...recommendationProps });
+  };
+
+  const handleFormSubmit = async (updatedRecommendation) => {
+    console.log(updatedRecommendation);
+    setSelectedRecommendation(null);
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <>
       {recommendations.map(recommendation => (
         <div key={recommendation.recommendation_id}>
-          <RecommendationCard recommendation={recommendation}/>
+          <RecommendationCard recommendation={recommendation} onUpdate={handleUpdateClick} />
+          {selectedRecommendation && selectedRecommendation.recommendationId === recommendation.recommendation_id && (
+            <UpdateRecommendationForm recommendationToUpdate={selectedRecommendation} onSubmit={handleFormSubmit} />
+          )}
         </div>
       ))}
     </>
   );
 };
 
-RecommendationList.propTypes = {
-  recommendations: PropTypes.arrayOf(
-    PropTypes.shape({
-      recommendation_id: PropTypes.number.isRequired,
-      created_by_id: PropTypes.number.isRequired,
-      tagged_user_id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 export default RecommendationList;
+
+function areArraysEqual(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+}

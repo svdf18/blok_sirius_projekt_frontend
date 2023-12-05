@@ -29,8 +29,8 @@ export const DeleteButtonComponent = ({ deleteFunction, itemId, buttonText, item
       {isConfirmationOpen && (
         <ConfirmationDialog>
           <p>{`Are you sure you want to delete this ${itemType}?`}</p>
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={handleCloseConfirmation}>No</button>
+          <StyledDeleteButtonConfirm onClick={handleDelete}>Yes</StyledDeleteButtonConfirm>
+          <StyledDeleteButtonConfirm onClick={handleCloseConfirmation}>No</StyledDeleteButtonConfirm>
         </ConfirmationDialog>
       )}
     </>
@@ -41,7 +41,7 @@ DeleteButtonComponent.propTypes = {
   deleteFunction: PropTypes.func.isRequired,
   itemId: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
-  itemType: PropTypes.string.isRequired, // Added prop for item type
+  itemType: PropTypes.string.isRequired,
 };
 
 const StyledDeleteButton = styled.div`
@@ -71,14 +71,33 @@ const ConfirmationDialog = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  border-radius: 28px;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 30px;
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+`;
 
-  button {
-    margin-right: 10px;
+const StyledDeleteButtonConfirm = styled.div`
+  position: relative;
+  background-color: #C2DFD3;
+  border: none;
+  text-align: center;
+  border-radius: 28px;
+  font-size: large;
+  padding: 0.5rem;
+  margin: 1rem auto;
+  display: block;
+  width: ${({ adaptiveWidth }) => adaptiveWidth ? 'auto' : '30%'};
+  box-shadow: 0 0.5px 1px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
+  transition: 300ms linear;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2b2b2b;
+    color: #F7F7F7;
+    border-radius: 14px;
   }
 `;

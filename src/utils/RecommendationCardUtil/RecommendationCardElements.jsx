@@ -45,3 +45,9 @@ export const RecommendationCardText = styled.p`
   margin-bottom: 10px;
   color: inherit;
 `;
+
+export const ButtonCardContainer = styled.div`
+  display: flex;
+  position: relative;
+  margin-top: 3rem;
+`;

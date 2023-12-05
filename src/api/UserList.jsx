@@ -1,8 +1,7 @@
-import UserCard from "../utils/UserCardUtil/UserCardComponent.jsx";
-import UpdateUserForm from "../utils/FormUtil/UserUpdateComponent.jsx";
-import { getUsers } from './UserApis.jsx';
 import { useState, useEffect } from 'react';
-import debounce from 'lodash/debounce';
+import { getUsers } from './UserApis.jsx';
+import UserCard from '../utils/UserCardUtil/UserCardComponent.jsx';
+import UpdateUserForm from '../utils/FormUtil/UserUpdateComponent.jsx';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -10,31 +9,30 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchUsers = async () => {
-    try {
-      const data = await getUsers();
-      setUsers(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setError(error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getUsers();
+        const previousUsers = [...users];
+
+        if (!areArraysEqual(previousUsers, data)) {
+          setUsers(data);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    const intervalId = setInterval(fetchUsers, 2000);
+
     fetchUsers();
-  }, []);
-
-  const debouncedFetchUsers = debounce(fetchUsers, 1000);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      debouncedFetchUsers();
-    }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [debouncedFetchUsers]);
+  }, [users]);
 
   const handleUpdateClick = (userId, userProps) => {
     setSelectedUser({ userId, ...userProps });
@@ -43,7 +41,6 @@ const UserList = () => {
   const handleFormSubmit = async (updatedUser) => {
     console.log(updatedUser);
     setSelectedUser(null);
-    fetchUsers();
   };
 
   if (loading) {
@@ -69,3 +66,7 @@ const UserList = () => {
 };
 
 export default UserList;
+
+function areArraysEqual(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+}

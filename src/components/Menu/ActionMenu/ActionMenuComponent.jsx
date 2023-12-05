@@ -41,6 +41,7 @@ const ActionMenuComponent = ({ menuItems = [], toggle }) => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         formComponent={selectedMenuItem?.formComponent}
+        title={selectedMenuItem?.title}
         onSubmit={(formData) => {
           console.log('Form data:', formData);
           closeModal();

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel } from "./FormElements";
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
 import PropTypes from 'prop-types';
 import { updateUser } from "../../api/UserApis";
 
@@ -143,7 +143,7 @@ import { updateUser } from "../../api/UserApis";
       />
     </FormInputContainer>
 
-      <button type="submit">Update</button>
+      <SubmitButton type="submit">Submit</SubmitButton>
     </FormContainer>
   );
 };

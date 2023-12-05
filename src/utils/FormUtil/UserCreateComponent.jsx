@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel } from "./FormElements";
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
 import PropTypes from 'prop-types';
 import { postUser } from "../../api/UserApis";
 
@@ -149,7 +149,7 @@ const CreateUserForm = ({ onSubmit }) => {
       />
     </FormInputContainer>
 
-    <button type="submit">Submit</button>
+    <SubmitButton type="submit">Submit</SubmitButton>
     </FormContainer>
   );
 };
