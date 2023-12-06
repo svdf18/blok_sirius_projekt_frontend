@@ -30,6 +30,12 @@ const SignInComponent = () => {
           .then(response => {
             console.log('Email sent to backend:', response.data);
             login(response.data.user);
+
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            login(response.data.user);
+
+            setEmail('');
+            setPassword('');
           })
           .catch(error => {
             console.error('Error sending email to backend:', error.message);

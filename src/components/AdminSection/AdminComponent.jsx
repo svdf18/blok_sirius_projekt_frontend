@@ -12,7 +12,15 @@ const AdminSection = () => {
   const isAdmin = user && user.user_type === 'admin';
 
   //render nav and buttons to lead user back to main
-  if (!isAdmin) {
+  if (!user) {
+    // No user is logged in
+    return (
+      <div>
+        <p>Please log in to access this page.</p>
+      </div>
+    );
+  } else if (!isAdmin) {
+    // Logged-in user does not have admin privileges
     return (
       <div>
         <p>Unauthorized access. Please log in with an admin account.</p>
