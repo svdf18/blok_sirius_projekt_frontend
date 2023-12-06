@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
+import "react-datepicker/dist/react-datepicker.css";
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton, StyledDatePicker } from "./FormElements";
 import PropTypes from 'prop-types';
 import { updateUser } from "../../api/UserApis";
 
@@ -7,7 +8,7 @@ import { updateUser } from "../../api/UserApis";
     const [form, setForm] = useState({
       first_name: "",
       last_name: "",
-      birthdate: "",
+      birthdate: null,
       email: "",
       phone: "",
       street: "",
@@ -16,29 +17,55 @@ import { updateUser } from "../../api/UserApis";
       user_image: "",
     });
   
-    useEffect(() => {
-      if (userToUpdate) {
-        setForm(userToUpdate);
-      }
-    }, [userToUpdate]);
+
+
+
+  useEffect(() => {
+    if (userToUpdate) {
+      const formattedBirthdate = new Date(userToUpdate.birthdate);
+      setForm({
+        ...userToUpdate,
+        birthdate: formattedBirthdate,
+      });
+    }
+  }, [userToUpdate]);
   
-    const handleChange = (e) => {
+const handleChange = (date) => {
+  if (date instanceof Date && !isNaN(date.getTime())) {
+    setForm({
+      ...form,
+      birthdate: date,
+    });
+  } 
+  else if (typeof date === 'string') {
+    const parsedDate = new Date(date);
+    
+    if (!isNaN(parsedDate.getTime())) {
       setForm({
         ...form,
-        [e.target.name]: e.target.value,
+        birthdate: parsedDate,
       });
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        const updatedUser = await updateUser(form);
-        onSubmit(updatedUser);
-      } catch (error) {
-        console.error("Error submitting form:", error.message);
-      }
-    };
+    } 
+    else {
+      console.error("Invalid date selected");
+    }
+  } else {
+    console.error("Invalid date selected");
+  }
+};
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const formattedDate = form.birthdate && form.birthdate.toISOString().split('T')[0];
+    const updatedUser = await updateUser({ ...form, birthdate: formattedDate });
+    onSubmit(updatedUser);
+  } catch (error) {
+    console.error("Error submitting form:", error.message);
+  }
+};
 
   return (
     <FormContainer onSubmit={handleSubmit}>
@@ -68,12 +95,10 @@ import { updateUser } from "../../api/UserApis";
 
     <FormInputContainer>
       <FormLabel>Birth Date</FormLabel>
-      <FormInput
-        type="date"
+      <StyledDatePicker
+        selected={form.birthdate}
         onChange={handleChange}
-        name="birthdate"
-        placeholder="Birth date"
-        value={form.birthdate}
+        dateFormat="dd/MM/yyyy"
       />
     </FormInputContainer>
 

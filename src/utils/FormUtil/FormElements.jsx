@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {FaCheckCircle} from 'react-icons/fa';
+import DatePicker from "react-datepicker";
 
 export const FormContainer = styled.form`
   display: flex;
@@ -17,7 +18,7 @@ export const FormContainer = styled.form`
   overflow-y: auto;
 `;
 
-export const FormInput = styled.input`
+const commonInputStyles = `
   padding: 10px;
   border: none;
   background: #C2DFD3;
@@ -26,6 +27,15 @@ export const FormInput = styled.input`
   color: inherit;
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
+  width: 97%
+`;
+
+export const FormInput = styled.input`
+  ${commonInputStyles}
+`;
+
+export const StyledDatePicker = styled(DatePicker)`
+  ${commonInputStyles}
 `;
 
 export const FormTitle = styled.h2`
