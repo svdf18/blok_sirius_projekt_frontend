@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton, StyledDatePicker } from "./FormElements";
 import PropTypes from 'prop-types';
 import { postUser } from "../../api/UserApis";
+import { formatDateBackend } from "../DateUtil/FormatDateComponent";
 
 const CreateUserForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
-    birthdate: "",
+    birthdate: null,
     email: "",
     phone: "",
     street: "",
@@ -16,35 +17,47 @@ const CreateUserForm = ({ onSubmit }) => {
     user_image: "",
   });
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name === "birthdate") {
+    const dateValue = typeof value === 'string' ? formatDateBackend(value) : value;
+
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [name]: dateValue,
     });
-  };
+  } else {
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  }
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const newUser = await postUser(form);
-      onSubmit(newUser);
+  try {
+    const formattedDate = form.birthdate && form.birthdate.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    const newUser = await postUser({ ...form, birthdate: formattedDate });
+    onSubmit(newUser);
 
-      setForm({
-        first_name: "",
-        last_name: "",
-        birthdate: "",
-        email: "",
-        phone: "",
-        street: "",
-        postal_code: "",
-        user_type: "",
-        user_image: "",
-      });
-    } catch (error) {
-      console.error("Error submitting form:", error.message);
-    }
-  };
+    setForm({
+      first_name: "",
+      last_name: "",
+      birthdate: null,
+      email: "",
+      phone: "",
+      street: "",
+      postal_code: "",
+      user_type: "",
+      user_image: "",
+    });
+  } catch (error) {
+    console.error("Error submitting form:", error.message);
+  }
+};
 
   return (
     <FormContainer onSubmit={handleSubmit}>
@@ -74,13 +87,12 @@ const CreateUserForm = ({ onSubmit }) => {
 
     <FormInputContainer>
       <FormLabel>Birth Date</FormLabel>
-      <FormInput
-        type="date"
-        onChange={handleChange}
-        name="birthdate"
-        placeholder="Birth date"
-        value={form.birthdate}
-      />
+        <StyledDatePicker
+          selected={form.birthdate}
+          onChange={(date) => handleChange({ target: { name: 'birthdate', value: date } })}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="DD/MM/YYYY"
+        />
     </FormInputContainer>
 
     <FormInputContainer>

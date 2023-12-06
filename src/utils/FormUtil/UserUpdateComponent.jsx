@@ -16,13 +16,12 @@ import { updateUser } from "../../api/UserApis";
       user_type: "",
       user_image: "",
     });
-  
-
-
 
   useEffect(() => {
     if (userToUpdate) {
+      console.log(userToUpdate.birthdate);
       const formattedBirthdate = new Date(userToUpdate.birthdate);
+      console.log(formattedBirthdate);
       setForm({
         ...userToUpdate,
         birthdate: formattedBirthdate,
@@ -38,8 +37,9 @@ const handleChange = (date) => {
     });
   } 
   else if (typeof date === 'string') {
+    console.log(date);
     const parsedDate = new Date(date);
-    
+    console.log(parsedDate);
     if (!isNaN(parsedDate.getTime())) {
       setForm({
         ...form,
@@ -59,7 +59,9 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const formattedDate = form.birthdate && form.birthdate.toISOString().split('T')[0];
+    console.log(form.birthdate);
+    const formattedDate = form.birthdate && form.birthdate.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    console.log(formattedDate);
     const updatedUser = await updateUser({ ...form, birthdate: formattedDate });
     onSubmit(updatedUser);
   } catch (error) {

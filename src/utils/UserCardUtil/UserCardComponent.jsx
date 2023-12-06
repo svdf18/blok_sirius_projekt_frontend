@@ -6,7 +6,7 @@ import { deleteUser } from '../../api/UserApis';
 import ModalComponent from '../ModalUtil/FormModalComponent';
 import UserUpdateForm from '../FormUtil/UserUpdateComponent';
 import { useState, useEffect } from 'react';
-import { formatDate } from '../DateUtil/FormatDateComponent';
+import { formatDateFrontend } from '../DateUtil/FormatDateComponent';
 
 const UserCard = ({ user, onUpdate }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -38,7 +38,7 @@ const openUpdateModal = () => {
       <UserCardSubtitle>{user.user_type}</UserCardSubtitle>
       <UserCardText>Email: {user.email}</UserCardText>
       <UserCardText>Phone: {user.phone}</UserCardText>
-      <UserCardText>Birthdate: {formatDate(user.birthdate)}</UserCardText>
+      <UserCardText>Birthdate: {formatDateFrontend(user.birthdate)}</UserCardText>
       <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
       <ButtonCardContainer>
         <DeleteButtonComponent
