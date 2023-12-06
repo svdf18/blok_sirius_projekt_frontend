@@ -28,8 +28,19 @@ import { updateUser } from "../../api/UserApis";
       });
     }
   }, [userToUpdate]);
+
+
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+  setForm({
+    ...form,
+    [name]: value,
+  });
+};
+
   
-const handleChange = (date) => {
+const handleDateChange = (date) => {
+  console.log("New date:", date);
   if (date instanceof Date && !isNaN(date.getTime())) {
     setForm({
       ...form,
@@ -99,7 +110,7 @@ const handleSubmit = async (e) => {
       <FormLabel>Birth Date</FormLabel>
       <StyledDatePicker
         selected={form.birthdate}
-        onChange={handleChange}
+        onChange={handleDateChange}
         dateFormat="dd/MM/yyyy"
       />
     </FormInputContainer>
