@@ -2,7 +2,7 @@ import { useState } from 'react';
 import GlobalStyle from '../../styles/globalStyles';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { EventContainer, EventContainerGrid, ActionMenuGridContainer, CalendarContainer, TodayContainer, UpcomingContainer, breakpointColumnsObj } from './EventElements';
+import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from './EventElements';
 import { useEventList } from '../../api/EventList';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import DateSection from './DateSection.jsx';
@@ -25,15 +25,8 @@ const EventSection = () => {
       <GlobalStyle />
 
       <EventContainer>
-        <EventContainerGrid
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          <ActionMenuGridContainer>
+        <EventContainerGrid>
             <ActionMenuComponent />
-          </ActionMenuGridContainer>
-
           {/* Today / Date click */}
           <TodayContainer>
             <DateSection

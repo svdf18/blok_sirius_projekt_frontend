@@ -4,7 +4,6 @@ import Card from '../../utils/CardUtil/CardComponent.jsx';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import SiriusPeople from '../../assets/sirius_people.jpeg'
 
-
 const HomeSection = () => {
 
   

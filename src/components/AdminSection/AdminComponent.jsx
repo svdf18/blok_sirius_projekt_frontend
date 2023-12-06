@@ -3,10 +3,22 @@ import GlobalStyle from '../../styles/globalStyles.jsx';
 import Card from '../../utils/CardUtil/CardComponent.jsx';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import SiriusDecor from '../../assets/sirius_decor.jpeg'
+import { useUser } from '../../services/Auth/UserContext.jsx';
 
 
 const AdminSection = () => {
+  const { user } = useUser();
 
+  const isAdmin = user && user.user_type === 'admin';
+
+  //render nav and buttons to lead user back to main
+  if (!isAdmin) {
+    return (
+      <div>
+        <p>Unauthorized access. Please log in with an admin account.</p>
+      </div>
+    );
+  }
   
   return (
     <>
