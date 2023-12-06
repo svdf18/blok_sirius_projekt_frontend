@@ -9,6 +9,7 @@ import RecommendationsIndex from './pages/RecommendationsIndex';
 import AdminRecommendationsIndex from './pages/AdminRecommendationsIndex';
 import EventIndex from './pages/EventIndex.jsx';
 import { UserProvider } from './services/Auth/UserContext';
+import UserProfileIndex from './pages/UserProfileIndex';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/recommendations" element={<RecommendationsIndex/>} />
         <Route path="/events-calendar" element={<EventIndex/>} />
         <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
+        <Route path="/user-profile" element={<UserProfileIndex/>} />
         <Route path="/admin-dashboard" element={<AdminIndex/>} />
         <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />
         <Route path="/admin-recommendations" element={<AdminRecommendationsIndex/>} />
