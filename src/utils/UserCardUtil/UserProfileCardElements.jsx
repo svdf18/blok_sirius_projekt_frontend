@@ -69,3 +69,7 @@ export const UserProfileCardText = styled.p`
   margin-bottom: 10px;
   color: inherit;
 `;
+
+export const UserProfileCardLoading = styled.h1`
+  
+`

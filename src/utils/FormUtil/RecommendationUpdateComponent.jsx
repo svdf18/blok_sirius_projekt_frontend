@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
 import PropTypes from 'prop-types';
-import { updateRecommendation } from '../../api/RecommendationApis';
 import Select from 'react-select';
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
+import { updateRecommendation } from '../../api/RecommendationApis';
 import { getUsers } from '../../api/UserApis';
+import { useUser } from '../../services/Auth/UserContext';
 
 const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
@@ -12,8 +13,8 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
     category: '',
     tagged_user: null,
   });
-
   const [users, setUsers] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
     if (recommendationToUpdate) {
@@ -63,11 +64,24 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
     e.preventDefault();
 
     try {
-      const updatedRecommendation = await updateRecommendation(form);
+      // Update created_by_id with user_id from useUser hook
+      const updatedForm = {
+        ...form,
+        created_by_id: user?.user_id || '',
+      };
+
+      // Call the API with the updated form data
+      await updateRecommendation(updatedForm);
+
+      // Prepare the updated recommendation object to pass to onSubmit
+      const updatedRecommendation = { ...updatedForm };
+
+      // Call the onSubmit function with the updated recommendation
       onSubmit(updatedRecommendation);
 
       console.log('Updated Recommendation:', updatedRecommendation);
 
+      // Clear the form
       setForm({
         title: '',
         content: '',

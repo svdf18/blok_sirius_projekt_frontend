@@ -1,23 +1,24 @@
-// useSignOut.js
 import { useState } from 'react';
 import { auth } from '../firebase.js';
 import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../Services/Auth/UserContext'; 
 
 const useSignOut = () => {
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate();
+  const { logout } = useUser();
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
 
-      // Additional cleanup tasks
-      // Redirect to the homepage
-      navigate('/'); // Use navigate instead of history.push
+      localStorage.removeItem('user');
+      logout();
 
-      // You may also want to clear/reset other states here
-
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     } catch (error) {
       console.error('Error signing out:', error.message);
       setError(error.message);

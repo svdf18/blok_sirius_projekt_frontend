@@ -1,14 +1,23 @@
+import { useState } from 'react';
 import { useUser } from '../../services/Auth/UserContext';
 import {
   UserProfileCardContainer,
   UserProfileCardTitle,
   UserProfileCardText,
+  UserProfileCardLoading,
 } from './UserProfileCardElements';
 import useSignOut from '../../hooks/useSignOut';
 
 const UserProfileCardComponent = () => {
   const { user } = useUser();
-  const { handleSignOut, error } = useSignOut();
+  const { handleSignOut } = useSignOut();
+  const [loading, setLoading] = useState(false);
+
+  const handleSignOutWithLoading = async () => {
+    setLoading(true);
+    await handleSignOut();
+    setLoading(false);
+  };
 
   return (
     <UserProfileCardContainer user_type={user?.user_type}>
@@ -22,7 +31,11 @@ const UserProfileCardComponent = () => {
           <UserProfileCardText>Street: {user.street}</UserProfileCardText>
           <UserProfileCardText>Postal Code: {user.postal_code}</UserProfileCardText>
           <UserProfileCardText>User Type: {user.user_type}</UserProfileCardText>
-          <button onClick={handleSignOut}>Sign Out</button>
+          {loading ? (
+            <UserProfileCardLoading>Signing Out...</UserProfileCardLoading>
+          ) : (
+            <button onClick={handleSignOutWithLoading}>Sign Out</button>
+          )}
         </div>
       ) : (
         <UserProfileCardText>User not logged in</UserProfileCardText>
