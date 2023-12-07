@@ -8,6 +8,7 @@ import AdminPeopleDirectoryIndex from './pages/AdminPeopleDirectoryIndex.jsx'
 import RecommendationsIndex from './pages/RecommendationsIndex';
 import AdminRecommendationsIndex from './pages/AdminRecommendationsIndex';
 import EventIndex from './pages/EventIndex.jsx';
+import AdminEventIndex from './pages/AdminEventIndex.jsx';
 import { UserProvider } from './services/Auth/UserContext';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminIndex/>} />
         <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />
         <Route path="/admin-recommendations" element={<AdminRecommendationsIndex/>} />
+        <Route path="/admin-events-calendar" element={<AdminEventIndex/>} />
       </Routes>
     </Router>
   </UserProvider>

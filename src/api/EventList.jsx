@@ -27,5 +27,3 @@ export const useEventList = () => {
 
   return { date, setDate, upcomingEvents, todayEvents };
 };
-
-

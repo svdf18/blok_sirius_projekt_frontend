@@ -27,7 +27,6 @@ const EventSection = () => {
       <EventContainer>
         <EventContainerGrid>
             <ActionMenuComponent />
-          {/* Today / Date click */}
           <TodayContainer>
             <DateSection
               selectedEvent={selectedEvent}
@@ -36,7 +35,6 @@ const EventSection = () => {
             />
           </TodayContainer>
 
-          {/* Calendar with events */}
           <CalendarContainer>
             <Calendar onChange={setDate} value={date} />
           </CalendarContainer>
