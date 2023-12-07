@@ -73,3 +73,25 @@ export const UserProfileCardText = styled.p`
 export const UserProfileCardLoading = styled.h1`
   
 `
+
+export const LogSubmitButton = styled.button`
+  position: relative;
+  background-color: #f7f7f7;
+  border: none;
+  border-radius: 28px;
+  font-size: large;
+  padding: 1rem;
+  font-weight: bold;
+  margin: 1rem auto;
+  display: block;
+  width: ${({ adaptiveWidth }) => adaptiveWidth ? 'auto' : '30%'};
+  box-shadow: 0 0.5px 1px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
+  transition: 300ms linear;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2b2b2b;
+    color: #F7F7F7;
+    border-radius: 14px;
+  }
+`;

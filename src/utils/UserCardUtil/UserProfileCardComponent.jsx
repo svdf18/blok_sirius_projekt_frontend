@@ -5,6 +5,8 @@ import {
   UserProfileCardTitle,
   UserProfileCardText,
   UserProfileCardLoading,
+  LogSubmitButton,
+  UserProfileCardSubtitle
 } from './UserProfileCardElements';
 import useSignOut from '../../hooks/useSignOut';
 
@@ -21,20 +23,19 @@ const UserProfileCardComponent = () => {
 
   return (
     <UserProfileCardContainer user_type={user?.user_type}>
-      <UserProfileCardTitle>User Information</UserProfileCardTitle>
+      <UserProfileCardTitle>{user.first_name} {user.last_name}</UserProfileCardTitle>
       {user ? (
         <div>
-          <UserProfileCardText>First Name: {user.first_name}</UserProfileCardText>
-          <UserProfileCardText>Last Name: {user.last_name}</UserProfileCardText>
+          <UserProfileCardSubtitle>{user.user_type}</UserProfileCardSubtitle>
           <UserProfileCardText>Email: {user.email}</UserProfileCardText>
           <UserProfileCardText>Phone: {user.phone}</UserProfileCardText>
           <UserProfileCardText>Street: {user.street}</UserProfileCardText>
           <UserProfileCardText>Postal Code: {user.postal_code}</UserProfileCardText>
-          <UserProfileCardText>User Type: {user.user_type}</UserProfileCardText>
+          
           {loading ? (
             <UserProfileCardLoading>Signing Out...</UserProfileCardLoading>
           ) : (
-            <button onClick={handleSignOutWithLoading}>Sign Out</button>
+            <LogSubmitButton onClick={handleSignOutWithLoading}>Sign Out</LogSubmitButton>
           )}
         </div>
       ) : (

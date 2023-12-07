@@ -22,6 +22,8 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
     }
   }, [recommendationToUpdate]);
 
+  
+
   useEffect(() => {
     const loadUsers = async () => {
       try {
@@ -69,19 +71,11 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
         ...form,
         created_by_id: user?.user_id || '',
       };
-
-      // Call the API with the updated form data
       await updateRecommendation(updatedForm);
-
-      // Prepare the updated recommendation object to pass to onSubmit
       const updatedRecommendation = { ...updatedForm };
-
-      // Call the onSubmit function with the updated recommendation
       onSubmit(updatedRecommendation);
-
       console.log('Updated Recommendation:', updatedRecommendation);
 
-      // Clear the form
       setForm({
         title: '',
         content: '',
@@ -157,7 +151,7 @@ UpdateRecommendationForm.propTypes = {
     tagged_user: PropTypes.object,
   }),
   onSubmit: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
 };
 
 export default UpdateRecommendationForm;

@@ -1,3 +1,4 @@
+import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const getColorByUserType = (userType) => {
@@ -69,3 +70,27 @@ export const UserCardText = styled.p`
   margin-bottom: 10px;
   color: inherit;
 `;
+
+export const UserCardIconLink = styled(FaPlus)`
+  position: relative;
+  display: flex;
+  left: 90%;
+  align-items: center;
+  justify-content: center;
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-bottom: 0.5rem;
+  background-color: #4F5E6A;
+  color: #4F5E6A;;
+  border-radius: 1.5rem;
+  transition: all 300ms linear;
+  background-color: #f7f7f7;
+
+  &:hover {
+    color: #C2DFD3;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(220, 198, 198, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
+    transform: scale(1.2);
+  }
+
+`
