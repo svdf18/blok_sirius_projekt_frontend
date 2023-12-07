@@ -94,7 +94,7 @@ export const CardIconLink = styled(Link)`
   height: 1.0rem;
   width: 1.0rem;
   margin-bottom: 0.5rem;
-  background-color: #4F5E6A;
+
   color: #C2DFD3;
   border-radius: 1.5rem;
   transition: all 300ms linear;
@@ -115,17 +115,31 @@ export const PlusIcon = styled(ICON_TYPES.plus)`
 `;
 
 export const BookIcon = styled(ICON_TYPES.book)`
+  background-color: #4F5E6A;
    transform: scale(1.5);
 `;
 
 export const GlobeIcon = styled(ICON_TYPES.globe)`
-   transform: scale(1.5);
+  background-color: #f7f7f7;
+  color: #4F5E6A;
+  transform: scale(1.5);
+
+  &:hover {
+    color: #2b2b2b;
+  }
 `;
 
 export const CalendarIcon = styled(ICON_TYPES.calendar)`
    transform: scale(1.5);
+   background-color: #C2DFD3;
+   color: #4F5E6A;
+
+   &:hover {
+    color: #2b2b2b;
+  }
 `;
 
 export const UsersIcon = styled(ICON_TYPES.users)`
-   transform: scale(1.5);
+  background-color: #4F5E6A;
+  transform: scale(1.5);
 `;

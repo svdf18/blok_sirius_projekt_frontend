@@ -77,14 +77,15 @@ export const UserCardIconLink = styled(FaPlus)`
   left: 90%;
   align-items: center;
   justify-content: center;
-  height: 1.2rem;
-  width: 1.2rem;
+  height: 1.0rem;
+  width: 1.0rem;
   margin-bottom: 0.5rem;
   background-color: #4F5E6A;
   color: #4F5E6A;;
   border-radius: 1.5rem;
   transition: all 300ms linear;
   background-color: #f7f7f7;
+  cursor: pointer;
 
   &:hover {
     color: #C2DFD3;

@@ -79,7 +79,7 @@ export const LogSubmitButton = styled.button`
   background-color: #f7f7f7;
   border: none;
   border-radius: 28px;
-  font-size: large;
+  font-size: medium;
   padding: 1rem;
   font-weight: bold;
   margin: 1rem auto;

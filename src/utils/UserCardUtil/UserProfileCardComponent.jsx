@@ -16,16 +16,19 @@ const UserProfileCardComponent = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSignOutWithLoading = async () => {
-    setLoading(true);
-    await handleSignOut();
-    setLoading(false);
+    try {
+      setLoading(true);
+      await handleSignOut();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <UserProfileCardContainer user_type={user?.user_type}>
-      <UserProfileCardTitle>{user.first_name} {user.last_name}</UserProfileCardTitle>
       {user ? (
         <div>
+          <UserProfileCardTitle>{user.first_name} {user.last_name}</UserProfileCardTitle>
           <UserProfileCardSubtitle>{user.user_type}</UserProfileCardSubtitle>
           <UserProfileCardText>Email: {user.email}</UserProfileCardText>
           <UserProfileCardText>Phone: {user.phone}</UserProfileCardText>
@@ -39,7 +42,7 @@ const UserProfileCardComponent = () => {
           )}
         </div>
       ) : (
-        <UserProfileCardText>User not logged in</UserProfileCardText>
+        <UserProfileCardTitle>User not logged in</UserProfileCardTitle>
       )}
     </UserProfileCardContainer>
   );
