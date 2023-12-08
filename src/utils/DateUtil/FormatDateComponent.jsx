@@ -17,7 +17,7 @@ export const formatTimeFrontend = (time) => {
   today.setHours(parseInt(hours, 10));
   today.setMinutes(parseInt(minutes, 10));
 
-  return today.toLocaleTimeString('dk-DK', { hour: '2-digit', minute: '2-digit' });
+  return today.toLocaleTimeString('dk-DK', { hour: '2-digit', minute: '2-digit', hour12: false });
 };
 
 export const formatTimeBackend = (timeString) => {

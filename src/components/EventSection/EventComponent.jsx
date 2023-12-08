@@ -1,24 +1,13 @@
-import { useState } from 'react';
 import GlobalStyle from '../../styles/globalStyles';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from './EventElements';
 import { ShowEvents } from '../../api/ShowEvents';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
-import DateSection from './DateSection.jsx';
-import UpcomingSection from './UpcomingSection.jsx';
+import EventList from '../../api/EventList.jsx';
 
 const EventSection = () => {
-  const { date, setDate, upcomingEvents, todayEvents } = ShowEvents();
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
-  const handleEventClick = (event) => {
-    setSelectedEvent(event);
-  };
-
-  const handleCloseDetailView = () => {
-    setSelectedEvent(null);
-  };
+  const { date, setDate} = ShowEvents();
 
   return (
     <>
@@ -26,13 +15,11 @@ const EventSection = () => {
 
       <EventContainer>
         <EventContainerGrid>
-            <ActionMenuComponent />
+
+          <ActionMenuComponent />
+
           <TodayContainer>
-            <DateSection
-              selectedEvent={selectedEvent}
-              handleEventClick={handleEventClick}
-              todayEvents={todayEvents}
-            />
+            <EventList/>
           </TodayContainer>
 
           <CalendarContainer>
@@ -40,14 +27,9 @@ const EventSection = () => {
           </CalendarContainer>
 
           <UpcomingContainer>
-            <UpcomingSection
-              selectedEvent={selectedEvent}
-              handleCloseDetailView={handleCloseDetailView}
-              handleEventClick={handleEventClick}
-              todayEvents={todayEvents}
-              upcomingEvents={upcomingEvents}
-            />
+            <EventList/>
           </UpcomingContainer>
+
         </EventContainerGrid>
       </EventContainer>
     </>

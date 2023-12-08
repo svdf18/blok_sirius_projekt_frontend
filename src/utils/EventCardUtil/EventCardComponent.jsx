@@ -1,55 +1,56 @@
 import PropTypes from 'prop-types';
-import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent';
+import { EventCardContainer, EventCardText, ButtonCardContainer, CardContentContainer } from './EventCardElements';
 import { UpdateButtonComponent } from '../../utils/ButtonUtil/UpdateButtonComponent';
 import { DeleteButtonComponent } from '../../utils/ButtonUtil/DeleteButtonComponent';
 import { deleteEvent } from '../../api/EventApis';
-import { useState, useEffect } from 'react';
 import ModalComponent from '../../utils/ModalUtil/FormModalComponent';
 import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
+import { useState, useEffect } from 'react';
+import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent';
 
 const EventCard = ({ event, onUpdate }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  const handleEventClick = (event) => {
-    setSelectedEvent(event);
-  };
-
   const openUpdateModal = () => {
-    console.log('Opening modal');
-    console.log('onUpdate:', onUpdate); // Log onUpdate here
+    console.log('onUpdate:', onUpdate);
+
     setSelectedEvent(event);
     setIsUpdateModalOpen(true);
   };
 
   const closeUpdateModal = () => {
     console.log('Closing modal');
-    console.log('onUpdate:', onUpdate); // Log onUpdate here
+    console.log('onUpdate:', onUpdate);
+
     setSelectedEvent(null);
   };
 
   useEffect(() => {
     if (selectedEvent === null) {
       setIsUpdateModalOpen(false);
-      console.log('Modal closed');
-      console.log('onUpdate:', onUpdate); // Log onUpdate here
     }
   }, [selectedEvent]);
 
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+  };
+
   return (
-    <>
-      <span onClick={() => handleEventClick(event)}>
-        {formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})
-      </span>
-        <DeleteButtonComponent
-          deleteFunction={() => {
-            console.log(`Deleting event with ID ${event.event_id}`);
-            deleteEvent(event.event_id);
+    <EventCardContainer onClick={() => handleEventClick(event)}>
+      <CardContentContainer>
+      <EventCardText>{formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
+          
+      <ButtonCardContainer>
+        <DeleteButtonComponent 
+          deleteFunction={(itemId) => {
+            console.log(`Deleting event with ID ${itemId}`);
+            deleteEvent(itemId);
           }}
           itemId={event.event_id}
           itemType="event"
         />
-        <UpdateButtonComponent onUpdate={openUpdateModal} itemId={event.event_id} itemProps={event} />
+        <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={event.event_id} itemProps={event} />
         <ModalComponent
           isOpen={isUpdateModalOpen}
           onRequestClose={closeUpdateModal}
@@ -59,8 +60,10 @@ const EventCard = ({ event, onUpdate }) => {
             onUpdate(updatedEvent);
             closeUpdateModal();
           }}
-        />
-    </>
+          />
+        </ButtonCardContainer>
+        </CardContentContainer>
+    </EventCardContainer>
   );
 };
 

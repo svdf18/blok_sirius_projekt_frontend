@@ -3,7 +3,7 @@ import { getEvents } from './EventApis.jsx';
 import EventCard from '../utils/EventCardUtil/EventCardComponent';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
 
-export const EventList = () => {
+const EventList = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,12 +13,12 @@ useEffect(() => {
   const fetchEvents = async () => {
     try {
       const data = await getEvents();
-      setEvents((previousEvents) => {
-        if (!areArraysEqual(previousEvents, data)) {
-          return data;
-        }
-        return previousEvents;
-      });
+      const previousEvents = [...events];
+
+      if (!areArraysEqual(previousEvents, data)) {
+        setEvents(data);
+      }
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -32,11 +32,11 @@ useEffect(() => {
   fetchEvents();
 
   return () => clearInterval(intervalId);
-}, []);
+}, [events]);
 
   const handleUpdateClick = (eventId, eventProps) => {
     console.log('handleUpdateClick called:', eventId, eventProps);
-    setSelectedEvent({ eventId: eventId, ...eventProps });
+    setSelectedEvent({ eventId, ...eventProps });
   };
 
   const handleFormSubmit = async (updatedEvent) => {
@@ -65,6 +65,8 @@ useEffect(() => {
     </>
   );
 };
+
+export default EventList;
 
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
