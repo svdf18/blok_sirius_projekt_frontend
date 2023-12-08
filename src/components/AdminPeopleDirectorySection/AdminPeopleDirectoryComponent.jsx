@@ -28,4 +28,3 @@ const AdminPeopleDirectorySection = () => {
 };
 
 export default AdminPeopleDirectorySection;
-

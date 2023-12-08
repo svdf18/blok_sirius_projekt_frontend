@@ -1,34 +1,60 @@
 import PropTypes from 'prop-types';
-import { useEventList } from '../../api/EventList';
-import { formatDateFrontend, formatTime } from '../../utils/DateUtil/FormatDateComponent';
-import { UpdateButtonComponent } from '../../utils/ButtonUtil/UpdateButtonComponent';
-import { DeleteButtonComponent } from '../../utils/ButtonUtil/DeleteButtonComponent';
-import { ButtonCardContainer } from '../../utils/UserCardUtil/UserCardElements';
-import ModalComponent from '../../utils/ModalUtil/FormModalComponent';
-import { deleteEvent } from '../../api/EventApis';
 import { useState, useEffect } from 'react';
+import { getEvents } from '../../api/EventApis';
+import { ShowEvents } from '../../api/ShowEvents';
+import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent'
+import EventCard from '../../utils/EventCardUtil/EventCardComponent';
 import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
 
-const UpcomingSection = ({ selectedEvent, handleCloseDetailView, handleEventClick, onUpdate}) => {
-  const { upcomingEvents } = useEventList();
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedEventModal, setSelectedEventModal] = useState(null);
+export const UpcomingSection = ({ handleCloseDetailView, handleEventClick, onUpdate }) => {
+  const { upcomingEvents } = ShowEvents();
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const openUpdateModal = () => {
-  console.log('Opening modal');
-  setSelectedEventModal(event);
-  setIsUpdateModalOpen(true);
-};
-
-  const closeUpdateModal = () => {
-    setSelectedEventModal(null);
+useEffect(() => {
+  const fetchEvents = async () => {
+    try {
+      const data = await getEvents();
+      setEvents((previousEvents) => {
+        if (!areArraysEqual(previousEvents, data)) {
+          return data;
+        }
+        return previousEvents;
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setError(error);
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    if (selectedEventModal === null) {
-      setIsUpdateModalOpen(false);
-    }
-  }, [selectedEventModal]);
+  const intervalId = setInterval(fetchEvents, 2000);
+
+  fetchEvents();
+
+  return () => clearInterval(intervalId);
+}, []);
+
+  const handleUpdateClick = (eventId, eventProps) => {
+    console.log('handleUpdateClick called:', eventId, eventProps);
+    setSelectedEvent({ eventId: eventId, ...eventProps });
+  };
+
+  const handleFormSubmit = async (updatedEvent) => {
+    console.log('handleFormSubmit called:', updatedEvent);
+    setSelectedEvent(null);
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
 
   return (
@@ -39,33 +65,13 @@ const openUpdateModal = () => {
         <>
           <h2>Upcoming Events</h2>
           <ul>
-            {upcomingEvents.map((event) => (
-              <li key={event.event_id}>
-                <span onClick={() => handleEventClick(event)}>
-                  {formatDateFrontend(event.date)} at {formatTime(event.start_time)} - {event.title} ({event.location})
-                </span>
-                      <ButtonCardContainer>
-        <DeleteButtonComponent
-          deleteFunction={(itemId) => {
-            console.log(`Deleting user with ID ${itemId}`);
-            deleteEvent(itemId);
-          }}
-          itemId={event.event_id}
-          itemType="event"
-        />
-        <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={event.event_id} itemProps={event} />
-        <ModalComponent
-          isOpen={isUpdateModalOpen}
-          onRequestClose={closeUpdateModal}
-          formComponent={(props) => <UpdateEventForm userToUpdate={selectedEvent} {...props} />}
-          onSubmit={(updatedEvent) => {
-            console.log('Form submitted:', updatedEvent);
-            onUpdate(updatedEvent);
-            closeUpdateModal();
-          }}
-        />
-      </ButtonCardContainer>
-              </li>
+            {events.map((event) => (
+            <li key={event.event_id}>
+              <EventCard event={event} onUpdate={handleUpdateClick} />
+              {selectedEvent && selectedEvent.eventId === event.event_id && (
+                <UpdateEventForm eventToUpdate={selectedEvent} onSubmit={handleFormSubmit} />
+              )}
+            </li>
             ))}
           </ul>
         </>
@@ -73,6 +79,10 @@ const openUpdateModal = () => {
     </div>
   );
 };
+
+function areArraysEqual(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
 
 UpcomingSection.propTypes = {
   selectedEvent: PropTypes.object,
@@ -88,8 +98,8 @@ const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <p>Title: {selectedEvent.title}</p>
       <p>Description: {selectedEvent.description}</p>
       <p>Date: {formatDateFrontend(selectedEvent.date)}</p>
-      <p>Begins at: {formatTime(selectedEvent.start_time)}</p>
-      <p>Ends at: {formatTime(selectedEvent.end_time)}</p>
+      <p>Begins at: {formatTimeFrontend(selectedEvent.start_time)}</p>
+      <p>Ends at: {formatTimeFrontend(selectedEvent.end_time)}</p>
       <p>Location: {selectedEvent.location}</p>
       <button onClick={handleCloseDetailView}>Close</button>
     </div>

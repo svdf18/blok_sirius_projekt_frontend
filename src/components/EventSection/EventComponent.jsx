@@ -3,13 +3,13 @@ import GlobalStyle from '../../styles/globalStyles';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from './EventElements';
-import { useEventList } from '../../api/EventList';
+import { ShowEvents } from '../../api/ShowEvents';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import DateSection from './DateSection.jsx';
 import UpcomingSection from './UpcomingSection.jsx';
 
 const EventSection = () => {
-  const { date, setDate, upcomingEvents, todayEvents } = useEventList();
+  const { date, setDate, upcomingEvents, todayEvents } = ShowEvents();
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleEventClick = (event) => {

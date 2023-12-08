@@ -11,14 +11,20 @@ export const formatDateBackend = (dateString) => {
   return new Date(`${year}-${month}-${day}`);
 };
 
-export const formatTime = (time) => {
-  const [hours, minutes] = time.split(':');
+export const formatTimeFrontend = (time) => {
   const today = new Date();
+  const [hours, minutes] = time.split(':');
   today.setHours(parseInt(hours, 10));
   today.setMinutes(parseInt(minutes, 10));
 
-  const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-  const formattedTime = today.toLocaleTimeString('dk-DK', options);
+  return today.toLocaleTimeString('dk-DK', { hour: '2-digit', minute: '2-digit' });
+};
 
-  return formattedTime;
+export const formatTimeBackend = (timeString) => {
+  if (!timeString) {
+    return '';
+  }
+
+  const [hours, minutes] = timeString.split(':');
+  return { hours, minutes };
 };

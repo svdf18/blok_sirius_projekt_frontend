@@ -17,6 +17,8 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     location: "",
   });
 
+  console.log(eventToUpdate);
+
   useEffect(() => {
     if (eventToUpdate) {
       const formattedDate = new Date(eventToUpdate.date);
@@ -61,20 +63,21 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
-      const formattedAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
-      const formattedUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
+  try {
+    const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    const formattedAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    const formattedUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
 
-      const updatedEvent = await updateEvent({ ...form, date: formattedDate, deadline_attend: formattedAttend, deadline_unattend: formattedUnattend });
-      onSubmit(updatedEvent);
-    } catch (error) {
-      console.error("Error submitting form:", error.message);
-    }
-  };
+    const updatedEvent = await updateEvent({ ...form, event_id: eventToUpdate.event_id, date: formattedDate, deadline_attend: formattedAttend, deadline_unattend: formattedUnattend });
+     console.log('UpdateEventForm handleSubmit called:', updatedEvent);
+    onSubmit(updatedEvent);
+  } catch (error) {
+    console.error("Error submitting form:", error.message);
+  }
+};
 
   return (
     <FormContainer onSubmit={handleSubmit}>
@@ -170,6 +173,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
 
 UpdateEventForm.propTypes = {
   eventToUpdate: PropTypes.shape({
+    event_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     start_time: PropTypes.string,

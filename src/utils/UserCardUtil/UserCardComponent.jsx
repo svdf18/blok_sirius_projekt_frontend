@@ -4,7 +4,7 @@ import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 import { deleteUser } from '../../api/UserApis';
 import ModalComponent from '../ModalUtil/FormModalComponent';
-import UserUpdateForm from '../FormUtil/UserUpdateComponent';
+import UpdateUserForm from '../FormUtil/UserUpdateComponent';
 import { useState, useEffect } from 'react';
 import { formatDateFrontend } from '../DateUtil/FormatDateComponent';
 
@@ -53,7 +53,7 @@ const openUpdateModal = () => {
         <ModalComponent
           isOpen={isUpdateModalOpen}
           onRequestClose={closeUpdateModal}
-          formComponent={(props) => <UserUpdateForm userToUpdate={selectedUser} {...props} />}
+          formComponent={(props) => <UpdateUserForm userToUpdate={selectedUser} {...props} />}
           onSubmit={(updatedUser) => {
             console.log('Form submitted:', updatedUser);
             onUpdate(updatedUser);
