@@ -22,11 +22,12 @@ export const postUser = async (formData) => {
   }
 };
 
-export const deleteUser = async (userId) => {
+export const deleteUser = async (userToDeleteId, currentUserId) => {
   try {
-    await axios.delete(`${endpoint}/users/${userId}`);
+    // Pass both user_id to be deleted and the user_id of the user making the request
+    await axios.delete(`${endpoint}/users/${userToDeleteId}/${currentUserId}`);
   } catch (error) {
-    console.error(`Error deleting user with ID ${userId}:`, error.message);
+    console.error(`Error deleting user with ID ${userToDeleteId}:`, error.message);
     console.error("Error details:", error.response?.data);
     throw error;
   }

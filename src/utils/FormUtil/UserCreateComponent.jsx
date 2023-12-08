@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton, StyledDatePicker } from "./FormElements";
 import PropTypes from 'prop-types';
+import Select from 'react-select';
+import { getDepartments } from "../../api/DepartmentApi";
 import { postUser } from "../../api/UserApis";
+import { useUser } from '../../services/Auth/UserContext';
 import { formatDateBackend } from "../DateUtil/FormatDateComponent";
 
 const CreateUserForm = ({ onSubmit }) => {
+  const { user } = useUser();
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -15,7 +19,11 @@ const CreateUserForm = ({ onSubmit }) => {
     postal_code: "",
     user_type: "",
     user_image: "",
+    department: "",
+    created_by_id: user?.user_id || '',
   });
+
+  const [departments, setDepartments] = useState([]);
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -35,6 +43,22 @@ const handleChange = (e) => {
   }
 };
 
+useEffect(() => {
+  // Fetch departments when the component mounts
+  const fetchDepartments = async () => {
+    try {
+      const response = await getDepartments();
+      // Assuming the response is an array of objects with a 'department_name' property
+      const departmentOptions = response.map((department) => ({ value: department.department_name, label: department.department_name }));
+      setDepartments(departmentOptions);
+    } catch (error) {
+      console.error("Error fetching departments:", error.message);
+    }
+  };
+
+  fetchDepartments();
+}, []);
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -53,6 +77,8 @@ const handleSubmit = async (e) => {
       postal_code: "",
       user_type: "",
       user_image: "",
+      department: "",
+      created_by_id: user?.user_id || '',
     });
   } catch (error) {
     console.error("Error submitting form:", error.message);
@@ -160,6 +186,16 @@ const handleSubmit = async (e) => {
         value={form.user_image}
       />
     </FormInputContainer>
+
+    <FormInputContainer>
+        <FormLabel>Department</FormLabel>
+        <Select
+          options={departments}
+          onChange={(selectedOption) => setForm({ ...form, department: selectedOption.value })}
+          value={departments.find((option) => option.value === form.department)}
+          placeholder="Select department"
+        />
+      </FormInputContainer>
 
     <SubmitButton type="submit">Submit</SubmitButton>
     </FormContainer>
