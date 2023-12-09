@@ -38,7 +38,7 @@ const AdminSection = () => {
         columnClassName="my-masonry-grid_column">
         <ActionMenuComponent></ActionMenuComponent>
           <Card title="Manage Recommendations"color="white" size="medium" linkPath="/admin-recommendations"/>
-          <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/people-directory"/>
+          <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/admin-events-calendar"/>
           <Card title="" color="white" size="small" linkPath="/people-directory" backgroundImage={SiriusDecor}/>
           <Card title="Manage Knowledge Hub" color="grey" size="large" linkPath="/people-directory" />
           <Card title="Manage Human Resources System" color="green" size="medium" linkPath="/people-directory" />

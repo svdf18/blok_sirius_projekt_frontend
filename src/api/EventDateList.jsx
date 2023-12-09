@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getEvents } from './EventApis';
-import EventCard from '../utils/EventCardUtil/EventCardComponent';
-import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
+import { getEvents } from './EventApis.jsx';
+import EventCard from '../utils/EventCardUtil/EventCardComponent.jsx';
+import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent.jsx';
 import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 
-const EventList = ({ selectedDate }) => {
+const EventDateList = ({ selectedDate }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,24 +56,27 @@ useEffect(() => {
 // Sort events by date and time using the utility function
 const sortedEvents = sortByDateTime(events);
 
-const upcomingFilteredEvents = sortedEvents.filter((event) => {
+const filteredEvents = sortedEvents.filter((event) => {
   const eventDate = new Date(event.date);
-  return eventDate > selectedDate;
+  return (
+    eventDate.getFullYear() === selectedDate.getFullYear() &&
+    eventDate.getMonth() === selectedDate.getMonth() &&
+    eventDate.getDate() === selectedDate.getDate()
+  );
 });
 
   return (
     <>
-      <h2>Upcoming Events</h2>
-      {upcomingFilteredEvents.map((event) => (
+    <h2>Events on this date:</h2>
+      {filteredEvents.map((event) => (
         <div key={event.event_id}>
           <EventCard 
           event={event} 
           onUpdate={handleUpdateClick} />
           {selectedEvent && selectedEvent.eventId === event.event_id && (
-            <UpdateEventForm
-              eventToUpdate={selectedEvent}
-              onSubmit={handleFormSubmit}
-            />
+            <UpdateEventForm 
+            eventToUpdate={selectedEvent} 
+            onSubmit={handleFormSubmit} />
           )}
         </div>
       ))}
@@ -81,7 +84,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
   );
 };
 
-export default EventList;
+export default EventDateList;
 
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { getEvents } from '../../api/EventApis';
-import { ShowEvents } from '../../api/ShowEvents';
-import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent'
-import EventCard from '../../utils/EventCardUtil/EventCardComponent';
-import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
+import { getEvents } from './EventApis';
+import { ShowEvents } from './ShowEvents';
+import { formatDateFrontend, formatTimeFrontend } from '../utils/DateUtil/FormatDateComponent'
+import EventCard from '../utils/EventCardUtil/EventCardComponent';
+import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
 
 export const UpcomingSection = ({ handleCloseDetailView, handleEventClick, onUpdate }) => {
   const { upcomingEvents } = ShowEvents();

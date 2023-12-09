@@ -24,6 +24,7 @@ const EventCard = ({ event, onUpdate }) => {
     console.log('onUpdate:', onUpdate);
 
     setSelectedEvent(null);
+    setIsUpdateModalOpen(false);
   };
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const EventCard = ({ event, onUpdate }) => {
 
   const handleEventClick = (event) => {
     setSelectedEvent(event);
+    console.log('Event clicked:', event);
   };
 
   return (
@@ -80,7 +82,6 @@ EventCard.propTypes = {
     location: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired,
   }).isRequired,
-  handleEventClick: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

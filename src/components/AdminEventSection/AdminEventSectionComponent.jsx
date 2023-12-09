@@ -1,36 +1,41 @@
 import GlobalStyle from '../../styles/globalStyles';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from '../EventSection/EventElements';
 import { ShowEvents } from '../../api/ShowEvents.jsx';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import EventList from '../../api/EventList.jsx';
+import EventDateList from '../../api/EventDateList.jsx';
 import CreateEventForm from '../../utils/FormUtil/EventCreateComponent.jsx';
+import 'react-calendar/dist/Calendar.css';
+import CalendarComponent from '../../api/CalendarComponent.jsx';
 
 const AdminEventSection = () => {
   const menuItems = [
     { title: 'Create Event', formComponent: CreateEventForm },
   ];
+
   const { date, setDate } = ShowEvents();
 
+  const handleCalendarDateChange = (selectedDate) => {
+    setDate(selectedDate);
+  };
 
   return (
     <>
-      <GlobalStyle backgroundColor="yellow"/>
+      <GlobalStyle backgroundColor="yellow" />
       <EventContainer backgroundColor="yellow">
         <EventContainerGrid>
           <ActionMenuComponent menuItems={menuItems} />
 
           <TodayContainer>
-            <EventList/>
+            <EventDateList selectedDate={date} />
           </TodayContainer>
 
           <CalendarContainer>
-            <Calendar onChange={setDate} value={date} />
+            <CalendarComponent onDateChange={handleCalendarDateChange} />
           </CalendarContainer>
 
           <UpcomingContainer>
-            <EventList/>
+            <EventList selectedDate={date} />
           </UpcomingContainer>
 
         </EventContainerGrid>

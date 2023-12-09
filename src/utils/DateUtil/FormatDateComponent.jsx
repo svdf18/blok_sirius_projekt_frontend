@@ -28,3 +28,18 @@ export const formatTimeBackend = (timeString) => {
   const [hours, minutes] = timeString.split(':');
   return { hours, minutes };
 };
+
+export const sortByDateTime = (events) => {
+  return [...events].sort((a, b) => {
+    const dateComparison = new Date(a.date) - new Date(b.date);
+
+    if (dateComparison === 0) {
+      const startTimeA = a.start_time;
+      const startTimeB = b.start_time;
+      const timeComparison = new Date(`1970-01-01T${startTimeA}`) - new Date(`1970-01-01T${startTimeB}`);
+      return timeComparison;
+    }
+
+    return dateComparison;
+  });
+};
