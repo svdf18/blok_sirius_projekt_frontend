@@ -3,8 +3,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton, StyledDatePicker } from "./FormElements";
 import PropTypes from 'prop-types';
 import { updateUser } from "../../api/UserApis";
+import Select from 'react-select';
+import { useUser } from "../../services/Auth/UserContext";
+import { getDepartments } from "../../api/DepartmentApi";
+
 
   const UpdateUserForm = ({ userToUpdate, onSubmit }) => {
+    const { user } = useUser();
     const [form, setForm] = useState({
       first_name: "",
       last_name: "",
@@ -15,7 +20,11 @@ import { updateUser } from "../../api/UserApis";
       postal_code: "",
       user_type: "",
       user_image: "",
+      department: "",
+      updated_by_id: user?.user_id || '',
     });
+
+    const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
     if (userToUpdate) {
@@ -28,6 +37,22 @@ import { updateUser } from "../../api/UserApis";
       });
     }
   }, [userToUpdate]);
+
+  useEffect(() => {
+    // Fetch departments when the component mounts
+    const fetchDepartments = async () => {
+      try {
+        const response = await getDepartments();
+        // Assuming the response is an array of objects with a 'department_name' property
+        const departmentOptions = response.map((department) => ({ value: department.department_name, label: department.department_name }));
+        setDepartments(departmentOptions);
+      } catch (error) {
+        console.error("Error fetching departments:", error.message);
+      }
+    };
+  
+    fetchDepartments();
+  }, []);
 
 
   const handleChange = (e) => {
@@ -73,7 +98,7 @@ const handleSubmit = async (e) => {
     console.log(form.birthdate);
     const formattedDate = form.birthdate && form.birthdate.toLocaleDateString('en-GB').split('/').reverse().join('-');
     console.log(formattedDate);
-    const updatedUser = await updateUser({ ...form, birthdate: formattedDate });
+    const updatedUser = await updateUser({ ...form, birthdate: formattedDate, updated_by_id: user?.user_id || '', });
     onSubmit(updatedUser);
   } catch (error) {
     console.error("Error submitting form:", error.message);
@@ -181,6 +206,16 @@ const handleSubmit = async (e) => {
       />
     </FormInputContainer>
 
+    <FormInputContainer>
+        <FormLabel>Department</FormLabel>
+        <Select
+          options={departments}
+          onChange={(selectedOption) => setForm({ ...form, department: selectedOption.value })}
+          value={departments.find((option) => option.value === form.department)}
+          placeholder="Select department"
+        />
+      </FormInputContainer>
+
       <SubmitButton type="submit">Submit</SubmitButton>
     </FormContainer>
   );
@@ -197,6 +232,7 @@ UpdateUserForm.propTypes = {
     postal_code: PropTypes.number.isRequired,
     user_type: PropTypes.string.isRequired,
     user_image: PropTypes.string,
+    department: PropTypes.string,
   }),
   onSubmit: PropTypes.func.isRequired,
 };

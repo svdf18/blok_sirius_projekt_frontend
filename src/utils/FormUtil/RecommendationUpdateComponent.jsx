@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
 import PropTypes from 'prop-types';
-import { updateRecommendation } from '../../api/RecommendationApis';
 import Select from 'react-select';
+import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from "./FormElements";
+import { updateRecommendation } from '../../api/RecommendationApis';
 import { getUsers } from '../../api/UserApis';
+import { useUser } from '../../services/Auth/UserContext';
 
 const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
@@ -12,14 +13,16 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
     category: '',
     tagged_user: null,
   });
-
   const [users, setUsers] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
     if (recommendationToUpdate) {
       setForm(recommendationToUpdate);
     }
   }, [recommendationToUpdate]);
+
+  
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -63,9 +66,14 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
     e.preventDefault();
 
     try {
-      const updatedRecommendation = await updateRecommendation(form);
+      // Update created_by_id with user_id from useUser hook
+      const updatedForm = {
+        ...form,
+        created_by_id: user?.user_id || '',
+      };
+      await updateRecommendation(updatedForm);
+      const updatedRecommendation = { ...updatedForm };
       onSubmit(updatedRecommendation);
-
       console.log('Updated Recommendation:', updatedRecommendation);
 
       setForm({
@@ -143,7 +151,7 @@ UpdateRecommendationForm.propTypes = {
     tagged_user: PropTypes.object,
   }),
   onSubmit: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
 };
 
 export default UpdateRecommendationForm;

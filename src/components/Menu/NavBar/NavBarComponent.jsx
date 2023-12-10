@@ -5,11 +5,11 @@ import { NavBarContainer, NavBarIconLink, UserIcon, HashtagIcon, MessageIcon, St
 export const NavBarComponent = ({ isSidebarOpen }) => {
   return (
     <NavBarContainer>
-<NavBarIconLink mobile={isSidebarOpen}>
+<NavBarIconLink to="/" mobile={isSidebarOpen}>
   <StarIcon />
   <span className="tooltip">Home</span>
 </NavBarIconLink>
-<NavBarIconLink mobile={isSidebarOpen}>
+<NavBarIconLink to="/user-profile" mobile={isSidebarOpen}>
   <UserIcon />
   <span className="tooltip">Profile</span>
 </NavBarIconLink>

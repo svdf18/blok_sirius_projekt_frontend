@@ -16,7 +16,7 @@ const Card = ({ title, content, color, size, linkPath, backgroundImage, icon }) 
 
   return (
     <CardContainer color={color} size={size} backgroundImage={backgroundImage}>
-      <CardIconLink>{IconComponent}</CardIconLink>
+      <CardIconLink to={linkPath}>{IconComponent}</CardIconLink>
       <CardTitle to={linkPath}>{title}</CardTitle>
       <CardContent>{content}</CardContent>
     </CardContainer>

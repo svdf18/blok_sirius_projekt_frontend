@@ -37,13 +37,13 @@ const AdminSection = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
         <ActionMenuComponent></ActionMenuComponent>
-          <Card title="Manage Recommendations"color="white" size="medium" linkPath="/admin-recommendations"/>
-          <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/admin-events-calendar"/>
+          <Card title="Manage Recommendations"color="white" size="medium" linkPath="/admin-recommendations" icon="globe"/>
+          <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/people-directory" icon="calendar"/>
           <Card title="" color="white" size="small" linkPath="/people-directory" backgroundImage={SiriusDecor}/>
-          <Card title="Manage Knowledge Hub" color="grey" size="large" linkPath="/people-directory" />
+          <Card title="Manage Knowledge Hub" color="grey" size="large" linkPath="/people-directory" icon="book" />
           <Card title="Manage Human Resources System" color="green" size="medium" linkPath="/people-directory" />
           <Card title="Manage Learning & Development Community" color="white" size="medium" linkPath="/people-directory" />
-          <Card title="Manage People Directory" color="grey" size="large" linkPath="/admin-dashboard/people-directory" />
+          <Card title="Manage People Directory" color="grey" size="large" linkPath="/admin-dashboard/people-directory" icon="users" />
         </HomeContainerGrid>
       </HomeContainer>
     </>
