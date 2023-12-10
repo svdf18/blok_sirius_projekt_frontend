@@ -3,12 +3,13 @@ import { FaPen } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const UpdateButtonComponent = ({ onUpdate, itemId, buttonText, itemProps, ...restProps }) => {
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation();
     onUpdate(itemId, itemProps);
   };
 
   return (
-    <StyledUpdateButton onClick={handleClick} {...restProps}>
+    <StyledUpdateButton onClick={(event) => handleClick(event)} {...restProps}>
       {buttonText || <FaPen />}
     </StyledUpdateButton>
   );
@@ -19,6 +20,7 @@ UpdateButtonComponent.propTypes = {
   itemId: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
   itemProps: PropTypes.object,
+  event: PropTypes.object,
 };
 
 const StyledUpdateButton = styled.div`

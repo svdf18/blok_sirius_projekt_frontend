@@ -7,30 +7,33 @@ import styled from 'styled-components';
 export const DeleteButtonComponent = ({ deleteFunction, itemId, buttonText, itemType, ...restProps }) => {
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
 
-  const handleOpenConfirmation = () => {
+  const handleOpenConfirmation = (event) => {
+    event.stopPropagation();
     setConfirmationOpen(true);
   };
 
-  const handleCloseConfirmation = () => {
+  const handleCloseConfirmation = (event) => {
+    event.stopPropagation();
     setConfirmationOpen(false);
   };
 
-  const handleDelete = () => {
-    deleteFunction(itemId);
+  const handleDelete = (event) => {
+    event.stopPropagation();
+    deleteFunction(itemId, event);
     handleCloseConfirmation();
   };
 
   return (
     <>
-      <StyledDeleteButton onClick={handleOpenConfirmation} {...restProps}>
+      <StyledDeleteButton onClick={(event) => handleOpenConfirmation(event)} {...restProps}>
         {buttonText || <FaTrash />}
       </StyledDeleteButton>
 
       {isConfirmationOpen && (
         <ConfirmationDialog>
           <p>{`Are you sure you want to delete this ${itemType}?`}</p>
-          <StyledDeleteButtonConfirm onClick={handleDelete}>Yes</StyledDeleteButtonConfirm>
-          <StyledDeleteButtonConfirm onClick={handleCloseConfirmation}>No</StyledDeleteButtonConfirm>
+          <StyledDeleteButtonConfirm onClick={(event) => handleDelete(event)}>Yes</StyledDeleteButtonConfirm>
+          <StyledDeleteButtonConfirm onClick={(event) => handleCloseConfirmation(event)}>No</StyledDeleteButtonConfirm>
         </ConfirmationDialog>
       )}
     </>
@@ -42,6 +45,7 @@ DeleteButtonComponent.propTypes = {
   itemId: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
   itemType: PropTypes.string.isRequired,
+  event: PropTypes.object,
 };
 
 const StyledDeleteButton = styled.div`
@@ -99,5 +103,8 @@ const StyledDeleteButtonConfirm = styled.div`
     background-color: #2b2b2b;
     color: #F7F7F7;
     border-radius: 14px;
+  }
+    &:active {
+    event.stopPropagation();
   }
 `;

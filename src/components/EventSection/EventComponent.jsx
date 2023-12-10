@@ -1,14 +1,15 @@
 import GlobalStyle from '../../styles/globalStyles';
-import CalendarComponent from '../../api/CalendarComponent';
-import 'react-calendar/dist/Calendar.css';
 import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from './EventElements';
-import { ShowEvents } from '../../api/ShowEvents';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import EventList from '../../api/EventList.jsx';
 import EventDateList from '../../api/EventDateList.jsx';
+import 'react-calendar/dist/Calendar.css';
+import CalendarComponent from '../../api/CalendarComponent';
+import { useState } from 'react';
 
 const EventSection = () => {
-  const { date, setDate, upcomingEvents} = ShowEvents();
+  const [date, setDate] = useState(new Date());
+
   const handleCalendarDateChange = (selectedDate) => {
     setDate(selectedDate);
   };
@@ -16,23 +17,25 @@ const EventSection = () => {
   return (
     <>
       <GlobalStyle />
-
       <EventContainer>
         <EventContainerGrid>
-
           <ActionMenuComponent />
 
           <TodayContainer>
-            <EventDateList date={date} />
+            <EventDateList 
+            selectedDate={date} />
           </TodayContainer>
 
           <CalendarContainer>
-            <CalendarComponent onDateChange={handleCalendarDateChange} />
+            <CalendarComponent 
+            onDateChange={handleCalendarDateChange} />
           </CalendarContainer>
 
           <UpcomingContainer>
-            <EventList date={date} upcomingEvents={upcomingEvents} />
+            <EventList 
+            selectedDate={date} />
           </UpcomingContainer>
+
 
         </EventContainerGrid>
       </EventContainer>

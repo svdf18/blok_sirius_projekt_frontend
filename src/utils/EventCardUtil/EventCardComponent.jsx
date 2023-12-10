@@ -8,11 +8,12 @@ import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
 import { useState, useEffect } from 'react';
 import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent';
 
-const EventCard = ({ event, onUpdate }) => {
+const EventCard = ({ event, onUpdate, setSelectedEventProp }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const openUpdateModal = () => {
+    console.log('Update button clicked:', event.event_id, event);
     console.log('onUpdate:', onUpdate);
 
     setSelectedEvent(event);
@@ -20,8 +21,8 @@ const EventCard = ({ event, onUpdate }) => {
   };
 
   const closeUpdateModal = () => {
-    console.log('Closing modal');
-    console.log('onUpdate:', onUpdate);
+    // console.log('Closing modal');
+    // console.log('onUpdate:', onUpdate);
 
     setSelectedEvent(null);
     setIsUpdateModalOpen(false);
@@ -33,38 +34,47 @@ const EventCard = ({ event, onUpdate }) => {
     }
   }, [selectedEvent]);
 
+
   const handleEventClick = (event) => {
-    setSelectedEvent(event);
     console.log('Event clicked:', event);
+    setSelectedEvent(event);
+    setSelectedEventProp(event);
   };
 
   return (
     <EventCardContainer onClick={() => handleEventClick(event)}>
       <CardContentContainer>
-      <EventCardText>{formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
-          
-      <ButtonCardContainer>
-        <DeleteButtonComponent 
-          deleteFunction={(itemId) => {
-            console.log(`Deleting event with ID ${itemId}`);
-            deleteEvent(itemId);
-          }}
-          itemId={event.event_id}
-          itemType="event"
-        />
-        <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={event.event_id} itemProps={event} />
-        <ModalComponent
-          isOpen={isUpdateModalOpen}
-          onRequestClose={closeUpdateModal}
-          formComponent={(props) => <UpdateEventForm eventToUpdate={selectedEvent} {...props} />}
-          onSubmit={(updatedEvent) => {
-            console.log('Form submitted:', updatedEvent);
-            onUpdate(updatedEvent);
-            closeUpdateModal();
-          }}
+        <EventCardText>{formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
+
+        <ButtonCardContainer>
+
+          <DeleteButtonComponent
+            deleteFunction={(itemId, event) => {
+              event.stopPropagation();
+              console.log(`Delete button clicked for event with ID ${itemId}`);
+              console.log(`Deleting event with ID ${itemId}`);
+              deleteEvent(itemId);
+            }}
+            itemId={event.event_id}
+            itemType="event"
+          />
+          <UpdateButtonComponent onUpdate={() => {
+            openUpdateModal();
+          }} itemId={event.event_id}
+            itemProps={event} />
+
+          <ModalComponent
+            isOpen={isUpdateModalOpen}
+            onRequestClose={closeUpdateModal}
+            formComponent={(props) => <UpdateEventForm eventToUpdate={selectedEvent} {...props} />}
+            onSubmit={(updatedEvent) => {
+              console.log('Form submitted:', updatedEvent);
+              onUpdate(updatedEvent);
+              closeUpdateModal();
+            }}
           />
         </ButtonCardContainer>
-        </CardContentContainer>
+      </CardContentContainer>
     </EventCardContainer>
   );
 };
@@ -83,6 +93,8 @@ EventCard.propTypes = {
     created_at: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  setSelectedEventProp: PropTypes.func,
 };
 
 export default EventCard;
