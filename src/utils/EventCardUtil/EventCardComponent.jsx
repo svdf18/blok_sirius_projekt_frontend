@@ -81,6 +81,7 @@ const EventCard = ({ event, onUpdate, setSelectedEventProp }) => {
 
 EventCard.propTypes = {
   event: PropTypes.shape({
+    stopPropagation: PropTypes.func,
     event_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
@@ -90,7 +91,6 @@ EventCard.propTypes = {
     deadline_attend: PropTypes.string.isRequired,
     deadline_unattend: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
-    created_at: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func,

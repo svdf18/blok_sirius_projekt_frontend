@@ -185,17 +185,18 @@ const handleSubmit = async (e) => {
     </FormInputContainer>
 
     <FormInputContainer>
-      <FormLabel>User Type</FormLabel>
-      <FormInput
-        type="text"
-        onChange={handleChange}
-        name="user_type"
-        placeholder="User type"
-        value={form.user_type}
-      />
-    </FormInputContainer>
+      <FormLabel FormLabel>User Type</FormLabel>
+        <FormInput
+          type="text"
+          onChange={handleChange}
+          name="user_type"
+          placeholder="User Type"
+          value={form.user_type}
+        />
+      </FormInputContainer>
 
     <FormInputContainer>
+
       <FormLabel>User Image</FormLabel>
       <FormInput
         type="text"

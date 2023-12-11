@@ -6,7 +6,8 @@ import {
   UserProfileCardText,
   UserProfileCardLoading,
   LogSubmitButton,
-  UserProfileCardSubtitle
+  UserProfileCardSubtitle,
+  UserProfileCardImage,
 } from './UserProfileCardElements';
 import useSignOut from '../../hooks/useSignOut';
 
@@ -30,6 +31,7 @@ const UserProfileCardComponent = () => {
         <div>
           <UserProfileCardTitle>{user.first_name} {user.last_name}</UserProfileCardTitle>
           <UserProfileCardSubtitle>{user.user_type}</UserProfileCardSubtitle>
+          <UserProfileCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />
           <UserProfileCardText>Email: {user.email}</UserProfileCardText>
           <UserProfileCardText>Phone: {user.phone}</UserProfileCardText>
           <UserProfileCardText>Street: {user.street}</UserProfileCardText>

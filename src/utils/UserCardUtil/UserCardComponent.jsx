@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText, ButtonCardContainer, UserCardIconLink } from "./UserCardElements";
+import { UserCardContainer, UserCardTitle, UserCardSubtitle, UserCardText, ButtonCardContainer, UserCardIconLink, UserCardImage } from "./UserCardElements";
 import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 import { deleteUser } from '../../api/UserApis';
@@ -49,6 +49,7 @@ const UserCard = ({ user, onUpdate }) => {
         <>
           <UserCardTitle> {user.first_name} {user.last_name}</UserCardTitle>
           <UserCardSubtitle>{user.department}</UserCardSubtitle>
+          <UserCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />
           <UserCardText>Email: {user.email}</UserCardText>
           <UserCardText>Phone: {user.phone}</UserCardText>
           <UserCardText>Birthdate: {formatDateFrontend(user.birthdate)}</UserCardText>
@@ -100,6 +101,7 @@ UserCard.propTypes = {
     street: PropTypes.string.isRequired,
     postal_code: PropTypes.number.isRequired,
     user_type: PropTypes.string.isRequired,
+    user_image: PropTypes.string.isRequired,
     department: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
