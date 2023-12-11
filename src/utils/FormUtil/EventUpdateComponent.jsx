@@ -6,7 +6,7 @@ import { updateEvent } from "../../api/EventApis";
 
 const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
-    user_id_creator: "1",
+    created_by_id: "",
     title: "",
     description: "",
     start_time: "",
@@ -63,51 +63,51 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  e.stopPropagation(); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  // Add a validation check to ensure deadlines are before the event date
-  if (
-    (form.deadline_attend && form.deadline_attend >= form.date) ||
-    (form.deadline_unattend && form.deadline_unattend >= form.date)
-  ) {
-    console.error("Deadlines must be before the event date");
-    // Optionally, you can display an error message to the user
-    return;
-  }
+    // Add a validation check to ensure deadlines are before the event date
+    if (
+      (form.deadline_attend && form.deadline_attend >= form.date) ||
+      (form.deadline_unattend && form.deadline_unattend >= form.date)
+    ) {
+      console.error("Deadlines must be before the event date");
+      // Optionally, you can display an error message to the user
+      return;
+    }
 
-  // Add a validation check to ensure end time is after start time
-  if (form.start_time && form.end_time && form.start_time >= form.end_time) {
-    console.error("End time must be after start time");
-    // Optionally, you can display an error message to the user
-    return;
-  }
+    // Add a validation check to ensure end time is after start time
+    if (form.start_time && form.end_time && form.start_time >= form.end_time) {
+      console.error("End time must be after start time");
+      // Optionally, you can display an error message to the user
+      return;
+    }
 
-  try {
-    const formattedDate =
-      form.date &&
-      form.date.toLocaleDateString("en-GB").split("/").reverse().join("-");
-    const formattedAttend =
-      form.deadline_attend &&
-      form.deadline_attend.toLocaleDateString("en-GB").split("/").reverse().join("-");
-    const formattedUnattend =
-      form.deadline_unattend &&
-      form.deadline_unattend.toLocaleDateString("en-GB").split("/").reverse().join("-");
+    try {
+      const formattedDate =
+        form.date &&
+        form.date.toLocaleDateString("en-GB").split("/").reverse().join("-");
+      const formattedAttend =
+        form.deadline_attend &&
+        form.deadline_attend.toLocaleDateString("en-GB").split("/").reverse().join("-");
+      const formattedUnattend =
+        form.deadline_unattend &&
+        form.deadline_unattend.toLocaleDateString("en-GB").split("/").reverse().join("-");
 
-    const updatedEvent = await updateEvent({
-      ...form,
-      event_id: eventToUpdate.event_id,
-      date: formattedDate,
-      deadline_attend: formattedAttend,
-      deadline_unattend: formattedUnattend,
-    });
-    console.log("UpdateEventForm handleSubmit called:", updatedEvent);
-    onSubmit(updatedEvent);
-  } catch (error) {
-    console.error("Error submitting form:", error.message);
-  }
-};
+      const updatedEvent = await updateEvent({
+        ...form,
+        event_id: eventToUpdate.event_id,
+        date: formattedDate,
+        deadline_attend: formattedAttend,
+        deadline_unattend: formattedUnattend,
+      });
+      console.log("UpdateEventForm handleSubmit called:", updatedEvent);
+      onSubmit(updatedEvent);
+    } catch (error) {
+      console.error("Error submitting form:", error.message);
+    }
+  };
 
   const handleFormClick = (event) => {
     event.stopPropagation();

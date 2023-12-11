@@ -6,7 +6,7 @@ import { formatDateBackend } from "../DateUtil/FormatDateComponent";
 
 const CreateEventForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
-    user_id_creator: "1", 
+    created_by_id: "", 
     title: "",
     description: "",
     start_time: "",
@@ -46,7 +46,7 @@ const CreateEventForm = ({ onSubmit }) => {
       onSubmit(newEvent);
 
       setForm({
-        user_id_creator: "",
+        created_by_id: "",
         title: "",
         description: "",
         start_time: "",
