@@ -4,6 +4,7 @@ import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, Sub
 import PropTypes from 'prop-types';
 import { updateEvent } from "../../api/EventApis";
 
+// Component for updating event information
 const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
     created_by_id: "",
@@ -15,8 +16,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     location: "",
   });
 
-  // console.log(eventToUpdate);
-
+  // useEffect to update form data when eventToUpdate changes
   useEffect(() => {
     if (eventToUpdate) {
       const formattedDate = new Date(eventToUpdate.date);
@@ -28,6 +28,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   }, [eventToUpdate]);
 
+  // Handler for input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -36,6 +37,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     });
   };
 
+  // Handler for date changes in the date picker
   const handleDateChange = (date, name) => {
     if (date instanceof Date && !isNaN(date.getTime())) {
       setForm({
@@ -57,11 +59,12 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
+  // Handler for form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // Add a validation check to ensure end time is after start time, would actually need end date to make this proper
+    // Add a validation check to ensure end time is after start time - would actually need end date to make this proper
     if (form.start_time && form.end_time && form.start_time >= form.end_time) {
       console.error("End time must be after start time");
       return;
@@ -84,6 +87,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
+  // Handler to prevent form click from propagating
   const handleFormClick = (event) => {
     event.stopPropagation();
   };
