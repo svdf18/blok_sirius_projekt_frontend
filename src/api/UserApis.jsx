@@ -61,3 +61,30 @@ export const updateUser = async (formData) => {
     throw error;
   }
 };
+
+
+// Function to check invitation
+export const checkInvitation = async (userContext, eventId) => {
+  const userId = userContext?.user?.user_id;
+
+  try {
+    const response = await axios.post(`${endpoint}/link-user-to-event/check-invitation`, { userId, eventId });
+    return response.data;
+  } catch (error) {
+    console.error('Error checking invitation:', error.message);
+    throw error;
+  }
+};
+
+// Function to mark attendance
+export const markAttendance = async (userContext, eventId) => {
+  const userId = userContext?.user?.user_id; // Make sure to extract userId correctly
+
+  try {
+    const response = await axios.post(`${endpoint}/link-user-to-event/mark-attendance`, { userId, eventId });
+    return response.data;
+  } catch (error) {
+    console.error('Error marking attendance:', error.message);
+    throw error;
+  }
+};

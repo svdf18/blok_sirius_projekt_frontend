@@ -4,12 +4,18 @@ import EventCard from '../utils/EventCardUtil/EventCardComponent';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
 import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
+import { useUser } from '../services/Auth/UserContext.jsx'
+import { checkInvitation, markAttendance } from './UserApis.jsx';
 
 const EventList = ({ selectedDate }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userContext = useUser();
+
+  const currentUserId = userContext.user?.user_id;
+  console.log(`Current user ${currentUserId}.`);
 
 useEffect(() => {
   const fetchEvents = async () => {
@@ -62,7 +68,7 @@ useEffect(() => {
     return <p>Error: {error.message}</p>;
   }
 
-// Sort events by date and time using the utility function
+// Sort events by date and time
 const sortedEvents = sortByDateTime(events);
 
 const upcomingFilteredEvents = sortedEvents.filter((event) => {
@@ -75,12 +81,41 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
     setSelectedEvent(null);
   };
 
+  const handleCheckInvitation = async () => {
+    console.log('Checking invitation status');
+    console.log('User ID:', currentUserId);
+    console.log('Event ID:', selectedEvent.event_id);
+    console.log('User context:', userContext);
+
+    try {
+      const invitationStatus = await checkInvitation(userContext, selectedEvent.event_id);
+
+      // Handle the invitation status as needed
+      if (invitationStatus.isInvited) {
+        console.log(`User ${currentUserId} is invited to event ${selectedEvent.event_id}`);
+        // User is invited, mark attendance
+        const attendanceStatus = await markAttendance(userContext, selectedEvent.event_id);
+        console.log('Attendance Status:', attendanceStatus);
+      } else {
+        console.log(`User ${currentUserId} is not invited to event ${selectedEvent.event_id}`);
+        // Add your logic for a user not invited
+      }
+    } catch (error) {
+      console.error('Error checking invitation:', error.message);
+      // Handle the error as needed
+    }
+  };
+
+
+
   return (
     <>
       {selectedEvent ? (
         <EventDetails
           selectedEvent={selectedEvent}
           handleCloseDetailView={handleCloseDetailView}
+          currentUserId={currentUserId}
+          handleCheckInvitation={handleCheckInvitation}
         />
       ) : (
         <>
@@ -106,7 +141,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
   );
 };
 
-const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
+const EventDetails = ({ selectedEvent, handleCloseDetailView, handleCheckInvitation }) => {
   return (
     <div>
       <h3>Event Details</h3>
@@ -117,6 +152,7 @@ const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <p>Ends at: {selectedEvent.end_time}</p>
       <p>Location: {selectedEvent.location}</p>
       <button onClick={handleCloseDetailView}>Close</button>
+      <button onClick={handleCheckInvitation}>Attend</button>
     </div>
   );
 };
@@ -131,6 +167,7 @@ EventDetails.propTypes = {
     location: PropTypes.string,
   }).isRequired,
   handleCloseDetailView: PropTypes.func.isRequired,
+  handleCheckInvitation: PropTypes.func.isRequired,
 };
 
 EventList.propTypes = {
