@@ -13,7 +13,7 @@ export const DeleteButtonComponent = ({ deleteFunction, itemId, buttonText, item
   };
 
   const handleCloseConfirmation = (event) => {
-    event.stopPropagation();
+    event?.stopPropagation();
     setConfirmationOpen(false);
   };
 
@@ -103,8 +103,5 @@ const StyledDeleteButtonConfirm = styled.div`
     background-color: #2b2b2b;
     color: #F7F7F7;
     border-radius: 14px;
-  }
-    &:active {
-    event.stopPropagation();
   }
 `;

@@ -95,3 +95,13 @@ export const LogSubmitButton = styled.button`
     border-radius: 14px;
   }
 `;
+
+export const UserProfileCardImage = styled.img`
+  width: 100%; /* Ensure the image takes the full width of its container */
+  height: 100%; /* Ensure the image takes the full height of its container */
+  object-fit: cover; /* Crop the image to cover the entire container */
+  object-position: center top; /* Position the image at the center of the top */
+  position: relative;
+  aspect-ratio: 1; /* Maintain a 1:1 aspect ratio (width:height) */
+  border-radius: 28px;
+`;
