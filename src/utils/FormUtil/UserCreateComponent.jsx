@@ -165,16 +165,18 @@ const handleSubmit = async (e) => {
       />
     </FormInputContainer>
 
-    <FormInputContainer>
-      <FormLabel>User Type</FormLabel>
-      <FormInput
-        type="text"
-        onChange={handleChange}
-        name="user_type"
-        placeholder="User type"
-        value={form.user_type}
-      />
-    </FormInputContainer>
+      <FormInputContainer>
+        <FormLabel>User Type</FormLabel>
+        <Select
+          options={[
+            { value: 'user', label: 'User' },
+            { value: 'admin', label: 'Admin' },
+          ]}
+          onChange={(selectedOption) => setForm({ ...form, user_type: selectedOption.value })}
+          value={{ value: form.user_type, label: form.user_type.charAt(0).toUpperCase() + form.user_type.slice(1) }}
+          placeholder="Select user type"
+        />
+      </FormInputContainer>
 
     <FormInputContainer>
       <FormLabel>User Image</FormLabel>

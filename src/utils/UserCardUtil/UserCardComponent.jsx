@@ -49,7 +49,7 @@ const UserCard = ({ user, onUpdate }) => {
         <>
           <UserCardTitle> {user.first_name} {user.last_name}</UserCardTitle>
           <UserCardSubtitle>{user.department}</UserCardSubtitle>
-          <UserCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />
+          {user.user_image && <UserCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />} {/* No text if image is empty */}
           <UserCardText>Email: {user.email}</UserCardText>
           <UserCardText>Phone: {user.phone}</UserCardText>
           <UserCardText>Birthdate: {formatDateFrontend(user.birthdate)}</UserCardText>
