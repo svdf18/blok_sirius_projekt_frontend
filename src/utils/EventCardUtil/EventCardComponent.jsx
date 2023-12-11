@@ -88,8 +88,6 @@ EventCard.propTypes = {
     date: PropTypes.string.isRequired,
     start_time: PropTypes.string.isRequired,
     end_time: PropTypes.string.isRequired,
-    deadline_attend: PropTypes.string.isRequired,
-    deadline_unattend: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
