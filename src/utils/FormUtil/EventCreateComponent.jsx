@@ -6,7 +6,7 @@ import { formatDateBackend } from "../DateUtil/FormatDateComponent";
 
 const CreateEventForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
-    created_by_id: "", 
+    created_by_id: "1", 
     title: "",
     description: "",
     start_time: "",
@@ -16,6 +16,9 @@ const CreateEventForm = ({ onSubmit }) => {
     deadline_unattend: null,
     location: "",
   });
+
+
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +38,18 @@ const CreateEventForm = ({ onSubmit }) => {
     }
   };
 
+  const handleDepartmentChange = (e) => {
+    const { value, checked } = e.target;
+    const departmentId = parseInt(value, 10);  // Convert value to an integer
+  
+    if (checked) {
+      setSelectedDepartments([...selectedDepartments, departmentId]);
+    } else {
+      setSelectedDepartments(selectedDepartments.filter(depId => depId !== departmentId));
+    }
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,7 +57,29 @@ const CreateEventForm = ({ onSubmit }) => {
     const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
     const formattedDeadlineAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
     const formattedDeadlineUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
-      const newEvent = await postEvent({ ...form, date: formattedDate, deadline_attend: formattedDeadlineAttend, deadline_unattend: formattedDeadlineUnattend});
+    
+    console.log('Form Data:', {
+      created_by_id: form.created_by_id,
+      title: form.title,
+      description: form.description,
+      date: formattedDate,
+      start_time: form.start_time,
+      end_time: form.end_time,
+      deadline_attend: formattedDeadlineAttend,
+      deadline_unattend: formattedDeadlineUnattend,
+      location: form.location,
+    });
+
+    console.log('Department Data:', selectedDepartments);
+    
+    const newEvent = await postEvent({
+      ...form,
+      date: formattedDate,
+      deadline_attend: formattedDeadlineAttend,
+      deadline_unattend: formattedDeadlineUnattend,
+      departments: selectedDepartments, // Add selected departments to the request
+    });
+
       onSubmit(newEvent);
 
       setForm({
@@ -56,6 +93,7 @@ const CreateEventForm = ({ onSubmit }) => {
         deadline_unattend: null,
         location: "",
       });
+      setSelectedDepartments([]);
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }
@@ -147,6 +185,60 @@ const CreateEventForm = ({ onSubmit }) => {
           placeholder="Event location"
           value={form.location}
         />
+      </FormInputContainer>
+
+      <FormInputContainer>
+        <FormLabel>Departments</FormLabel>
+        <div>
+          {/* Management */}
+          <label>
+            <input
+              type="checkbox"
+              name="department"
+              value={1}
+              checked={selectedDepartments.includes(1)}
+              onChange={handleDepartmentChange}
+            />
+            Management
+          </label>
+
+          {/* IT */}
+          <label>
+            <input
+              type="checkbox"
+              name="department"
+              value={2}
+              checked={selectedDepartments.includes(2)}
+              onChange={handleDepartmentChange}
+          />
+          IT
+          </label>
+
+          {/* Human Resources */}
+          <label>
+            <input
+              type="checkbox"
+              name="department"
+              value={3}
+              checked={selectedDepartments.includes(3)}
+              onChange={handleDepartmentChange}
+          />
+          Human Resources
+          </label>
+
+          {/* Legal */}
+          <label>
+            <input
+              type="checkbox"
+              name="department"
+              value={4}
+              checked={selectedDepartments.includes(4)}
+              onChange={handleDepartmentChange}
+          />
+          Legal
+          </label>
+
+        </div>
       </FormInputContainer>
 
       <SubmitButton type="submit">Submit</SubmitButton>

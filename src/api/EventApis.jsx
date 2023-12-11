@@ -14,6 +14,12 @@ export const getEvents = async () => {
 export const postEvent = async (formData) => {
   try {
     const response = await axios.post(`${endpoint}/events`, formData);
+    const eventId = response.data.event_id;
+
+    // Add logic to handle departments
+    const { selectedDepartments } = formData;
+    await axios.post(`${endpoint}/event-departments/${eventId}`, { departments: selectedDepartments });
+
     console.log('Event created successfully:', response.data);
   } catch (error) {
     console.error('Error creating event:', error.message);
