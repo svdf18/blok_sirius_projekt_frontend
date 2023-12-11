@@ -11,22 +11,43 @@ export const getEvents = async () => {
   }
 };
 
+// Function to submit event data
 export const postEvent = async (formData) => {
   try {
     const response = await axios.post(`${endpoint}/events`, formData);
     const eventId = response.data.event_id;
 
-    // Add logic to handle departments
-    const { selectedDepartments } = formData;
-    await axios.post(`${endpoint}/event-departments/${eventId}`, { departments: selectedDepartments });
-
     console.log('Event created successfully:', response.data);
+    console.log('Event ID:', eventId);
+
+    return eventId; // Return the event ID for further use
   } catch (error) {
     console.error('Error creating event:', error.message);
     console.error('Error details:', error.response?.data);
     throw error;
   }
 };
+
+// Function to submit selected departments
+export const postSelectedDepartments = async (eventId, selectedDepartments) => {
+  try {
+    // Ensure that the selectedDepartments is an array of integers
+    const formattedDepartments = selectedDepartments.map((departmentId) => parseInt(departmentId, 10));
+
+    // Check if there are selectedDepartments and make the request only if there are
+    if (formattedDepartments.length > 0) {
+      await axios.post(`${endpoint}/event-departments/${eventId}`, { departments: formattedDepartments });
+      console.log('Departments submitted successfully');
+    } else {
+      console.log('No departments selected');
+    }
+  } catch (error) {
+    console.error('Error submitting departments:', error.message);
+    console.error('Error details:', error.response?.data);
+    throw error;
+  }
+};
+
 
 export const deleteEvent = async (eventId) => {
   try {

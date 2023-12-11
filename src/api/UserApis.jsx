@@ -15,8 +15,25 @@ export const postUser = async (formData) => {
   try {
     const response = await axios.post(`${endpoint}/users`, formData);
     console.log('User created successfully:', response.data);
+
+    // If the user was created successfully, link the user to the department
+    if (response.data.user_id && formData.department) {
+      await linkUserToDepartment(response.data.user_id, formData.department);
+      console.log('User linked to department successfully');
+    }
   } catch (error) {
     console.error(`Error creating user with ID ${formData.user_id}:`, error.message);
+    console.error("Error details:", error.response?.data);
+    throw error;
+  }
+};
+
+// Function to link user to department
+const linkUserToDepartment = async (userId, departmentName) => {
+  try {
+    await axios.post(`${endpoint}/link-user-to-department`, { userId, departmentName });
+  } catch (error) {
+    console.error(`Error linking user with ID ${userId} to department ${departmentName}:`, error.message);
     console.error("Error details:", error.response?.data);
     throw error;
   }

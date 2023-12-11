@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton, StyledDatePicker } from "./FormElements";
 import PropTypes from 'prop-types';
-import { postEvent } from "../../api/EventApis";
+import { postEvent, postSelectedDepartments } from "../../api/EventApis";
 import { formatDateBackend } from "../DateUtil/FormatDateComponent";
 
 const CreateEventForm = ({ onSubmit }) => {
@@ -52,36 +52,38 @@ const CreateEventForm = ({ onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-    const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
-    const formattedDeadlineAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
-    const formattedDeadlineUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
-    
-    console.log('Form Data:', {
-      created_by_id: form.created_by_id,
-      title: form.title,
-      description: form.description,
-      date: formattedDate,
-      start_time: form.start_time,
-      end_time: form.end_time,
-      deadline_attend: formattedDeadlineAttend,
-      deadline_unattend: formattedDeadlineUnattend,
-      location: form.location,
-    });
-
-    console.log('Department Data:', selectedDepartments);
-    
-    const newEvent = await postEvent({
-      ...form,
-      date: formattedDate,
-      deadline_attend: formattedDeadlineAttend,
-      deadline_unattend: formattedDeadlineUnattend,
-      departments: selectedDepartments, // Add selected departments to the request
-    });
-
-      onSubmit(newEvent);
-
+      const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
+      const formattedDeadlineAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
+      const formattedDeadlineUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
+  
+      console.log('Form Data:', {
+        created_by_id: form.created_by_id,
+        title: form.title,
+        description: form.description,
+        date: formattedDate,
+        start_time: form.start_time,
+        end_time: form.end_time,
+        deadline_attend: formattedDeadlineAttend,
+        deadline_unattend: formattedDeadlineUnattend,
+        location: form.location,
+      });
+  
+      console.log('Department Data:', selectedDepartments);
+  
+      // Submit event data and get the event ID
+      const eventId = await postEvent({
+        ...form,
+        date: formattedDate,
+        deadline_attend: formattedDeadlineAttend,
+        deadline_unattend: formattedDeadlineUnattend,
+      });
+  
+      // Submit selected departments using the obtained event ID
+      await postSelectedDepartments(eventId, selectedDepartments);
+  
+      // Clear the form after successful submission
       setForm({
         created_by_id: "",
         title: "",
@@ -94,10 +96,14 @@ const CreateEventForm = ({ onSubmit }) => {
         location: "",
       });
       setSelectedDepartments([]);
+  
+      // Pass the event ID to the parent component
+      onSubmit(eventId);
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }
   };
+  
 
   return (
     <FormContainer onSubmit={handleSubmit}>
