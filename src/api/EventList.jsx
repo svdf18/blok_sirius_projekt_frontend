@@ -84,7 +84,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
         />
       ) : (
         <>
-          <h2>Upcoming Events</h2>
+          <h2>Upcoming events</h2>
           {upcomingFilteredEvents.map((event) => (
             <div key={event.event_id} >
               <EventCard

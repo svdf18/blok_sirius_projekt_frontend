@@ -15,7 +15,6 @@ const CreateEventForm = ({ onSubmit }) => {
     location: "",
   });
 
-
   const [selectedDepartments, setSelectedDepartments] = useState([]);
 
   const handleChange = (e) => {
@@ -94,7 +93,6 @@ const CreateEventForm = ({ onSubmit }) => {
     }
   };
   
-
   return (
     <FormContainer onSubmit={handleSubmit}>
       <FormTitle>{"Create Event"}</FormTitle>
