@@ -40,7 +40,7 @@ const AdminSection = () => {
           <Card title="Manage Recommendations"color="white" size="medium" linkPath="/admin-recommendations" icon="globe"/>
           <Card title="Manage Events & Calendar" color="green" size="medium" linkPath="/admin-events-calendar" icon="calendar"/>
           <Card title="" color="white" size="small" linkPath="/people-directory" backgroundImage={SiriusDecor}/>
-          <Card title="Manage Knowledge Hub" color="grey" size="large" linkPath="/people-directory" icon="book" />
+          <Card title="Log In" color="grey" size="large" linkPath="/log-in" icon="book" />
           <Card title="Manage Human Resources System" color="green" size="medium" linkPath="/people-directory" />
           <Card title="Manage Learning & Development Community" color="white" size="medium" linkPath="/people-directory" />
           <Card title="Manage People Directory" color="grey" size="large" linkPath="/admin-dashboard/people-directory" icon="users" />

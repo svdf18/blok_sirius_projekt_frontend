@@ -12,6 +12,7 @@ const CreateRecommendationForm = ({ title, onSubmit }) => {
     created_by_id: user?.user_id || '', // Set created_by_id from useUser hook
     title: '',
     content: '',
+    recommendation_url: '',
     tagged_user: null,
   });
 
@@ -56,8 +57,9 @@ const CreateRecommendationForm = ({ title, onSubmit }) => {
         created_by_id: user?.user_id || '', // Pass created_by_id in the form data
         title: form.title,
         content: form.content,
+        recommendation_url: form.recommendation_url,
         tagged_user_id: form.tagged_user ? form.tagged_user.value : null,
-        category: title.toLowerCase(),
+        category: title,
       });
 
       onSubmit(newRecommendation);
@@ -68,6 +70,7 @@ const CreateRecommendationForm = ({ title, onSubmit }) => {
         created_by_id: user?.user_id || '', // Reset the created_by_id in the form
         title: '',
         content: '',
+        recommendation_url: '',
         tagged_user: null,
       });
     } catch (error) {
@@ -85,7 +88,7 @@ const CreateRecommendationForm = ({ title, onSubmit }) => {
           type="text"
           onChange={handleChange}
           name="title"
-          placeholder="Subject"
+          placeholder="Name your recommendation"
           value={form.title}
         />
       </FormInputContainer>
@@ -98,6 +101,17 @@ const CreateRecommendationForm = ({ title, onSubmit }) => {
           name="content"
           placeholder="Write something nice"
           value={form.content}
+        />
+      </FormInputContainer>
+
+      <FormInputContainer>
+        <FormLabel>Recommendation URL</FormLabel>
+        <FormInput
+          type="text"
+          onChange={handleChange}
+          name="recommendation_url"
+          placeholder="https:// ..."
+          value={form.recommendation_url}
         />
       </FormInputContainer>
 

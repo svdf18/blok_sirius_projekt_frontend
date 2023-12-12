@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeIndex from './pages/HomeIndex.jsx';
 import PeopleDirectoryIndex from './pages/PeopleDirectoryIndex.jsx';
-import KnowledgeHubIndex from './pages/KnowledgeHubIndex.jsx';
+import LogInIndex from './pages/LogInIndex.jsx';
 import AdminIndex from './pages/AdminIndex.jsx';
 import AdminPeopleDirectoryIndex from './pages/AdminPeopleDirectoryIndex.jsx'
 import RecommendationsIndex from './pages/RecommendationsIndex';
@@ -21,7 +21,7 @@ function App() {
         <Route path="/people-directory" element={<PeopleDirectoryIndex/>} />
         <Route path="/recommendations" element={<RecommendationsIndex/>} />
         <Route path="/events-calendar" element={<EventIndex/>} />
-        <Route path="/knowledge-hub" element={<KnowledgeHubIndex/>} />
+        <Route path="/log-in" element={<LogInIndex/>} />
         <Route path="/user-profile" element={<UserProfileIndex/>} />
         <Route path="/admin-dashboard" element={<AdminIndex/>} />
         <Route path="/admin-dashboard/people-directory" element={<AdminPeopleDirectoryIndex/>} />

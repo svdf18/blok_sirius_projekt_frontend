@@ -3,13 +3,13 @@ import { auth } from '../../firebase.js';
 import axios from 'axios';
 import { endpoint } from '../../api/endpoint.jsx';
 import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, SubmitButton } from '../../utils/FormUtil/FormElements.jsx';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword} from 'firebase/auth';
 import { useUser } from './UserContext.jsx';
 
 const SignInComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, logout, user } = useUser();
+  const { login } = useUser();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,17 +43,6 @@ const SignInComponent = () => {
       })
       .catch((error) => {
         console.error('Error signing in:', error.message);
-      });
-  };
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        logout();
-        console.log('User signed out');
-      })
-      .catch((error) => {
-        console.error('Error signing out:', error.message);
       });
   };
 
@@ -91,13 +80,6 @@ const SignInComponent = () => {
 
         <SubmitButton type="submit">Sign In</SubmitButton>
       </FormContainer>
-
-      {user && (
-        <div>
-          <p>Logged in as: {user.email}</p>
-          <button onClick={handleSignOut}>Sign Out</button>
-        </div>
-      )}
     </>
   );
 }

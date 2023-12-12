@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen, toggle }) => {
             <SidebarMenu>
               <SidebarLink to='/' onClick={toggle}>Home</SidebarLink>
               <SidebarLink to='/people-directory' onClick={toggle}>People Directory</SidebarLink>
-              <SidebarLink to='/knowledge-hub' onClick={toggle}>Knowledge Hub</SidebarLink>
+              <SidebarLink to='/log-in' onClick={toggle}>Log In</SidebarLink>
               <SidebarLink to="/recommendations" onClick={toggle}>Recommendations</SidebarLink>
               <SidebarLink to="/events-calendar" onClick={toggle}>Events and Calendar</SidebarLink>
               {user && user.user_type === 'admin' && (

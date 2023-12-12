@@ -12,19 +12,19 @@ const HomeSection = () => {
     <GlobalStyle/>
       <HomeContainer id='/'>
         <HomeContainerGrid
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column">
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column">
 
-        <ActionMenuComponent/>
-       
-        <Card title="Recommendations"color="white" size="medium" linkPath="/recommendations" icon="globe" />
-        <Card title="Events & Calendar" color="green" size="medium" linkPath="/events-calendar" icon="calendar"/>
-        <Card title="" color="grey" size="small" linkPath="/people-directory" backgroundImage={SiriusPeople}/>
-        <Card title="Knowledge Hub" color="grey" size="large" linkPath="/knowledge-hub" icon="book" />
-        <Card title="Human Resources System" color="green" size="medium" linkPath="/people-directory" />
-        <Card title="Learning & Development Community" color="white" size="medium" linkPath="/people-directory" />
-        <Card title="People Directory" color="grey" size="large" linkPath="/people-directory" icon="users"/>
+          <ActionMenuComponent/>
+        
+          <Card title="Recommendations"color="white" size="medium" linkPath="/recommendations" icon="globe" />
+          <Card title="Events & Calendar" color="green" size="medium" linkPath="/events-calendar" icon="calendar"/>
+          <Card title="" color="grey" size="small" linkPath="/people-directory" backgroundImage={SiriusPeople}/>
+          <Card title="Log In" color="grey" size="large" linkPath="/log-in" icon="book" />
+          <Card title="Human Resources System" color="green" size="medium" linkPath="/people-directory" />
+          <Card title="Learning & Development Community" color="white" size="medium" linkPath="/people-directory" />
+          <Card title="People Directory" color="grey" size="large" linkPath="/people-directory" icon="users"/>
         </HomeContainerGrid>
       </HomeContainer>
     </>
