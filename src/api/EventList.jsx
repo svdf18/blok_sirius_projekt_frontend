@@ -108,7 +108,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
   );
 };
 
-const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
+export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const [attendingUsers, setAttendingUsers] = useState([]);
   const userContext = useUser();
   const currentUserId = userContext.user?.user_id;

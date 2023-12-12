@@ -148,7 +148,7 @@ const CreateEventForm = ({ onSubmit }) => {
       </FormInputContainer>
 
       <FormInputContainer>
-        <FormLabel>Departments</FormLabel>
+        <FormLabel>Invited Departments</FormLabel>
         <div>
           {/* Management */}
           <label>

@@ -4,6 +4,7 @@ import EventCard from '../utils/EventCardUtil/EventCardComponent.jsx';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent.jsx';
 import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
+import { EventDetails } from './EventList.jsx';
 
 const EventDateList = ({ selectedDate }) => {
   const [events, setEvents] = useState([]);
@@ -71,6 +72,10 @@ const filteredEvents = sortedEvents.filter((event) => {
     setSelectedEvent(null);
   };
 
+  const handleSetSelectedEvent = (event) => {
+    setSelectedEvent(event);
+  };
+
   return (
         <>
   {selectedEvent ? (
@@ -80,13 +85,14 @@ const filteredEvents = sortedEvents.filter((event) => {
     />
   ) : (
     <>
-    <h2>Events on this date:</h2>
+    <h2>Events on this date</h2>
       {filteredEvents.map((event) => (
         <div key={event.event_id}>
           <EventCard 
           event={event} 
           onUpdate={handleUpdateClick} 
-          onDetailsClick={() => setSelectedEvent(event)} />
+          onDetailsClick={() => setSelectedEvent(event)}
+          setSelectedEventProp={handleSetSelectedEvent} />
           {selectedEvent && selectedEvent.eventId === event.event_id && (
             <UpdateEventForm 
             eventToUpdate={selectedEvent} 
@@ -100,20 +106,6 @@ const filteredEvents = sortedEvents.filter((event) => {
   );
 };
 
-const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
-  return (
-    <div>
-      <h3>Event Details</h3>
-      <p>Title: {selectedEvent.title}</p>
-      <p>Description: {selectedEvent.description}</p>
-      <p>Date: {selectedEvent.date}</p>
-      <p>Begins at: {selectedEvent.start_time}</p>
-      <p>Location: {selectedEvent.location}</p>
-      <button onClick={handleCloseDetailView}>Close</button>
-    </div>
-  );
-};
-
 EventDetails.propTypes = {
   selectedEvent: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -121,6 +113,7 @@ EventDetails.propTypes = {
     date: PropTypes.string.isRequired,
     start_time: PropTypes.string.isRequired,
     location: PropTypes.string,
+    event_id: PropTypes.number.isRequired,
   }).isRequired,
   handleCloseDetailView: PropTypes.func.isRequired,
 };
