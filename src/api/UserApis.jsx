@@ -79,6 +79,7 @@ export const checkInvitation = async (userContext, eventId) => {
 
   try {
     const response = await axios.post(`${endpoint}/link-user-to-event/check-invitation`, { userId, eventId });
+    console.log('Check Invitation Response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error checking invitation:', error.message);
@@ -95,6 +96,18 @@ export const markAttendance = async (userContext, eventId) => {
     return response.data;
   } catch (error) {
     console.error('Error marking attendance:', error.message);
+    throw error;
+  }
+};
+
+// Function to get attending users
+export const getAttendingUsers = async (eventId) => {
+  try {
+    const response = await axios.get(`${endpoint}/link-user-to-event/attending-users`, { params: { eventId } });
+    console.log('Get Attending Users Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting attending users:', error.message);
     throw error;
   }
 };
