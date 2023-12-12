@@ -4,6 +4,7 @@ import { FormContainer, FormInput, FormTitle, FormInputContainer, FormLabel, Sub
 import PropTypes from 'prop-types';
 import { updateEvent } from "../../api/EventApis";
 
+// Component for updating event information
 const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
   const [form, setForm] = useState({
     created_by_id: "",
@@ -12,28 +13,22 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     start_time: "",
     end_time: "",
     date: null,
-    deadline_attend: null,
-    deadline_unattend: null,
     location: "",
   });
 
-  // console.log(eventToUpdate);
-
+  // useEffect to update form data when eventToUpdate changes
   useEffect(() => {
     if (eventToUpdate) {
       const formattedDate = new Date(eventToUpdate.date);
-      const formattedAttend = new Date(eventToUpdate.deadline_attend);
-      const formattedUnattend = new Date(eventToUpdate.deadline_unattend);
 
       setForm({
         ...eventToUpdate,
         date: formattedDate,
-        deadline_attend: formattedAttend,
-        deadline_unattend: formattedUnattend,
       });
     }
   }, [eventToUpdate]);
 
+  // Handler for input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -42,6 +37,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     });
   };
 
+  // Handler for date changes in the date picker
   const handleDateChange = (date, name) => {
     if (date instanceof Date && !isNaN(date.getTime())) {
       setForm({
@@ -63,24 +59,14 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
+  // Handler for form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // Add a validation check to ensure deadlines are before the event date
-    if (
-      (form.deadline_attend && form.deadline_attend >= form.date) ||
-      (form.deadline_unattend && form.deadline_unattend >= form.date)
-    ) {
-      console.error("Deadlines must be before the event date");
-      // Optionally, you can display an error message to the user
-      return;
-    }
-
-    // Add a validation check to ensure end time is after start time
+    // Add a validation check to ensure end time is after start time - would actually need end date to make this proper
     if (form.start_time && form.end_time && form.start_time >= form.end_time) {
       console.error("End time must be after start time");
-      // Optionally, you can display an error message to the user
       return;
     }
 
@@ -88,19 +74,11 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
       const formattedDate =
         form.date &&
         form.date.toLocaleDateString("en-GB").split("/").reverse().join("-");
-      const formattedAttend =
-        form.deadline_attend &&
-        form.deadline_attend.toLocaleDateString("en-GB").split("/").reverse().join("-");
-      const formattedUnattend =
-        form.deadline_unattend &&
-        form.deadline_unattend.toLocaleDateString("en-GB").split("/").reverse().join("-");
 
       const updatedEvent = await updateEvent({
         ...form,
         event_id: eventToUpdate.event_id,
         date: formattedDate,
-        deadline_attend: formattedAttend,
-        deadline_unattend: formattedUnattend,
       });
       console.log("UpdateEventForm handleSubmit called:", updatedEvent);
       onSubmit(updatedEvent);
@@ -109,6 +87,7 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     }
   };
 
+  // Handler to prevent form click from propagating
   const handleFormClick = (event) => {
     event.stopPropagation();
   };
@@ -170,26 +149,6 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
       </FormInputContainer>
 
       <FormInputContainer>
-        <FormLabel>Deadline to Attend</FormLabel>
-        <StyledDatePicker
-          selected={form.deadline_attend}
-          onChange={(date) => handleDateChange(date, 'deadline_attend')}
-          dateFormat="dd/MM/yyyy"
-          placeholderText="DD/MM/YYYY"
-        />
-      </FormInputContainer>
-
-      <FormInputContainer>
-        <FormLabel>Deadline to Unattend</FormLabel>
-        <StyledDatePicker
-          selected={form.deadline_unattend}
-          onChange={(date) => handleDateChange(date, 'deadline_unattend')}
-          dateFormat="dd/MM/yyyy"
-          placeholderText="DD/MM/YYYY"
-        />
-      </FormInputContainer>
-
-      <FormInputContainer>
         <FormLabel>Location</FormLabel>
         <FormInput
           type="text"
@@ -213,8 +172,6 @@ UpdateEventForm.propTypes = {
     start_time: PropTypes.string,
     end_time: PropTypes.string,
     date: PropTypes.string,
-    deadline_attend: PropTypes.string,
-    deadline_unattend: PropTypes.string,
     location: PropTypes.string,
   }),
   onSubmit: PropTypes.func.isRequired,

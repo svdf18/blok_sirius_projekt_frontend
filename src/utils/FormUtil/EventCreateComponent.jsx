@@ -12,18 +12,15 @@ const CreateEventForm = ({ onSubmit }) => {
     start_time: "",
     end_time: "",
     date: null,
-    deadline_attend: null,
-    deadline_unattend: null,
     location: "",
   });
-
 
   const [selectedDepartments, setSelectedDepartments] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "date" || name === "deadline_attend" || name === "deadline_unattend") {
+    if (name === "date" ) {
       const dateValue = typeof value === 'string' ? formatDateBackend(value) : value;
 
       setForm({
@@ -55,8 +52,6 @@ const CreateEventForm = ({ onSubmit }) => {
   
     try {
       const formattedDate = form.date && form.date.toLocaleDateString('en-GB').split('/').reverse().join('-');
-      const formattedDeadlineAttend = form.deadline_attend && form.deadline_attend.toLocaleDateString('en-GB').split('/').reverse().join('-');
-      const formattedDeadlineUnattend = form.deadline_unattend && form.deadline_unattend.toLocaleDateString('en-GB').split('/').reverse().join('-');
   
       console.log('Form Data:', {
         created_by_id: form.created_by_id,
@@ -65,8 +60,6 @@ const CreateEventForm = ({ onSubmit }) => {
         date: formattedDate,
         start_time: form.start_time,
         end_time: form.end_time,
-        deadline_attend: formattedDeadlineAttend,
-        deadline_unattend: formattedDeadlineUnattend,
         location: form.location,
       });
   
@@ -76,8 +69,6 @@ const CreateEventForm = ({ onSubmit }) => {
       const eventId = await postEvent({
         ...form,
         date: formattedDate,
-        deadline_attend: formattedDeadlineAttend,
-        deadline_unattend: formattedDeadlineUnattend,
       });
   
       // Submit selected departments using the obtained event ID
@@ -91,8 +82,6 @@ const CreateEventForm = ({ onSubmit }) => {
         start_time: "",
         end_time: "",
         date: null,
-        deadline_attend: null,
-        deadline_unattend: null,
         location: "",
       });
       setSelectedDepartments([]);
@@ -104,7 +93,6 @@ const CreateEventForm = ({ onSubmit }) => {
     }
   };
   
-
   return (
     <FormContainer onSubmit={handleSubmit}>
       <FormTitle>{"Create Event"}</FormTitle>
@@ -160,27 +148,6 @@ const CreateEventForm = ({ onSubmit }) => {
           value={form.end_time}
         />
       </FormInputContainer>
-
-      <FormInputContainer>
-        <FormLabel>Deadline to Attend</FormLabel>
-        <StyledDatePicker
-          selected={form.deadline_attend}
-          onChange={(date) => handleChange({ target: { name: 'deadline_attend', value: date } })}
-          dateFormat="dd/MM/yyyy"
-          placeholderText="DD/MM/YYYY"
-        />
-      </FormInputContainer>
-
-      <FormInputContainer>
-        <FormLabel>Deadline to Unattend</FormLabel>
-        <StyledDatePicker
-          selected={form.deadline_unattend}
-          onChange={(date) => handleChange({ target: { name: 'deadline_unattend', value: date } })}
-          dateFormat="dd/MM/yyyy"
-          placeholderText="DD/MM/YYYY"
-        />
-      </FormInputContainer>
-
 
       <FormInputContainer>
         <FormLabel>Location</FormLabel>

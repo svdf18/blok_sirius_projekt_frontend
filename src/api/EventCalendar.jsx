@@ -2,7 +2,7 @@ import Calendar from "react-calendar";
 import { useState } from "react";
 import PropTypes from 'prop-types';
 
-const CalendarComponent = ({ onDateChange }) => {
+const EventCalendar = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
@@ -15,8 +15,8 @@ const CalendarComponent = ({ onDateChange }) => {
   );
 };
 
-CalendarComponent.propTypes = {
+EventCalendar.propTypes = {
   onDateChange: PropTypes.func.isRequired,
 };
 
-export default CalendarComponent;
+export default EventCalendar;

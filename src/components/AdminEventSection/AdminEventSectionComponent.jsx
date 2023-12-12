@@ -3,7 +3,7 @@ import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, 
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import EventList from '../../api/EventList.jsx';
 import EventDateList from '../../api/EventDateList.jsx';
-import CalendarComponent from '../../api/CalendarComponent.jsx';
+import EventCalendar from '../../api/EventCalendar.jsx';
 import 'react-calendar/dist/Calendar.css';
 import CreateEventForm from '../../utils/FormUtil/EventCreateComponent.jsx';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ const AdminEventSection = () => {
           </TodayContainer>
 
           <CalendarContainer>
-            <CalendarComponent 
+            <EventCalendar 
             onDateChange={handleCalendarDateChange} />
           </CalendarContainer>
 
