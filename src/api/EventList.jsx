@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getEvents } from './EventApis';
 import EventCard from '../utils/EventCardUtil/EventCardComponent';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
-import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
+import { sortByDateTime, formatDateFrontend } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
 import { useUser } from '../services/Auth/UserContext.jsx'
 import { checkInvitation, markAttendance, getUserById, getAttendingUsers } from './UserApis.jsx';
@@ -113,7 +113,14 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const userContext = useUser();
   const currentUserId = userContext.user?.user_id;
   const [error, setError] = useState(null);
+  const [formattedDate, setFormattedDate] = useState("");
 
+
+  useEffect(() => {
+    if (selectedEvent) {
+      setFormattedDate(formatDateFrontend(selectedEvent.date));
+    }
+  }, [selectedEvent]);
   // fetch user given a user_id
   const fetchUserDetails = async (userId) => {
     try {
@@ -176,7 +183,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <h3>Event Details</h3>
       <p>Title: {selectedEvent.title}</p>
       <p>Description: {selectedEvent.description}</p>
-      <p>Date: {selectedEvent.date}</p>
+      <p>Date: {formattedDate}</p>
       <p>Begins at: {selectedEvent.start_time}</p>
       <p>Location: {selectedEvent.location}</p>
       <p>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</p>
