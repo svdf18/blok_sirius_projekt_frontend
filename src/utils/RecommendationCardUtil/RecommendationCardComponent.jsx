@@ -1,15 +1,19 @@
 import PropTypes from 'prop-types';
-import { RecommendationCardContainer, RecommendationCardTitle, RecommendationCardText, ButtonCardContainer } from './RecommendationCardElements.jsx';
+import { RecommendationCardContainer, RecommendationCardTitle, RecommendationCardText, ButtonCardContainer, RecommendationUserName, RecommendationUserContainer, RecommendationUserImage, RecommendationCardURL } from './RecommendationCardElements.jsx';
 import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 import { deleteRecommendation } from '../../api/RecommendationApis';
+import { getUserById } from '../../api/UserApis.jsx';
 import ModalComponent from '../ModalUtil/FormModalComponent.jsx';
 import { useState, useEffect } from 'react';
 import UpdateRecommendationForm from '../FormUtil/RecommendationUpdateComponent.jsx';
 
+
 const RecommendationCard = ({ recommendation, onUpdate }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+  const [taggedUserName, setTaggedUserName] = useState('');
+  const [taggedUserImage, setTaggedUserImage] = useState('');
 
   const openUpdateModal = () => {
     console.log('Opening modal');
@@ -31,10 +35,33 @@ const RecommendationCard = ({ recommendation, onUpdate }) => {
     }
   }, [selectedRecommendation]);
 
+  useEffect(() => {
+    const fetchTaggedUserName = async () => {
+      try {
+        const taggedUser = await getUserById(recommendation.tagged_user_id);
+        setTaggedUserName(`${taggedUser.first_name} ${taggedUser.last_name}`); 
+        setTaggedUserImage(taggedUser.user_image);   // Assuming user_image is the URL
+      } catch (error) {
+        console.error('Error fetching tagged user details:', error.message);
+      }
+    };
+  
+    fetchTaggedUserName();
+  }, [recommendation.tagged_user_id]);
+  
+
+
   return (
     <RecommendationCardContainer category={recommendation.category}>
       <RecommendationCardTitle>{recommendation.title}</RecommendationCardTitle>
+        <RecommendationUserContainer>
+          <RecommendationUserName>Anbefalet af {taggedUserName}</RecommendationUserName>
+          <RecommendationUserImage src={taggedUserImage} alt={`Profile of ${taggedUserName}`} />
+        </RecommendationUserContainer>
       <RecommendationCardText>{recommendation.content}</RecommendationCardText>
+      <RecommendationCardURL href={recommendation.recommendation_url} target="_blank" rel="noopener noreferrer">
+        {recommendation.recommendation_url}
+      </RecommendationCardURL>
         <ButtonCardContainer>
           <DeleteButtonComponent
             deleteFunction={(itemId) => {
@@ -64,8 +91,10 @@ RecommendationCard.propTypes = {
   recommendation: PropTypes.shape({
     recommendation_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
+    recommendation_url: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
+    tagged_user_id: PropTypes.number.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

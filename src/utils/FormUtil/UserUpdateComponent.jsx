@@ -208,15 +208,21 @@ const handleSubmit = async (e) => {
       />
     </FormInputContainer>
 
-    <FormInputContainer>
-        <FormLabel>Department</FormLabel>
-        <Select
-          options={departments}
-          onChange={(selectedOption) => setForm({ ...form, department: selectedOption.value })}
-          value={departments.find((option) => option.value === form.department)}
-          placeholder="Select department"
-        />
-      </FormInputContainer>
+    {userToUpdate && (
+        <FormInputContainer>
+          <FormLabel>Department</FormLabel>
+          {/* Disable the select input */}
+          <Select
+            options={departments}
+            onChange={(selectedOption) => setForm({ ...form, department: selectedOption.value })}
+            value={departments.find((option) => option.value === form.department)}
+            placeholder="Select department"
+            // Disable the field for editing
+            isDisabled
+          />
+        </FormInputContainer>
+      )}
+
 
       <SubmitButton type="submit">Submit</SubmitButton>
     </FormContainer>

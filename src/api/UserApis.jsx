@@ -11,6 +11,16 @@ export const getUsers = async () => {
   }
 };
 
+export const getUserById = async (userId) => {
+  try {
+    const response = await axios.get(`${endpoint}/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with ID ${userId}:`, error.message);
+    throw error;
+  }
+};
+
 export const postUser = async (formData) => {
   try {
     const response = await axios.post(`${endpoint}/users`, formData);

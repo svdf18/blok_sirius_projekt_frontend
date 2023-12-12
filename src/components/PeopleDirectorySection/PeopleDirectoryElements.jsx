@@ -18,7 +18,7 @@ export const DirectoryGridContainer = styled.div`
   display: grid;
   margin-top: 5.9rem;
   padding-right: 6rem;
-  width: 90vw;
+  width: auto;
   grid-template-columns: 1fr 3fr;
 
   @media screen and (max-width: 1440px) {
@@ -49,7 +49,7 @@ export const DirectoryGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0px;
   width: auto;
-  margin-left: 6rem;
+  margin-left: 4rem;
   position: relative;
   background: inherit;
 

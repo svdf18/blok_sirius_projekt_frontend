@@ -117,9 +117,9 @@ const UpdateRecommendationForm = ({ recommendationToUpdate, onSubmit }) => {
         <FormLabel>Category</FormLabel>
         <Select
           options={[
-            { value: 'food', label: 'Food' },
-            { value: 'culture', label: 'Culture' },
-            { value: 'travel', label: 'Travel' },
+            { value: 'Food', label: 'Food' },
+            { value: 'Culture', label: 'Culture' },
+            { value: 'Travel', label: 'Travel' },
           ]}
           onChange={handleCategoryChange}
           name="category"

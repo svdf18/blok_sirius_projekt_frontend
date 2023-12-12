@@ -69,3 +69,4 @@ export const updateEvent = async (formData) => {
     throw error;
   }
 };
+
