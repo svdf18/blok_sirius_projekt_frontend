@@ -91,7 +91,7 @@ const MasonryContainerGrid = styled(Masonry)`
     }
 
     @media screen and (max-width: 1440px) {
-    min-width: 40vw;
+    min-width: 60vw;
     }
 
     @media screen and (max-width: 1080px) {
