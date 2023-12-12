@@ -178,7 +178,6 @@ const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <p>Description: {selectedEvent.description}</p>
       <p>Date: {selectedEvent.date}</p>
       <p>Begins at: {selectedEvent.start_time}</p>
-      <p>Ends at: {selectedEvent.end_time}</p>
       <p>Location: {selectedEvent.location}</p>
       <p>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</p>
       <button onClick={handleCloseDetailView}>Close</button>
@@ -193,7 +192,6 @@ EventDetails.propTypes = {
     description: PropTypes.string,
     date: PropTypes.string.isRequired,
     start_time: PropTypes.string.isRequired,
-    end_time: PropTypes.string.isRequired,
     location: PropTypes.string,
     event_id: PropTypes.number.isRequired,
   }).isRequired,

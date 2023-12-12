@@ -10,7 +10,6 @@ const CreateEventForm = ({ onSubmit }) => {
     title: "",
     description: "",
     start_time: "",
-    end_time: "",
     date: null,
     location: "",
   });
@@ -59,7 +58,6 @@ const CreateEventForm = ({ onSubmit }) => {
         description: form.description,
         date: formattedDate,
         start_time: form.start_time,
-        end_time: form.end_time,
         location: form.location,
       });
   
@@ -80,7 +78,6 @@ const CreateEventForm = ({ onSubmit }) => {
         title: "",
         description: "",
         start_time: "",
-        end_time: "",
         date: null,
         location: "",
       });
@@ -136,16 +133,6 @@ const CreateEventForm = ({ onSubmit }) => {
           onChange={handleChange}
           name="start_time"
           value={form.start_time}
-        />
-      </FormInputContainer>
-
-      <FormInputContainer>
-        <FormLabel>End Time</FormLabel>
-        <FormInput
-          type="time"
-          onChange={handleChange}
-          name="end_time"
-          value={form.end_time}
         />
       </FormInputContainer>
 

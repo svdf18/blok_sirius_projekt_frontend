@@ -11,7 +11,6 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
     title: "",
     description: "",
     start_time: "",
-    end_time: "",
     date: null,
     location: "",
   });
@@ -63,12 +62,6 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Add a validation check to ensure end time is after start time - would actually need end date to make this proper
-    if (form.start_time && form.end_time && form.start_time >= form.end_time) {
-      console.error("End time must be after start time");
-      return;
-    }
 
     try {
       const formattedDate =
@@ -139,16 +132,6 @@ const UpdateEventForm = ({ eventToUpdate, onSubmit }) => {
       </FormInputContainer>
 
       <FormInputContainer>
-        <FormLabel>End Time</FormLabel>
-        <FormInput
-          type="time"
-          onChange={handleChange}
-          name="end_time"
-          value={form.end_time}
-        />
-      </FormInputContainer>
-
-      <FormInputContainer>
         <FormLabel>Location</FormLabel>
         <FormInput
           type="text"
@@ -170,7 +153,6 @@ UpdateEventForm.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     start_time: PropTypes.string,
-    end_time: PropTypes.string,
     date: PropTypes.string,
     location: PropTypes.string,
   }),
