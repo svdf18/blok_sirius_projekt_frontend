@@ -16,7 +16,7 @@ const PeopleDirectorySection = () => {
             <ActionMenuComponent />
           </ActionMenuGridContainer>
             <DirectoryGrid>
-              <UserList/>
+              <UserList showButtons={false}/>
             </DirectoryGrid>
         </DirectoryGridContainer>
       </DirectoryContainer>

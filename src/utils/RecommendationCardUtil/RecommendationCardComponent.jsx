@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import UpdateRecommendationForm from '../FormUtil/RecommendationUpdateComponent.jsx';
 
 
-const RecommendationCard = ({ recommendation, onUpdate }) => {
+const RecommendationCard = ({ recommendation, onUpdate, showButtons }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
   const [taggedUserName, setTaggedUserName] = useState('');
@@ -63,15 +63,19 @@ const RecommendationCard = ({ recommendation, onUpdate }) => {
         Visit Webpage
       </RecommendationCardURL>
         <ButtonCardContainer>
-          <DeleteButtonComponent
-            deleteFunction={(itemId) => {
-              console.log(`Deleting recommendation with ID ${itemId}`);
-              deleteRecommendation(itemId);
-            }}
-            itemId={recommendation.recommendation_id}
-            itemType="recommendation"
-          />
-          <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={recommendation.recommendation_id} itemProps={recommendation} />
+          {showButtons && (
+            <>
+              <DeleteButtonComponent
+                deleteFunction={(itemId) => {
+                  console.log(`Deleting recommendation with ID ${itemId}`);
+                  deleteRecommendation(itemId);
+                }}
+                itemId={recommendation.recommendation_id}
+                itemType="recommendation"
+              />
+              <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={recommendation.recommendation_id} itemProps={recommendation} />
+            </>
+          )}
           <ModalComponent
             isOpen={isUpdateModalOpen}
             onRequestClose={closeUpdateModal}
@@ -97,6 +101,8 @@ RecommendationCard.propTypes = {
     tagged_user_id: PropTypes.number.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
+  showButtons: PropTypes.bool.isRequired,
+
 };
 
 export default RecommendationCard;

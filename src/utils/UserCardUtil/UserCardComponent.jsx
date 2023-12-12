@@ -9,7 +9,7 @@ import UserUpdateForm from '../FormUtil/UserUpdateComponent';
 import { formatDateFrontend } from '../DateUtil/FormatDateComponent';
 import { useUser } from '../../services/Auth/UserContext';
 
-const UserCard = ({ user, onUpdate }) => {
+const UserCard = ({ user, onUpdate, showButtons }) => {
   const [isExpanded, setIsExpanded] = useState(true); // Track the expanded/folded state
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -38,6 +38,7 @@ const UserCard = ({ user, onUpdate }) => {
   return (
     <UserCardContainer user_type={user.user_type} onClick={() => console.log("Card clicked")}>
       <UserCardIconLink onClick={toggleCardView} />
+  
       {isExpanded ? (
         <>
           <UserCardTitle> {user.first_name} {user.last_name}</UserCardTitle>
@@ -45,33 +46,39 @@ const UserCard = ({ user, onUpdate }) => {
           <UserCardText>Email: {user.email}</UserCardText>
         </>
       ) : null}
+  
       {!isExpanded && (
         <>
           <UserCardTitle> {user.first_name} {user.last_name}</UserCardTitle>
           <UserCardSubtitle>{user.department}</UserCardSubtitle>
+  
           {user.user_image && <UserCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />} {/* No text if image is empty */}
           <UserCardText>Email: {user.email}</UserCardText>
           <UserCardText>Phone: {user.phone}</UserCardText>
           <UserCardText>Birthdate: {formatDateFrontend(user.birthdate)}</UserCardText>
           <UserCardText>Address: {user.street}, {user.postal_code}</UserCardText>
+  
           <ButtonCardContainer>
-        <DeleteButtonComponent
-              deleteFunction={(itemId) => {
-                console.log(`Deleting user with ID ${itemId}`);
-                
-                // Check if userContext.user is defined before accessing user_id
-                const currentUserId = userContext.user?.user_id;
-                console.log(`Current user ${currentUserId}.`);
-                if (currentUserId !== undefined) {
-                  deleteUser(itemId, currentUserId);
-                } else {
-                  console.error("Current user information is missing.");
-                }
-              }}
-              itemId={user.user_id}
-              itemType="user"
-            />
-            <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={user.user_id} itemProps={user} />
+            {showButtons && (
+              <>
+                <DeleteButtonComponent
+                  deleteFunction={(itemId) => {
+                    console.log(`Deleting user with ID ${itemId}`);
+                    // Check if userContext.user is defined before accessing user_id
+                    const currentUserId = userContext.user?.user_id;
+                    console.log(`Current user ${currentUserId}.`);
+                    if (currentUserId !== undefined) {
+                      deleteUser(itemId, currentUserId);
+                    } else {
+                      console.error("Current user information is missing.");
+                    }
+                  }}
+                  itemId={user.user_id}
+                  itemType="user"
+                />
+                <UpdateButtonComponent onUpdate={() => openUpdateModal()} itemId={user.user_id} itemProps={user} />
+              </>
+            )}
             <ModalComponent
               isOpen={isUpdateModalOpen}
               onRequestClose={closeUpdateModal}
@@ -85,9 +92,10 @@ const UserCard = ({ user, onUpdate }) => {
           </ButtonCardContainer>
         </>
       )}
-      
     </UserCardContainer>
   );
+  
+  
 };
 
 UserCard.propTypes = {
@@ -105,6 +113,7 @@ UserCard.propTypes = {
     department: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
+  showButtons: PropTypes.bool.isRequired,
 };
 
 export default UserCard;

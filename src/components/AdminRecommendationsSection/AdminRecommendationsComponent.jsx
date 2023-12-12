@@ -20,9 +20,7 @@ const AdminRecommendationsComponent = () => {
           <ActionMenuGridContainer>
             <ActionMenuComponent menuItems={menuItems} />
           </ActionMenuGridContainer>
-          
-            <RecommendationList/>
-      
+          <RecommendationList showButtons={true}/>
         </RecommendationsDirectoryGridContainer>
       </RecommendationsDirectoryContainer>
       

@@ -4,8 +4,9 @@ import RecommendationCard from '../utils/RecommendationCardUtil/RecommendationCa
 import UpdateRecommendationForm from '../utils/FormUtil/RecommendationUpdateComponent.jsx';
 import styled from "styled-components";
 import Masonry from 'react-masonry-css';
+import PropTypes from 'prop-types';
 
-const RecommendationList = () => {
+const RecommendationList = ({ showButtons }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,7 +63,10 @@ const RecommendationList = () => {
 
       {recommendations.map(recommendation => (
         <div key={recommendation.recommendation_id}>
-          <RecommendationCard recommendation={recommendation} onUpdate={handleUpdateClick} />
+          <RecommendationCard 
+            recommendation={recommendation} 
+            onUpdate={handleUpdateClick}
+            showButtons={showButtons} />
           {selectedRecommendation && selectedRecommendation.recommendationId === recommendation.recommendation_id && (
             <UpdateRecommendationForm recommendationToUpdate={selectedRecommendation} onSubmit={handleFormSubmit} />
           )}
@@ -101,3 +105,7 @@ const breakpointColumnsObj = {
   1080: 2,
   720: 1,
 };
+
+RecommendationList.propTypes = {
+  showButtons: PropTypes.bool.isRequired,
+}

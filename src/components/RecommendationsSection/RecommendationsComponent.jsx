@@ -14,7 +14,7 @@ const RecommendationsSection = () => {
           <ActionMenuGridContainer>
             <ActionMenuComponent />
           </ActionMenuGridContainer>
-              <RecommendationList/>
+              <RecommendationList showButtons={false}/>
         </RecommendationsDirectoryGridContainer>
       </RecommendationsDirectoryContainer>
     </>

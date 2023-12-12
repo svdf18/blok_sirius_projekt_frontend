@@ -4,8 +4,9 @@ import UserCard from '../utils/UserCardUtil/UserCardComponent.jsx';
 import UpdateUserForm from '../utils/FormUtil/UserUpdateComponent.jsx';
 import styled from "styled-components";
 import Masonry from 'react-masonry-css';
+import PropTypes from 'prop-types';
 
-const UserList = () => {
+const UserList = ({ showButtons }) => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,10 @@ const UserList = () => {
       columnClassName="my-masonry-grid_column">
       {users.map(user => (
         <div key={user.user_id}>
-          <UserCard user={user} onUpdate={handleUpdateClick} />
+          <UserCard 
+            user={user} 
+            onUpdate={handleUpdateClick}
+            showButtons={showButtons} />
           {selectedUser && selectedUser.userId === user.user_id && (
             <UpdateUserForm userToUpdate={selectedUser} onSubmit={handleFormSubmit} />
           )}
@@ -77,6 +81,8 @@ export default UserList;
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
 }
+
+
 
 const MasonryContainerGrid = styled(Masonry)`
     display: flex;
@@ -104,3 +110,7 @@ const breakpointColumnsObj = {
   1440: 2,
   720: 1,
 };
+
+UserList.propTypes = {
+  showButtons: PropTypes.bool.isRequired,
+}
