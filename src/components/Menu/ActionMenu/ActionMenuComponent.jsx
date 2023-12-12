@@ -27,7 +27,6 @@ const ActionMenuComponent = ({ menuItems = [], toggle }) => {
         <img src={SiriusLogo} alt="Sirius Logo" />
       </ActionMenuLogo>
       <BreakLine />
-
       {menuItems &&
         menuItems.map((menuItem, index) => (
           <React.Fragment key={index}>
@@ -58,7 +57,7 @@ ActionMenuComponent.propTypes = {
       title: PropTypes.string.isRequired,
       formComponent: PropTypes.elementType.isRequired,
     })
-  ).isRequired,
+  ),
   toggle: PropTypes.func,
 };
 

@@ -5,12 +5,14 @@ import UpdateRecommendationForm from '../utils/FormUtil/RecommendationUpdateComp
 import styled from "styled-components";
 import Masonry from 'react-masonry-css';
 import PropTypes from 'prop-types';
+import GenericSearch from '../components/Common/GenericSearchComponent.jsx';
 
 const RecommendationList = ({ showButtons }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredRecommendations, setFilteredRecommendations] = useState([]);
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -20,6 +22,7 @@ const RecommendationList = ({ showButtons }) => {
 
         if (!areArraysEqual(previousRecommendations, data)) {
           setRecommendations(data);
+          setFilteredRecommendations(data); // Initialize filtered recommendations with all recommendations
         }
 
         setLoading(false);
@@ -46,6 +49,14 @@ const RecommendationList = ({ showButtons }) => {
     setSelectedRecommendation(null);
   };
 
+  // Function to handle search and update filtered recommendations
+  const handleSearch = (query) => {
+    const filtered = recommendations.filter((recommendation) =>
+      recommendation.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredRecommendations(filtered);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -56,23 +67,29 @@ const RecommendationList = ({ showButtons }) => {
 
   return (
     <>
-    <MasonryContainerGrid
-      breakpointCols={breakpointColumnsObj}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column">
-
-      {recommendations.map(recommendation => (
-        <div key={recommendation.recommendation_id}>
-          <RecommendationCard 
-            recommendation={recommendation} 
-            onUpdate={handleUpdateClick}
-            showButtons={showButtons} />
-          {selectedRecommendation && selectedRecommendation.recommendationId === recommendation.recommendation_id && (
-            <UpdateRecommendationForm recommendationToUpdate={selectedRecommendation} onSubmit={handleFormSubmit} />
-          )}
-        </div>
-      ))}
-    </MasonryContainerGrid>
+      <GenericSearch onSearch={handleSearch} />
+      <MasonryContainerGrid
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {filteredRecommendations.map((recommendation) => (
+          <div key={recommendation.recommendation_id}>
+            <RecommendationCard
+              recommendation={recommendation}
+              onUpdate={handleUpdateClick}
+              showButtons={showButtons}
+            />
+            {selectedRecommendation &&
+              selectedRecommendation.recommendationId === recommendation.recommendation_id && (
+                <UpdateRecommendationForm
+                  recommendationToUpdate={selectedRecommendation}
+                  onSubmit={handleFormSubmit}
+                />
+              )}
+          </div>
+        ))}
+      </MasonryContainerGrid>
     </>
   );
 };
@@ -82,6 +99,8 @@ export default RecommendationList;
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
 }
+
+//// SOS styling
 
 const MasonryContainerGrid = styled(Masonry)`
     display: flex;

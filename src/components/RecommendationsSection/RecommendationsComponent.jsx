@@ -4,8 +4,8 @@ import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
 import RecommendationList from "../../api/RecommendationsList.jsx";
 import { RecommendationsDirectoryContainer, RecommendationsDirectoryGridContainer } from "./RecommendationsElements.jsx";
 
-
 const RecommendationsSection = () => {
+  
   return (
     <>
       <GlobalStyle />
@@ -14,7 +14,7 @@ const RecommendationsSection = () => {
           <ActionMenuGridContainer>
             <ActionMenuComponent />
           </ActionMenuGridContainer>
-              <RecommendationList showButtons={false}/>
+              <RecommendationList showButtons={true}/>
         </RecommendationsDirectoryGridContainer>
       </RecommendationsDirectoryContainer>
     </>
