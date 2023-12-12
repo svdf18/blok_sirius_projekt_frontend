@@ -87,7 +87,6 @@ EventCard.propTypes = {
     description: PropTypes.string,
     date: PropTypes.string.isRequired,
     start_time: PropTypes.string.isRequired,
-    end_time: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
