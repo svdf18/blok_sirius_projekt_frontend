@@ -16,15 +16,15 @@ export const RecommendationsDirectoryContainer = styled.div`
 export const RecommendationsDirectoryGridContainer = styled.div`
   display: grid;
   margin-top: 5.9rem;
-  padding-right: 6rem;
+  /* padding-right: 6rem; */ /* Remove or adjust this line */
   width: auto;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
 
   @media screen and (max-width: 1440px) {
     grid-template-columns: 1fr 2fr;
   }
 
-  @media screen and (max-width: 1080px) {
+  @media screen and (max-width: 1260px) {
     grid-template-columns: 1fr;
   }
 

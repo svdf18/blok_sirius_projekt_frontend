@@ -35,6 +35,6 @@ export const breakpointColumnsObj = {
 };
 
 export const MasonryItem = styled.div`
-  grid-column: span 2; /* Make the first item span two columns */
-  grid-row: span 2; /* Make the first item span two rows */
+  grid-column: span 2;
+  grid-row: span 2;
 `;

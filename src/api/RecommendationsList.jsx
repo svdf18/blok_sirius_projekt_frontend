@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { getRecommendations } from './RecommendationApis.jsx';
 import RecommendationCard from '../utils/RecommendationCardUtil/RecommendationCardComponent.jsx';
 import UpdateRecommendationForm from '../utils/FormUtil/RecommendationUpdateComponent.jsx';
+import styled from "styled-components";
+import Masonry from 'react-masonry-css';
 
 const RecommendationList = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -53,6 +55,11 @@ const RecommendationList = () => {
 
   return (
     <>
+    <MasonryContainerGrid
+      breakpointCols={breakpointColumnsObj}
+      className="my-masonry-grid"
+      columnClassName="my-masonry-grid_column">
+
       {recommendations.map(recommendation => (
         <div key={recommendation.recommendation_id}>
           <RecommendationCard recommendation={recommendation} onUpdate={handleUpdateClick} />
@@ -61,6 +68,7 @@ const RecommendationList = () => {
           )}
         </div>
       ))}
+    </MasonryContainerGrid>
     </>
   );
 };
@@ -70,3 +78,26 @@ export default RecommendationList;
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
 }
+
+const MasonryContainerGrid = styled(Masonry)`
+    display: flex;
+    max-width: 62vw;
+    margin: 0 auto;
+    gap: 5px;
+    justify-content: center;
+    align-items: ${({ breakpoint }) => breakpoint !== 2100 && 'flex-start'};
+
+    .my-masonry-grid_column {
+        background-clip: padding-box;
+    }
+
+    @media screen and (max-width: 1440px) {
+    max-width: 87vw;
+  }
+`;
+
+const breakpointColumnsObj = {
+  default: 2,
+  1080: 2,
+  720: 1,
+};

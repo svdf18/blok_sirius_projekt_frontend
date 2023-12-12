@@ -5,22 +5,22 @@ import { NavBarContainer, NavBarIconLink, UserIcon, HashtagIcon, MessageIcon, St
 export const NavBarComponent = ({ isSidebarOpen }) => {
   return (
     <NavBarContainer>
-<NavBarIconLink to="/" mobile={isSidebarOpen}>
-  <StarIcon />
-  <span className="tooltip">Home</span>
-</NavBarIconLink>
-<NavBarIconLink to="/user-profile" mobile={isSidebarOpen}>
-  <UserIcon />
-  <span className="tooltip">Profile</span>
-</NavBarIconLink>
-<NavBarIconLink mobile={isSidebarOpen}>
-  <HashtagIcon />
-  <span className="tooltip">Newsfeed</span>
-</NavBarIconLink>
-<NavBarIconLink mobile={isSidebarOpen}>
-  <MessageIcon />
-  <span className="tooltip">Messages</span>
-</NavBarIconLink>
+      <NavBarIconLink to="/" mobile={isSidebarOpen}>
+        <StarIcon />
+        <span className="tooltip">Home</span>
+      </NavBarIconLink>
+      <NavBarIconLink to="/user-profile" mobile={isSidebarOpen}>
+        <UserIcon />
+        <span className="tooltip">Profile</span>
+      </NavBarIconLink>
+      <NavBarIconLink mobile={isSidebarOpen}>
+        <HashtagIcon />
+        <span className="tooltip">Newsfeed</span>
+      </NavBarIconLink>
+      <NavBarIconLink mobile={isSidebarOpen}>
+        <MessageIcon />
+        <span className="tooltip">Messages</span>
+      </NavBarIconLink>
 
     </NavBarContainer>
   );

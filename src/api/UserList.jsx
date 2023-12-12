@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { getUsers } from './UserApis.jsx';
 import UserCard from '../utils/UserCardUtil/UserCardComponent.jsx';
 import UpdateUserForm from '../utils/FormUtil/UserUpdateComponent.jsx';
+import styled from "styled-components";
+import Masonry from 'react-masonry-css';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -53,6 +55,10 @@ const UserList = () => {
 
   return (
     <>
+    <MasonryContainerGrid
+      breakpointCols={breakpointColumnsObj}
+      className="my-masonry-grid"
+      columnClassName="my-masonry-grid_column">
       {users.map(user => (
         <div key={user.user_id}>
           <UserCard user={user} onUpdate={handleUpdateClick} />
@@ -61,6 +67,7 @@ const UserList = () => {
           )}
         </div>
       ))}
+      </MasonryContainerGrid>
     </>
   );
 };
@@ -70,3 +77,30 @@ export default UserList;
 function areArraysEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
 }
+
+const MasonryContainerGrid = styled(Masonry)`
+    display: flex;
+    min-width: 60vw;
+    margin: 0 auto;
+    gap: 5px;
+    justify-content: center;
+    align-items: ${({ breakpoint }) => breakpoint !== 2100 && 'flex-start'};
+
+    .my-masonry-grid_column {
+        background-clip: padding-box;
+    }
+
+    @media screen and (max-width: 1440px) {
+    min-width: 40vw;
+    }
+
+    @media screen and (max-width: 1080px) {
+    min-width: 80vw;
+  }
+`;
+
+const breakpointColumnsObj = {
+  default: 3,
+  1440: 2,
+  720: 1,
+};

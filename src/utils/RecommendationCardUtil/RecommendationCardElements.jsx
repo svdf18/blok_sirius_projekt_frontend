@@ -20,15 +20,13 @@ export const RecommendationCardContainer = styled.div.attrs((props) => ({
 }))`
   width: auto;
   text-align: left;
-  min-width: 12rem;
+  max-width: auto;
   border: none;
   border-radius: 28px;
-  padding: 20px;
+  padding: 10px;
   margin: 20px;
   box-shadow: 0 1px 3px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
   transition: all 30ms linear;
-
-
 `;
 
 export const RecommendationCardTitle = styled.h2`
@@ -52,12 +50,12 @@ export const RecommendationUserContainer = styled.div`
 `
 
 export const RecommendationUserImage = styled.img`
-  width: 15%; /* Ensure the image takes the full width of its container */
-  height: 100%; /* Ensure the image takes the full height of its container */
-  object-fit: cover; /* Crop the image to cover the entire container */
-  object-position: center top; /* Position the image at the center of the top */
+  width: 15%; 
+  height: 100%; 
+  object-fit: cover;
+  object-position: center top; 
   position: relative;
-  aspect-ratio: 1; /* Maintain a 1:1 aspect ratio (width:height) */
+  aspect-ratio: 1;
   border-radius: 28px;
   box-shadow: 0 1px 3px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
   

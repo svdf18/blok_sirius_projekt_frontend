@@ -66,6 +66,18 @@ export const SidebarLink = styled(Link)`
         color: #4F5E6A;
         transition: 0.2s ease-in-out;
     }
+
+    @media screen and (max-width: 1080px) {
+      font-size: 2.0rem;
+    }
+
+    @media screen and (max-width: 900px) {
+      font-size: 1.6rem;
+    }
+
+    @media screen and (max-width: 720px) {
+      font-size: 2.5rem;
+    }
 `
 
 export const MobileIconWrapper = styled.div`

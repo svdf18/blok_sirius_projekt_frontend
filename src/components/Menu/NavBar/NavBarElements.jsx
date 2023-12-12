@@ -79,7 +79,12 @@ export const NavBarIconLink = styled(Link)`
     &:last-child {
       margin-top: 1rem; 
     }
+
+    .tooltip {
+      display: none; /* Hide the tooltip on small screens */
+    }
   }
+
 
   @media screen and (max-width: 720px) {
     ${props => props.mobile && mobileStylesSideBarOpen}

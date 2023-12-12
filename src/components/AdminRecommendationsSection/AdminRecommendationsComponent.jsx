@@ -1,8 +1,9 @@
 import GlobalStyle from "../../styles/globalStyles.jsx";
 import RecommendationList from "../../api/RecommendationsList.jsx";
-import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
+import { ActionMenuGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
 import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
 import CreateRecommendationForm from "../../utils/FormUtil/RecommendationCreateComponent.jsx";
+import { RecommendationsDirectoryContainer, RecommendationsDirectoryGridContainer } from "../RecommendationsSection/RecommendationsElements.jsx"; 
 
 const AdminRecommendationsComponent = () => {
   const menuItems = [
@@ -14,16 +15,16 @@ const AdminRecommendationsComponent = () => {
   return (
     <>
       <GlobalStyle backgroundColor="yellow" />
-      <DirectoryContainer id="admin-recommendations" backgroundColor="yellow">
-        <DirectoryGridContainer>
+      <RecommendationsDirectoryContainer id="admin-recommendations" backgroundColor="yellow">
+        <RecommendationsDirectoryGridContainer>
           <ActionMenuGridContainer>
             <ActionMenuComponent menuItems={menuItems} />
           </ActionMenuGridContainer>
-          <DirectoryGrid>
+          
             <RecommendationList/>
-          </DirectoryGrid>
-        </DirectoryGridContainer>
-      </DirectoryContainer>
+      
+        </RecommendationsDirectoryGridContainer>
+      </RecommendationsDirectoryContainer>
       
     </>
   )

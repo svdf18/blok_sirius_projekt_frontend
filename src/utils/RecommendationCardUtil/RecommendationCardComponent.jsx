@@ -60,7 +60,7 @@ const RecommendationCard = ({ recommendation, onUpdate }) => {
         </RecommendationUserContainer>
       <RecommendationCardText>{recommendation.content}</RecommendationCardText>
       <RecommendationCardURL href={recommendation.recommendation_url} target="_blank" rel="noopener noreferrer">
-        {recommendation.recommendation_url}
+        Visit Webpage
       </RecommendationCardURL>
         <ButtonCardContainer>
           <DeleteButtonComponent

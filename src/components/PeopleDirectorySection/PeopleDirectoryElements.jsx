@@ -38,7 +38,7 @@ export const ActionMenuGridContainer = styled.div`
     display: flex;
     width: 400px;
     margin: 0 auto;
-    margin-left: 6rem;
+    margin-left: 4rem;
     justify-content: center;
     top: 0;
     height: 100%;
