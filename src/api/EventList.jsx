@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getEvents } from './EventApis';
 import EventCard from '../utils/EventCardUtil/EventCardComponent';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
-import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
+import { sortByDateTime, formatDateFrontend } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
 import { useUser } from '../services/Auth/UserContext.jsx'
 import { checkInvitation, markAttendance, getUserById, getAttendingUsers } from './UserApis.jsx';
@@ -52,7 +52,7 @@ useEffect(() => {
     );
     setEvents(updatedEvents);
 
-    // Set selectedEvent to null to hide the EventDetails view
+    // set selectedEvent to null to hide the EventDetails view
     setSelectedEvent(null);
   };
 
@@ -64,7 +64,7 @@ useEffect(() => {
     return <p>Error: {error.message}</p>;
   }
 
-// Sort events by date and time
+// sort events by date and time
 const sortedEvents = sortByDateTime(events);
 
 const upcomingFilteredEvents = sortedEvents.filter((event) => {
@@ -113,7 +113,14 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const userContext = useUser();
   const currentUserId = userContext.user?.user_id;
   const [error, setError] = useState(null);
+  const [formattedDate, setFormattedDate] = useState("");
 
+
+  useEffect(() => {
+    if (selectedEvent) {
+      setFormattedDate(formatDateFrontend(selectedEvent.date));
+    }
+  }, [selectedEvent]);
   // fetch user given a user_id
   const fetchUserDetails = async (userId) => {
     try {
@@ -142,8 +149,14 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
 
     // handle the invitation status as needed
     if (isInvited) {
+      // check if the user is already attending the event
+      const isAlreadyAttending = attendingUsers.some(user => user.id === currentUserId);
+      if (isAlreadyAttending) {
+        setError("***You are already attending the event***");
+        return;
+      }
       console.log(`User ${currentUserId} is invited to event ${selectedEvent.event_id}`);
-      
+
       // mark attendance and log the response
       console.log('Mark attendance response:', await markAttendance(userContext, selectedEvent.event_id));
 
@@ -160,9 +173,9 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       console.log(`User ${currentUserId} is not invited to event ${selectedEvent.event_id}`);
       // prompt for those not attending
     }
-    // After marking attendance, fetch the updated list of attending users
+    // after marking attendance, fetch the updated list of attending users
     await fetchAttendingUsers();
-  }, [currentUserId, selectedEvent.event_id, userContext, fetchAttendingUsers]);
+  }, [currentUserId, selectedEvent.event_id, userContext, fetchAttendingUsers, attendingUsers]);
 
   // useEffect hook to fetch the list of those attending when the selected event changes
   useEffect(() => {
@@ -172,11 +185,11 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
 
   return (
     <div>
-      {error && <p>Error: {error}</p>}
+      {error && <p>{error}</p>}
       <h3>Event Details</h3>
       <p>Title: {selectedEvent.title}</p>
       <p>Description: {selectedEvent.description}</p>
-      <p>Date: {selectedEvent.date}</p>
+      <p>Date: {formattedDate}</p>
       <p>Begins at: {selectedEvent.start_time}</p>
       <p>Location: {selectedEvent.location}</p>
       <p>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</p>
