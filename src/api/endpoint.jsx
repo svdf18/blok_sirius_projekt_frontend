@@ -1,1 +1,1 @@
-export const endpoint = "http://localhost:3306";
+export const endpoint = "https://backend-testinngnngn.azurewebsites.net/";
