@@ -53,8 +53,9 @@ const SignInComponent = () => {
 
   return (
     <>
+
       <FormContainer onSubmit={handleSubmit}>
-        <FormTitle>Sign In</FormTitle>
+        <FormTitle>Log In</FormTitle>
 
         <FormInputContainer>
           <FormLabel>Email</FormLabel>
@@ -78,9 +79,10 @@ const SignInComponent = () => {
           />
         </FormInputContainer>
 
-        <SubmitButton type="submit">Sign In</SubmitButton>
+        <SubmitButton type="submit">Log In</SubmitButton>
       </FormContainer>
     </>
+    
   );
 }
 

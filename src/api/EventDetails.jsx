@@ -4,6 +4,7 @@ import { useUser } from '../services/Auth/UserContext.jsx'
 import { checkInvitation, markAttendance, getUserById, getAttendingUsers } from './UserApis.jsx';
 import { formatDateFrontend } from '../utils/DateUtil/FormatDateComponent.jsx';
 import { EventCardAttending, EventCardTitle } from '../utils/EventCardUtil/EventCardElements.jsx';
+import { getEventDepartments } from './DepartmentApi.jsx';
 
 export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const [attendingUsers, setAttendingUsers] = useState([]);
@@ -11,6 +12,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const currentUserId = userContext.user?.user_id;
   const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState("");
+  const [departments, setDepartments] = useState([]);
 
 
   useEffect(() => {
@@ -79,6 +81,19 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
     fetchAttendingUsers();
   }, [selectedEvent, fetchAttendingUsers]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchAttendingUsers();
+      try {
+        const departments = await getEventDepartments(selectedEvent.event_id);
+        setDepartments(departments);
+      } catch (error) {
+        console.error('Error fetching event departments:', error.message);
+      }
+    };
+  
+    fetchData();
+  }, [selectedEvent, fetchAttendingUsers]);
 
   return (
     <div>
@@ -89,7 +104,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <p>Date: {formattedDate}</p>
       <p>Begins at: {selectedEvent.start_time}</p>
       <p>Location: {selectedEvent.location}</p>
-      <p>Departments: {selectedEvent.departments}</p>
+      <p>Departments: {departments.join(', ')}</p>
       <EventCardAttending>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</EventCardAttending>
       <button onClick={handleCloseDetailView}>Close</button>
       <button onClick={handleCheckInvitation}>Attend</button>

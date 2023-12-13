@@ -30,7 +30,7 @@ const UserProfileCardComponent = () => {
       {user ? (
         <div>
           <UserProfileCardTitle>{user.first_name} {user.last_name}</UserProfileCardTitle>
-          <UserProfileCardSubtitle>{user.user_type}</UserProfileCardSubtitle>
+          <UserProfileCardSubtitle>{user.department}</UserProfileCardSubtitle>
           <UserProfileCardImage src={user.user_image} alt={`Profile of ${user.first_name} ${user.last_name}`} />
           <UserProfileCardText>Email: {user.email}</UserProfileCardText>
           <UserProfileCardText>Phone: {user.phone}</UserProfileCardText>
@@ -38,9 +38,9 @@ const UserProfileCardComponent = () => {
           <UserProfileCardText>Postal Code: {user.postal_code}</UserProfileCardText>
           
           {loading ? (
-            <UserProfileCardLoading>Signing Out...</UserProfileCardLoading>
+            <UserProfileCardLoading>Logging Out...</UserProfileCardLoading>
           ) : (
-            <LogSubmitButton onClick={handleSignOutWithLoading}>Sign Out</LogSubmitButton>
+            <LogSubmitButton onClick={handleSignOutWithLoading}>Log Out</LogSubmitButton>
           )}
         </div>
       ) : (
