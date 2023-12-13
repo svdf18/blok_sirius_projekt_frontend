@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeIndex from './pages/HomeIndex.jsx';
 import PeopleDirectoryIndex from './pages/PeopleDirectoryIndex.jsx';
 import LogInIndex from './pages/LogInIndex.jsx';
