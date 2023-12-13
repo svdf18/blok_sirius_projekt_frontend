@@ -153,7 +153,6 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       const isAlreadyAttending = attendingUsers.some(user => user.id === currentUserId);
       if (isAlreadyAttending) {
         setError("***You are already attending the event***");
-        return;
       }
       console.log(`User ${currentUserId} is invited to event ${selectedEvent.event_id}`);
 
@@ -170,6 +169,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       // update state with user details
       setAttendingUsers(attendingUserDetails.filter(Boolean)); // filter out null values
     } else {
+      setError("***You are not invited to the event***");
       console.log(`User ${currentUserId} is not invited to event ${selectedEvent.event_id}`);
       // prompt for those not attending
     }
