@@ -85,7 +85,7 @@ const filteredEvents = sortedEvents.filter((event) => {
     />
   ) : (
     <>
-    <h2>Events on this date</h2>
+    <h2>{`Events on ${selectedDate.toLocaleDateString()}`}</h2>
       {filteredEvents.map((event) => (
         <div key={event.event_id}>
           <EventCard 
@@ -93,7 +93,8 @@ const filteredEvents = sortedEvents.filter((event) => {
           onUpdate={handleUpdateClick} 
           onDetailsClick={() => setSelectedEvent(event)}
           setSelectedEventProp={handleSetSelectedEvent}
-            showButtons={showButtons} />
+          showButtons={showButtons}
+          showDateTime={false} />
           {selectedEvent && selectedEvent.eventId === event.event_id && (
             <UpdateEventForm 
             eventToUpdate={selectedEvent} 

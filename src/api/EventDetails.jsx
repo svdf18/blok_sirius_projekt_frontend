@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useUser } from '../services/Auth/UserContext.jsx'
 import { checkInvitation, markAttendance, getUserById, getAttendingUsers } from './UserApis.jsx';
 import { formatDateFrontend } from '../utils/DateUtil/FormatDateComponent.jsx';
+import { EventCardAttending, EventCardTitle } from '../utils/EventCardUtil/EventCardElements.jsx';
 
 export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const [attendingUsers, setAttendingUsers] = useState([]);
@@ -82,13 +83,14 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   return (
     <div>
       {error && <p>{error}</p>}
-      <h3>Event Details</h3>
+      <EventCardTitle>Event Details</EventCardTitle>
       <p>Title: {selectedEvent.title}</p>
       <p>Description: {selectedEvent.description}</p>
       <p>Date: {formattedDate}</p>
       <p>Begins at: {selectedEvent.start_time}</p>
       <p>Location: {selectedEvent.location}</p>
-      <p>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</p>
+      <p>Departments: {selectedEvent.departments}</p>
+      <EventCardAttending>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</EventCardAttending>
       <button onClick={handleCloseDetailView}>Close</button>
       <button onClick={handleCheckInvitation}>Attend</button>
     </div>
@@ -102,6 +104,7 @@ EventDetails.propTypes = {
     date: PropTypes.string.isRequired,
     start_time: PropTypes.string.isRequired,
     location: PropTypes.string,
+    departments: PropTypes.string,
     event_id: PropTypes.number.isRequired,
   }).isRequired,
   handleCloseDetailView: PropTypes.func.isRequired,

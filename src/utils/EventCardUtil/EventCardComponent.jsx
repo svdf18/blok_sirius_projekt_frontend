@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { EventCardContainer, EventCardText, ButtonCardContainer, CardContentContainer } from './EventCardElements';
+import { EventCardContainer, EventCardText, ButtonCardContainer, CardContentContainer, EventCardDate } from './EventCardElements';
 import { UpdateButtonComponent } from '../../utils/ButtonUtil/UpdateButtonComponent';
 import { DeleteButtonComponent } from '../../utils/ButtonUtil/DeleteButtonComponent';
 import { deleteEvent } from '../../api/EventApis';
@@ -8,7 +8,7 @@ import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
 import { useState, useEffect } from 'react';
 import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent';
 
-const EventCard = ({ event, onUpdate, setSelectedEventProp, showButtons }) => {
+const EventCard = ({ event, onUpdate, setSelectedEventProp, showButtons, showDateTime }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -44,8 +44,10 @@ const EventCard = ({ event, onUpdate, setSelectedEventProp, showButtons }) => {
   return (
     <EventCardContainer onClick={() => handleEventClick(event)}>
       <CardContentContainer>
-        <EventCardText>{formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
-
+      {showDateTime && (
+        <EventCardDate>{formatDateFrontend(event.date)}</EventCardDate>
+      )}
+        <EventCardText>{formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
         <ButtonCardContainer>
           {showButtons && (
             <>
@@ -95,6 +97,12 @@ EventCard.propTypes = {
   onDelete: PropTypes.func,
   setSelectedEventProp: PropTypes.func,
   showButtons: PropTypes.bool.isRequired,
+  showDateTime: PropTypes.bool,
 };
+
+EventCard.defaultProps = {
+  showDateTime: true, // Set default value for showDateTime prop
+};
+
 
 export default EventCard;

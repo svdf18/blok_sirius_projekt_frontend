@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const EventCardContainer = styled.div`
-  background-color: '#4F5E6A';
+  background-color: '#2b2b2b';
   color: '#F7F7F7';
   width: auto;
   text-align: left;
@@ -18,8 +18,13 @@ export const EventCardContainer = styled.div`
 export const CardContentContainer = styled.div`
   align-items: center;
   border-radius: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
   margin-top: 12px;
+  background-color: #4F5E6A;
   cursor: pointer;
+
 
   &:hover {
     background-color: #C2DFD3;
@@ -28,11 +33,22 @@ export const CardContentContainer = styled.div`
   }
 `;
 
+export const EventCardDate = styled.p`
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 10px;
+
+`
+
 export const EventCardText = styled.p`
   font-size: 16px;
   margin: 0;
   padding-top: 15px;
   color: inherit;
+
+  @media screen and (max-width: 720px) {
+    font-size: 14px;
+  }
 `;
 
 export const ButtonCardContainer = styled.div`
@@ -43,3 +59,19 @@ export const ButtonCardContainer = styled.div`
 
   margin-bottom: 10px;
   `;
+
+export const EventCardAttending = styled.p`
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 10px;
+  border-top: 1px solid;
+
+`
+
+export const EventCardTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  color: inherit;
+  border-bottom: 1px solid;
+`;
