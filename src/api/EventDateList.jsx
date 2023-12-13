@@ -4,7 +4,7 @@ import EventCard from '../utils/EventCardUtil/EventCardComponent.jsx';
 import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent.jsx';
 import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
-import { EventDetails } from './EventList.jsx';
+import { EventDetails } from './EventDetails.jsx';
 
 const EventDateList = ({ selectedDate }) => {
   const [events, setEvents] = useState([]);
