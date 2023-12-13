@@ -5,7 +5,6 @@ import UpdateRecommendationForm from '../utils/FormUtil/RecommendationUpdateComp
 import styled from "styled-components";
 import Masonry from 'react-masonry-css';
 import PropTypes from 'prop-types';
-import GenericSearch from '../components/Common/GenericSearchComponent.jsx';
 
 const RecommendationList = ({ showButtons }) => {
   const [recommendations, setRecommendations] = useState([]);
@@ -49,14 +48,6 @@ const RecommendationList = ({ showButtons }) => {
     setSelectedRecommendation(null);
   };
 
-  const handleSearch = (query) => {
-    const filtered = recommendations.filter((recommendation) =>
-      recommendation.title.toLowerCase().includes(query.toLowerCase()) ||
-      recommendation.content.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredRecommendations(filtered);
-  };
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -89,7 +80,6 @@ const RecommendationList = ({ showButtons }) => {
           </div>
         ))}
       </MasonryContainerGrid>
-      <GenericSearch onSearch={handleSearch} />
     </>
   );
 };
@@ -106,6 +96,7 @@ const MasonryContainerGrid = styled(Masonry)`
     display: flex;
     max-width: 62vw;
     margin: 0 auto;
+    margin-left: 65px;
     gap: 5px;
     justify-content: center;
     align-items: ${({ breakpoint }) => breakpoint !== 2100 && 'flex-start'};

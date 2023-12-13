@@ -75,3 +75,31 @@ export const EventCardTitle = styled.h2`
   color: inherit;
   border-bottom: 1px solid;
 `;
+
+export const EventButtonContainer = styled.div`
+  display: flex;
+  position: relative;
+  margin-top: 30px;
+`;
+
+export const EventDetailButtons = styled.button`
+  position: relative;
+  background-color: #C2DFD3;
+  border: none;
+  border-radius: 20px;
+  font-size: small;
+  padding: 1rem;
+  font-weight: bold;
+  margin: 1rem auto;
+  display: block;
+  width: ${({ adaptiveWidth }) => adaptiveWidth ? 'auto' : '30%'};
+  box-shadow: 0 0.5px 1px rgba(40, 36, 36, 0.12), 0 1px 2px rgba(78, 77, 77, 0.24);
+  transition: 300ms linear;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2b2b2b;
+    color: #F7F7F7;
+    border-radius: 14px;
+  }
+`

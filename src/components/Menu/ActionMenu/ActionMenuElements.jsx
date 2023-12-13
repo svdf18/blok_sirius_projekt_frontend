@@ -73,7 +73,6 @@ export const ActionMenuLogo = styled(Link)`
     transform: scaleX(0.8);
   }
 `
-
 export const ActionMenuTitleModal = styled.div`
   font-size: 24px;
   font-weight: bold;

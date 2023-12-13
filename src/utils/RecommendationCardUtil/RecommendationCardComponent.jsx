@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { RecommendationCardContainer, RecommendationCardTitle, RecommendationCardText, ButtonCardContainer, RecommendationUserName, RecommendationUserContainer, RecommendationUserImage, RecommendationCardURL } from './RecommendationCardElements.jsx';
+import { RecommendationCardContainer, RecommendationCardTitle, RecommendationCardText, ButtonCardContainer, RecommendationUserName, RecommendationUserContainer, RecommendationUserImage, RecommendationCardURL, RecommendationCardTitleContainer, RecommendationCardCategory } from './RecommendationCardElements.jsx';
 import { DeleteButtonComponent } from '../ButtonUtil/DeleteButtonComponent';
 import { UpdateButtonComponent } from '../ButtonUtil/UpdateButtonComponent';
 import { deleteRecommendation } from '../../api/RecommendationApis';
@@ -53,7 +53,10 @@ const RecommendationCard = ({ recommendation, onUpdate, showButtons }) => {
 
   return (
     <RecommendationCardContainer category={recommendation.category}>
+      <RecommendationCardTitleContainer>
       <RecommendationCardTitle>{recommendation.title}</RecommendationCardTitle>
+      <RecommendationCardCategory>{recommendation.category}</RecommendationCardCategory>
+      </RecommendationCardTitleContainer>
         <RecommendationUserContainer>
           <RecommendationUserName>Anbefalet af {taggedUserName}</RecommendationUserName>
           <RecommendationUserImage src={taggedUserImage} alt={`Profile of ${taggedUserName}`} />

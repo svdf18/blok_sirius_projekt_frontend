@@ -100,6 +100,19 @@ export const markAttendance = async (userContext, eventId) => {
   }
 };
 
+// Function to unattend an event
+export const unattendEvent = async (userContext, eventId) => {
+  const userId = userContext?.user?.user_id;
+
+  try {
+    const response = await axios.post(`${endpoint}/link-user-to-event/unattend-event`, { userId, eventId });
+    return response.data;
+  } catch (error) {
+    console.error('Error unattending event:', error.message);
+    throw error;
+  }
+};
+
 // Function to get attending users
 export const getAttendingUsers = async (eventId) => {
   try {

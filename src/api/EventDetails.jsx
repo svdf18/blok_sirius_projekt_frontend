@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { useUser } from '../services/Auth/UserContext.jsx'
 import { checkInvitation, markAttendance, getUserById, getAttendingUsers } from './UserApis.jsx';
 import { formatDateFrontend } from '../utils/DateUtil/FormatDateComponent.jsx';
-import { EventCardAttending, EventCardTitle } from '../utils/EventCardUtil/EventCardElements.jsx';
+import { EventButtonContainer, EventCardAttending, EventCardTitle, EventDetailButtons } from '../utils/EventCardUtil/EventCardElements.jsx';
 import { getEventDepartments } from './DepartmentApi.jsx';
+import { unattendEvent } from './UserApis.jsx';
 
 export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
   const [attendingUsers, setAttendingUsers] = useState([]);
+  const [isAttending, setIsAttending] = useState(false);
   const userContext = useUser();
   const currentUserId = userContext.user?.user_id;
   const [error, setError] = useState(null);
@@ -20,6 +22,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       setFormattedDate(formatDateFrontend(selectedEvent.date));
     }
   }, [selectedEvent]);
+
   // fetch user given a user_id
   const fetchUserDetails = async (userId) => {
     try {
@@ -67,6 +70,7 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
 
       // update state with user details
       setAttendingUsers(attendingUserDetails.filter(Boolean)); // filter out null values
+      setIsAttending(true);
     } else {
       setError("***You are not invited to the event***");
       console.log(`User ${currentUserId} is not invited to event ${selectedEvent.event_id}`);
@@ -75,6 +79,25 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
     // after marking attendance, fetch the updated list of attending users
     await fetchAttendingUsers();
   }, [currentUserId, selectedEvent.event_id, userContext, fetchAttendingUsers, attendingUsers]);
+
+
+  const handleUnattendEvent = useCallback(async () => {
+    try {
+      console.log('Unattend event response:', await unattendEvent(userContext, selectedEvent.event_id));
+      await fetchAttendingUsers();
+      setIsAttending(false);
+    } catch (error) {
+      console.error('Error unattending event:', error.message);
+      setError('Error unattending event');
+    }
+  }, [userContext, selectedEvent.event_id, fetchAttendingUsers]);
+
+
+  useEffect(() => {
+    // Check if the current user is already attending when the attendingUsers list changes
+    const isUserAttending = attendingUsers.some(user => user.id === currentUserId);
+    setIsAttending(isUserAttending);
+  }, [attendingUsers, currentUserId]);
 
   // useEffect hook to fetch the list of those attending when the selected event changes
   useEffect(() => {
@@ -106,8 +129,12 @@ export const EventDetails = ({ selectedEvent, handleCloseDetailView }) => {
       <p>Location: {selectedEvent.location}</p>
       <p>Departments: {departments.join(', ')}</p>
       <EventCardAttending>Attending Users: {attendingUsers.map(user => `${user.details.first_name} ${user.details.last_name}`).join(', ')}</EventCardAttending>
-      <button onClick={handleCloseDetailView}>Close</button>
-      <button onClick={handleCheckInvitation}>Attend</button>
+      <EventButtonContainer>
+      <EventDetailButtons onClick={handleCloseDetailView}>Close</EventDetailButtons>
+      <EventDetailButtons onClick={isAttending ? handleUnattendEvent : handleCheckInvitation}>
+      {isAttending ? "Unattend" : "Attend"}
+      </EventDetailButtons>
+      </EventButtonContainer>
     </div>
   );
 };

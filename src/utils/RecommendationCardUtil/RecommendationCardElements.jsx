@@ -29,12 +29,25 @@ export const RecommendationCardContainer = styled.div.attrs((props) => ({
   transition: all 30ms linear;
 `;
 
+export const RecommendationCardTitleContainer = styled.div`
+  border-bottom: 1px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export const RecommendationCardTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
   color: inherit;
-  border-bottom: 1px solid;
+`;
+
+export const RecommendationCardCategory = styled.p`
+  font-size: 12px;
+  font-weight: bold;
+  color: inherit;
+  flex-direction: right;
 `;
 
 export const RecommendationCardText = styled.p`
@@ -47,6 +60,7 @@ export const RecommendationUserContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 10px;
 `
 
 export const RecommendationUserImage = styled.img`

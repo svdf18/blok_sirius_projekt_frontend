@@ -1,5 +1,5 @@
 import GlobalStyle from '../../styles/globalStyles';
-import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from './EventElements';
+import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer, ActionMenuGridContainer, EventDisplayGrid } from './EventElements';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import EventList from '../../api/EventList.jsx';
 import EventDateList from '../../api/EventDateList.jsx';
@@ -19,25 +19,28 @@ const EventSection = () => {
       <GlobalStyle />
       <EventContainer>
         <EventContainerGrid>
-          <ActionMenuComponent />
+          <ActionMenuGridContainer>
+            <ActionMenuComponent />
 
+            <CalendarContainer>
+              <EventCalendar 
+              onDateChange={handleCalendarDateChange} />
+            </CalendarContainer>
+
+          </ActionMenuGridContainer>
+        <EventDisplayGrid>
           <TodayContainer>
             <EventDateList 
             selectedDate={date} 
             showButtons={false} />
           </TodayContainer>
 
-          <CalendarContainer>
-            <EventCalendar 
-            onDateChange={handleCalendarDateChange} />
-          </CalendarContainer>
-
           <UpcomingContainer>
             <EventList 
             selectedDate={date}
             showButtons={false} />
           </UpcomingContainer>
-
+          </EventDisplayGrid>
 
         </EventContainerGrid>
       </EventContainer>
