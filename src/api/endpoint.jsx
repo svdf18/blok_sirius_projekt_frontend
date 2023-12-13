@@ -1,0 +1,1 @@
+export const endpoint = "https://backend-testinngnngn.azurewebsites.net/";

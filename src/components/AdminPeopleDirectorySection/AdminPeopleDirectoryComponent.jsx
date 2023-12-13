@@ -1,34 +1,28 @@
-import { useState } from "react";
 import GlobalStyle from "../../styles/globalStyles.jsx";
-import {
-  AdminPeopleDirectoryContainer,
-  AdminPeopleDirectoryH1Container,
-  AdminPeopleDirectoryH1,
-  AdminPeopleDirectoryGrid,
-} from "./AdminPeopleDirectoryElements.jsx";
-import AdminUserList from "../../utils/AdminUserCardUtil/AdminUserCardComponent.jsx";
-import Form from "../Form/FormComponent.jsx";
+import UserList from "../../api/UserList.jsx";
+import { ActionMenuGridContainer, DirectoryContainer, DirectoryGrid, DirectoryGridContainer } from "../PeopleDirectorySection/PeopleDirectoryElements.jsx";
+import CreateUserForm from "../../utils/FormUtil/UserCreateComponent.jsx";
+import ActionMenuComponent from "../Menu/ActionMenu/ActionMenuComponent.jsx";
 
 const AdminPeopleDirectorySection = () => {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const toggleFormVisibility = () => {
-    setIsFormVisible((prevVisibility) => !prevVisibility);
-  };
+  const menuItems = [
+    { title: 'Create User', formComponent: CreateUserForm },
+  ];
 
   return (
     <>
-      <GlobalStyle />
-      <AdminPeopleDirectoryContainer id="admin-people-directory">
-        <AdminPeopleDirectoryH1Container>
-          <AdminPeopleDirectoryH1>Admin People Directory</AdminPeopleDirectoryH1>
-          <button onClick={toggleFormVisibility}>Create User</button>
-          <AdminPeopleDirectoryGrid>
-            {isFormVisible && <Form />}
-            <AdminUserList />
-          </AdminPeopleDirectoryGrid>
-        </AdminPeopleDirectoryH1Container>
-      </AdminPeopleDirectoryContainer>
+      <GlobalStyle backgroundColor="yellow" />
+      <DirectoryContainer id="admin-dashboard-people-directory" backgroundColor="yellow">
+        <DirectoryGridContainer>
+          <ActionMenuGridContainer>
+            <ActionMenuComponent menuItems={menuItems} />
+          </ActionMenuGridContainer>
+          <DirectoryGrid>
+            <UserList showButtons={true}/>
+          </DirectoryGrid>
+        </DirectoryGridContainer>
+      </DirectoryContainer>
+
     </>
   );
 };
