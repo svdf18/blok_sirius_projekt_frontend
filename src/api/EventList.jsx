@@ -6,7 +6,7 @@ import UpdateEventForm from '../utils/FormUtil/EventUpdateComponent';
 import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 import { EventDetails } from './EventDetails.jsx';
 
-const EventList = ({ selectedDate }) => {
+const EventList = ({ selectedDate, showButtons }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -92,6 +92,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
                 event={event}
                 onUpdate={handleUpdateClick}
                 setSelectedEventProp={setSelectedEvent}
+                showButtons={showButtons}
               />
               {selectedEvent && selectedEvent.eventId === event.event_id && (
                 <UpdateEventForm
@@ -109,6 +110,7 @@ const upcomingFilteredEvents = sortedEvents.filter((event) => {
 
 EventList.propTypes = {
   selectedDate: PropTypes.instanceOf(Date).isRequired,
+  showButtons: PropTypes.bool.isRequired,
 };
 
 function areArraysEqual(arr1, arr2) {

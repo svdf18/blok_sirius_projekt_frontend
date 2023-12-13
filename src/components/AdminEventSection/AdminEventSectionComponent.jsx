@@ -28,7 +28,8 @@ const AdminEventSection = () => {
 
           <TodayContainer>
             <EventDateList 
-            selectedDate={date} />
+            selectedDate={date}
+             showButtons={true} />
           </TodayContainer>
 
           <CalendarContainer>
@@ -38,7 +39,8 @@ const AdminEventSection = () => {
 
           <UpcomingContainer>
             <EventList 
-            selectedDate={date} />
+            selectedDate={date}
+            showButtons={true} />
           </UpcomingContainer>
 
         </EventContainerGrid>

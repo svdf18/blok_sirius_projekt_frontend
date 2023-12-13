@@ -23,7 +23,8 @@ const EventSection = () => {
 
           <TodayContainer>
             <EventDateList 
-            selectedDate={date} />
+            selectedDate={date} 
+            showButtons={false} />
           </TodayContainer>
 
           <CalendarContainer>
@@ -33,7 +34,8 @@ const EventSection = () => {
 
           <UpcomingContainer>
             <EventList 
-            selectedDate={date} />
+            selectedDate={date}
+            showButtons={false} />
           </UpcomingContainer>
 
 

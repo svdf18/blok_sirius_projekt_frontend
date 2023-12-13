@@ -8,7 +8,7 @@ import UpdateEventForm from '../../utils/FormUtil/EventUpdateComponent';
 import { useState, useEffect } from 'react';
 import { formatDateFrontend, formatTimeFrontend } from '../../utils/DateUtil/FormatDateComponent';
 
-const EventCard = ({ event, onUpdate, setSelectedEventProp }) => {
+const EventCard = ({ event, onUpdate, setSelectedEventProp, showButtons }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -47,7 +47,8 @@ const EventCard = ({ event, onUpdate, setSelectedEventProp }) => {
         <EventCardText>{formatDateFrontend(event.date)} at {formatTimeFrontend(event.start_time)} - {event.title} ({event.location})</EventCardText>
 
         <ButtonCardContainer>
-
+          {showButtons && (
+            <>
           <DeleteButtonComponent
             deleteFunction={(itemId, event) => {
               event.stopPropagation();
@@ -62,7 +63,8 @@ const EventCard = ({ event, onUpdate, setSelectedEventProp }) => {
             openUpdateModal();
           }} itemId={event.event_id}
             itemProps={event} />
-
+            </>
+          )}
           <ModalComponent
             isOpen={isUpdateModalOpen}
             onRequestClose={closeUpdateModal}
@@ -92,6 +94,7 @@ EventCard.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func,
   setSelectedEventProp: PropTypes.func,
+  showButtons: PropTypes.bool.isRequired,
 };
 
 export default EventCard;

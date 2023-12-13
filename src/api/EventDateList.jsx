@@ -6,7 +6,7 @@ import { sortByDateTime } from '../utils/DateUtil/FormatDateComponent.jsx';
 import PropTypes from 'prop-types';
 import { EventDetails } from './EventDetails.jsx';
 
-const EventDateList = ({ selectedDate }) => {
+const EventDateList = ({ selectedDate, showButtons }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ useEffect(() => {
     return <p>Error: {error.message}</p>;
   }
 
-// Sort events by date and time using the utility function
+// sort events by date and time
 const sortedEvents = sortByDateTime(events);
 
 const filteredEvents = sortedEvents.filter((event) => {
@@ -92,7 +92,8 @@ const filteredEvents = sortedEvents.filter((event) => {
           event={event} 
           onUpdate={handleUpdateClick} 
           onDetailsClick={() => setSelectedEvent(event)}
-          setSelectedEventProp={handleSetSelectedEvent} />
+          setSelectedEventProp={handleSetSelectedEvent}
+            showButtons={showButtons} />
           {selectedEvent && selectedEvent.eventId === event.event_id && (
             <UpdateEventForm 
             eventToUpdate={selectedEvent} 
@@ -106,20 +107,9 @@ const filteredEvents = sortedEvents.filter((event) => {
   );
 };
 
-EventDetails.propTypes = {
-  selectedEvent: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    date: PropTypes.string.isRequired,
-    start_time: PropTypes.string.isRequired,
-    location: PropTypes.string,
-    event_id: PropTypes.number.isRequired,
-  }).isRequired,
-  handleCloseDetailView: PropTypes.func.isRequired,
-};
-
 EventDateList.propTypes = {
   selectedDate: PropTypes.instanceOf(Date).isRequired,
+  showButtons: PropTypes.bool.isRequired,
 };
 
 function areArraysEqual(arr1, arr2) {
