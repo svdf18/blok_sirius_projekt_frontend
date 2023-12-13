@@ -49,10 +49,10 @@ const RecommendationList = ({ showButtons }) => {
     setSelectedRecommendation(null);
   };
 
-  // Function to handle search and update filtered recommendations
   const handleSearch = (query) => {
     const filtered = recommendations.filter((recommendation) =>
-      recommendation.title.toLowerCase().includes(query.toLowerCase())
+      recommendation.title.toLowerCase().includes(query.toLowerCase()) ||
+      recommendation.content.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredRecommendations(filtered);
   };
@@ -67,7 +67,6 @@ const RecommendationList = ({ showButtons }) => {
 
   return (
     <>
-      <GenericSearch onSearch={handleSearch} />
       <MasonryContainerGrid
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
@@ -90,6 +89,7 @@ const RecommendationList = ({ showButtons }) => {
           </div>
         ))}
       </MasonryContainerGrid>
+      <GenericSearch onSearch={handleSearch} />
     </>
   );
 };
