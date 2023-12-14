@@ -1,5 +1,5 @@
 import GlobalStyle from '../../styles/globalStyles';
-import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer } from '../EventSection/EventElements';
+import { EventContainer, EventContainerGrid, CalendarContainer, TodayContainer, UpcomingContainer, ActionMenuGridContainer, EventDisplayGrid } from '../EventSection/EventElements';
 import ActionMenuComponent from '../Menu/ActionMenu/ActionMenuComponent.jsx';
 import EventList from '../../api/EventList.jsx';
 import EventDateList from '../../api/EventDateList.jsx';
@@ -24,24 +24,28 @@ const AdminEventSection = () => {
       <GlobalStyle backgroundColor="yellow" />
       <EventContainer backgroundColor="yellow">
         <EventContainerGrid>
-          <ActionMenuComponent menuItems={menuItems} />
+          <ActionMenuGridContainer>
+            <ActionMenuComponent menuItems={menuItems} />
 
+            <CalendarContainer>
+              <EventCalendar onDateChange={handleCalendarDateChange} />
+            </CalendarContainer>
+          </ActionMenuGridContainer>
+          <EventDisplayGrid>
           <TodayContainer>
             <EventDateList 
             selectedDate={date}
              showButtons={true} />
           </TodayContainer>
 
-          <CalendarContainer>
-            <EventCalendar 
-            onDateChange={handleCalendarDateChange} />
-          </CalendarContainer>
+          
 
           <UpcomingContainer>
             <EventList 
             selectedDate={date}
             showButtons={true} />
           </UpcomingContainer>
+          </EventDisplayGrid>
 
         </EventContainerGrid>
       </EventContainer>
